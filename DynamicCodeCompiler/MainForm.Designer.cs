@@ -30,7 +30,11 @@
         {
             this.tabControlMain = new System.Windows.Forms.TabControl();
             this.tabPageCompiler = new System.Windows.Forms.TabPage();
-            this.tabPageAssemblies = new System.Windows.Forms.TabPage();
+            this.listView1 = new System.Windows.Forms.ListView();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.tableLayoutCompiler = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.tableLayoutSource = new System.Windows.Forms.TableLayoutPanel();
@@ -39,6 +43,11 @@
             this.tableLayoutOutput = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBoxOutput = new System.Windows.Forms.RichTextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.tabPageAssemblies = new System.Windows.Forms.TabPage();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -48,6 +57,7 @@
             this.splitContainer.SuspendLayout();
             this.tableLayoutSource.SuspendLayout();
             this.tableLayoutOutput.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -63,6 +73,11 @@
             // 
             // tabPageCompiler
             // 
+            this.tabPageCompiler.Controls.Add(this.listView1);
+            this.tabPageCompiler.Controls.Add(this.button3);
+            this.tabPageCompiler.Controls.Add(this.button2);
+            this.tabPageCompiler.Controls.Add(this.button1);
+            this.tabPageCompiler.Controls.Add(this.textBox1);
             this.tabPageCompiler.Controls.Add(this.tableLayoutCompiler);
             this.tabPageCompiler.Location = new System.Drawing.Point(4, 22);
             this.tabPageCompiler.Name = "tabPageCompiler";
@@ -72,15 +87,52 @@
             this.tabPageCompiler.Text = "Compiler";
             this.tabPageCompiler.UseVisualStyleBackColor = true;
             // 
-            // tabPageAssemblies
+            // listView1
             // 
-            this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAssemblies.Name = "tabPageAssemblies";
-            this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAssemblies.Size = new System.Drawing.Size(929, 418);
-            this.tabPageAssemblies.TabIndex = 1;
-            this.tabPageAssemblies.Text = "Assemblies";
-            this.tabPageAssemblies.UseVisualStyleBackColor = true;
+            this.listView1.Location = new System.Drawing.Point(8, 66);
+            this.listView1.Name = "listView1";
+            this.listView1.Size = new System.Drawing.Size(292, 343);
+            this.listView1.TabIndex = 9;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(275, 40);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(22, 20);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "-";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(250, 40);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(24, 20);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "+";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(190, 40);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(61, 20);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "Browse";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBox1.Location = new System.Drawing.Point(8, 40);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(176, 20);
+            this.textBox1.TabIndex = 5;
             // 
             // tableLayoutCompiler
             // 
@@ -89,6 +141,7 @@
             this.tableLayoutCompiler.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.tableLayoutCompiler.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutCompiler.Controls.Add(this.splitContainer, 1, 0);
+            this.tableLayoutCompiler.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutCompiler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutCompiler.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutCompiler.Name = "tableLayoutCompiler";
@@ -185,6 +238,59 @@
             this.richTextBoxOutput.TabIndex = 1;
             this.richTextBoxOutput.Text = "";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.radioButton3);
+            this.panel1.Controls.Add(this.radioButton2);
+            this.panel1.Controls.Add(this.radioButton1);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(294, 28);
+            this.panel1.TabIndex = 1;
+            // 
+            // radioButton3
+            // 
+            this.radioButton3.AutoSize = true;
+            this.radioButton3.Location = new System.Drawing.Point(217, 4);
+            this.radioButton3.Name = "radioButton3";
+            this.radioButton3.Size = new System.Drawing.Size(74, 17);
+            this.radioButton3.TabIndex = 2;
+            this.radioButton3.TabStop = true;
+            this.radioButton3.Text = "Only Code";
+            this.radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(109, 4);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(85, 17);
+            this.radioButton2.TabIndex = 1;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Only Method";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(2, 4);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(84, 17);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Whole Class";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // tabPageAssemblies
+            // 
+            this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAssemblies.Name = "tabPageAssemblies";
+            this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAssemblies.Size = new System.Drawing.Size(929, 418);
+            this.tabPageAssemblies.TabIndex = 1;
+            this.tabPageAssemblies.Text = "Assemblies";
+            this.tabPageAssemblies.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,6 +301,7 @@
             this.Text = "Dynamic Code Compiler";
             this.tabControlMain.ResumeLayout(false);
             this.tabPageCompiler.ResumeLayout(false);
+            this.tabPageCompiler.PerformLayout();
             this.tableLayoutCompiler.ResumeLayout(false);
             this.splitContainer.Panel1.ResumeLayout(false);
             this.splitContainer.Panel2.ResumeLayout(false);
@@ -204,6 +311,8 @@
             this.tableLayoutSource.PerformLayout();
             this.tableLayoutOutput.ResumeLayout(false);
             this.tableLayoutOutput.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -221,6 +330,15 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutOutput;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox richTextBoxOutput;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton3;
     }
 }
 
