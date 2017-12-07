@@ -52,7 +52,7 @@ namespace DynamicCodeCompiler
                 string name = methods[i].Name;
                 if (!name.StartsWith("get_") && !name.StartsWith("set_") && !DefaultMethods.Contains(name))
                 {
-                    typeModel.Methods.Add(methods[i].Name);
+                    //typeModel.Methods.Add(methods[i].Name);
                 }
             }
             
