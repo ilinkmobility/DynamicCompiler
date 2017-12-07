@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-
 namespace DynamicCodeCompiler
 {
     public partial class MainForm : Form
@@ -36,7 +36,57 @@ namespace DynamicCodeCompiler
             listView1.FullRowSelect = true;
             //Add column headers.
             listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listView1.Columns.Add("",270);
+            listView1.Columns.Add("",300);
+
+            TreeView();
+        }
+
+        public void TreeView()
+        {
+            var Data = Constants.Classes;
+
+            for(int i=0;i<Data.Count;i++)
+            {
+                List<TreeNode> pnode = new List<TreeNode>();
+                List<TreeNode> cnode = new List<TreeNode>();
+                List<TreeNode> mnode = new List<TreeNode>();
+
+                //Properties.
+                for (int p=0;p<Data[i].Properties.Count;p++)
+                {
+                    pnode.Add(new TreeNode(
+                    Data[i].Properties[p].Type + " : " + Data[i].Properties[p].Name));
+                }                
+                TreeNode[] PropertiesArray = pnode.ToArray();
+
+                //Constructors.
+                for (int c = 0; c < Data[i].Constructors.Count; c++)
+                {
+                    cnode.Add(new TreeNode(
+                    Data[i].Name + "( " + string.Join(" , ", Data[i].Constructors[c].ArgumentTypes) + " )"));
+                }
+                TreeNode[] ConstructorsArray = cnode.ToArray();
+
+                //Methods.
+                for (int m=0;m<Data[i].Methods.Count;m++)
+                {
+                    mnode.Add(new TreeNode(
+                    Data[i].Methods[m].ReturnType + " : " +
+                    Data[i].Methods[m].Name +
+                    "( " + string.Join(" , ", Data[i].Methods[m].ArgumentTypes) + " )"));
+                }
+                TreeNode[] MethodsArray = mnode.ToArray();
+
+                //Adding each node.
+                TreeNode Properties = new TreeNode("Properties", PropertiesArray);
+                TreeNode Constructors = new TreeNode("Constructors", ConstructorsArray);
+                TreeNode Methods = new TreeNode("Methods", MethodsArray);
+                TreeNode[] MainComponents = new TreeNode[] { Properties, Constructors, Methods };
+                
+                // Final node.
+                TreeNode treeNode = new TreeNode(Data[i].Name, MainComponents);
+                treeView1.Nodes.Add(treeNode);                
+            }            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -44,7 +94,6 @@ namespace DynamicCodeCompiler
             OpenFileDialog fdlg = new OpenFileDialog();
             fdlg.Title = "File Browser";
             fdlg.InitialDirectory = @"c:\";
-            //"dll files (*.dll)|*.dll|All files (*.*)|*.*";
             fdlg.Filter = "dll files (*.dll)|*.dll";
             fdlg.FilterIndex = 2;
             fdlg.RestoreDirectory = true;

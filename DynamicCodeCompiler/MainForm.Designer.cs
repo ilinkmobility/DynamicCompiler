@@ -48,6 +48,7 @@
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.tabPageAssemblies = new System.Windows.Forms.TabPage();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -58,6 +59,7 @@
             this.tableLayoutSource.SuspendLayout();
             this.tableLayoutOutput.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tabPageAssemblies.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -283,6 +285,7 @@
             // 
             // tabPageAssemblies
             // 
+            this.tabPageAssemblies.Controls.Add(this.treeView1);
             this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
             this.tabPageAssemblies.Name = "tabPageAssemblies";
             this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
@@ -290,6 +293,13 @@
             this.tabPageAssemblies.TabIndex = 1;
             this.tabPageAssemblies.Text = "Assemblies";
             this.tabPageAssemblies.UseVisualStyleBackColor = true;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Location = new System.Drawing.Point(25, 44);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(880, 350);
+            this.treeView1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -313,6 +323,7 @@
             this.tableLayoutOutput.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabPageAssemblies.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -339,6 +350,7 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.TreeView treeView1;
     }
 }
 
