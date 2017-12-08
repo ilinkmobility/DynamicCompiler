@@ -210,10 +210,28 @@ namespace DynamicCodeCompiler
             Duplicate = false;
         }
 
+        const string MethodTemplate = "using System;namespace DynamicNamespace{public class DynamicClass{ METHODSOURCE }}";
+        const string CodeTemplate = "using System;namespace DynamicNamespace{public class DynamicClass{public void DynamicMethod(){ CODESOURCE }}}";
+
         private void btnCompile_Click(object sender, EventArgs e)
         {
-            string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text);
-            richTextBoxOutput.Text = result;
+            if (radioWholeClass.Checked)
+            {
+                string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text);
+                richTextBoxOutput.Text = result;
+            }
+            else if(radioMethodOnly.Checked)
+            {
+                var Methodfinal = MethodTemplate.Replace("METHODSOURCE", richTextBoxSource.Text);
+                string result = CompilerHelper.Instance.Compile(Methodfinal);
+                richTextBoxOutput.Text = result;
+            }
+            else
+            {
+                var Codefinal = CodeTemplate.Replace("CODESOURCE", richTextBoxSource.Text);
+                string result = CompilerHelper.Instance.Compile(Codefinal);
+                richTextBoxOutput.Text = result;
+            }
         }
 
         private void btnRun_Click(object sender, EventArgs e)
