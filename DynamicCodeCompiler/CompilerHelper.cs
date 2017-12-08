@@ -14,8 +14,6 @@ namespace DynamicCodeCompiler
 {
     public class CompilerHelper
     {
-        string[] DefaultMethods = { "ToString", "Equals", "GetHashCode", "GetType" };
-
         private static CompilerHelper instance;
 
         private CodeDomProvider codeProvider;
@@ -97,6 +95,8 @@ namespace DynamicCodeCompiler
             }
             else
             {
+                AssemblyHelper.Instance.GenerateTypeModel(GetCompiledAssembly());
+
                 return CompiledDllPath;
             }
         }
@@ -131,11 +131,29 @@ namespace DynamicCodeCompiler
             return assemblies;
         }
         
-        public Type GetAssembly()
+        public Type[] GetCompiledAssembly()
         {
             var assembly = Assembly.LoadFile(CompiledDllPath);
 
-            return assembly.GetTypes()[0];
+            return assembly.GetTypes();
+        }
+
+        public Type[] GetAllTypesFromAssembly(string path)
+        {
+            var assembly = Assembly.LoadFile(path);
+
+            return assembly.GetTypes();
+        }
+
+        public int GetNumberOfParameters(string method)
+        {
+            if (!method.Contains("(  )"))
+            {
+                var parameters = method.Substring(method.IndexOf('(')).Split(',');
+                return parameters.Length;
+            }
+
+            return 0;
         }
 
         public void InvokeConstructor()
@@ -143,7 +161,8 @@ namespace DynamicCodeCompiler
             try
             {
                 MessageBox.Show("Calling constructor", "Started", MessageBoxButtons.OK);
-                Type type = GetAssembly();
+                Type[] types = GetCompiledAssembly();
+                Type type = types[0];
                 ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
                 ctor.Invoke(null);
             }
@@ -152,25 +171,5 @@ namespace DynamicCodeCompiler
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
-
-        //public void GetTypeDetails(Type type)
-        //{
-        //    var typeModel = new TypeModel();
-
-        //    typeModel.Name = type.Name;
-
-        //    var methods = type.GetMethods();
-
-        //    for (int i = 0; i < methods.Length; i++)
-        //    {
-        //        string name = methods[i].Name;
-        //        if (!name.StartsWith("get_") && !name.StartsWith("set_") && !DefaultMethods.Contains(name))
-        //        {
-        //            //typeModel.Methods.Add(methods[i].Name);
-        //        }
-        //    }
-
-        //    var x = typeModel;
-        //}
     }
 }
