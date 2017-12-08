@@ -162,11 +162,31 @@ namespace DynamicCodeCompiler
         {
             try
             {
-                MessageBox.Show("Calling constructor", "Started", MessageBoxButtons.OK);
                 Type[] types = GetCompiledAssembly();
                 Type type = types[0];
                 ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
                 ctor.Invoke(null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        public void InvokeMethod(string method)
+        {
+            try
+            {
+                Type[] types = GetCompiledAssembly();
+                Type type = types[0];
+                MethodInfo methodInfo = type.GetMethod(method, 
+                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
+                    null,
+                    new Type[] { },
+                    null);
+
+                object classInstance = Activator.CreateInstance(type, null);
+                methodInfo.Invoke(classInstance, null);
             }
             catch (Exception ex)
             {
