@@ -15,6 +15,11 @@ namespace DynamicCodeCompiler
 
             CompilerHelper.Instance.GetAppDomainAssemblies();
 
+            richTextBoxSource.AddContextMenu();
+            richTextBoxOutput.AddContextMenu();
+
+            listViewAssemblyList.LoadList(CompilerHelper.Instance.GetLoadedAssembliesPathFromAppDomain());
+
             // Create the list to use as the custom source for prediction. 
             source.AddRange(new string[]
                             {
@@ -28,15 +33,15 @@ namespace DynamicCodeCompiler
                         "Javascript.dll",
                         "ASP.NET.dll"                 
                             });
-            textBox1.AutoCompleteCustomSource = source;
+            textBoxAssemblySearch.AutoCompleteCustomSource = source;
 
             //creating listview with columns.
-            listView1.View = View.Details;
-            listView1.GridLines = true;
-            listView1.FullRowSelect = true;
+            listViewAssemblyList.View = View.Details;
+            listViewAssemblyList.GridLines = true;
+            listViewAssemblyList.FullRowSelect = true;
             //Add column headers.
-            listView1.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listView1.Columns.Add("",300);
+            listViewAssemblyList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            listViewAssemblyList.Columns.Add("",300);
 
             TreeView();
         }
@@ -89,7 +94,7 @@ namespace DynamicCodeCompiler
             }            
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnBrowseAssembly_Click(object sender, EventArgs e)
         {
             OpenFileDialog fdlg = new OpenFileDialog();
             fdlg.Title = "File Browser";
@@ -107,57 +112,57 @@ namespace DynamicCodeCompiler
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnAddAssembly_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text == "" || textBox1.Text == null)
+            if (textBoxAssemblySearch.Text == "" || textBoxAssemblySearch.Text == null)
             {
                 MessageBox.Show("Please Browse or type an item to insert.");
             }
             else
             {
                 //ADDING TO LIST.
-                AddToList(textBox1.Text);
+                AddToList(textBoxAssemblySearch.Text);
                 //DELETING FROM PREDICTION.
-                source.Remove(textBox1.Text);
-                textBox1.AutoCompleteCustomSource = source;
+                source.Remove(textBoxAssemblySearch.Text);
+                textBoxAssemblySearch.AutoCompleteCustomSource = source;
 
-                textBox1.Text = null;
+                textBoxAssemblySearch.Text = null;
             }
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btnRemoveAssembly_Click(object sender, EventArgs e)
         {
             string ITEM = null;
 
-            if (listView1.SelectedItems.Count == 0)
+            if (listViewAssemblyList.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Please select an item to delete.");
             }
             else
             {
-                ITEM = listView1.SelectedItems[0].SubItems[0].Text;
+                ITEM = listViewAssemblyList.SelectedItems[0].SubItems[0].Text;
 
                 if (Dialog())
                 {
-                    if (listView1.SelectedItems.Count > 0)
+                    if (listViewAssemblyList.SelectedItems.Count > 0)
                     {
-                        if (listView1.FocusedItem.Text != null)
+                        if (listViewAssemblyList.FocusedItem.Text != null)
                         {
-                            string x = listView1.FocusedItem.Text.ToString();
+                            string x = listViewAssemblyList.FocusedItem.Text.ToString();
 
                             //DELETING FROM THE LIST.
-                            for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                            for (int i = listViewAssemblyList.Items.Count - 1; i >= 0; i--)
                             {
-                                if (listView1.Items[i].Text == ITEM)
+                                if (listViewAssemblyList.Items[i].Text == ITEM)
                                 {
-                                    listView1.Items[i].Remove();
+                                    listViewAssemblyList.Items[i].Remove();
                                     MessageBox.Show("Item has been Deleted.");
                                 }
                             }
 
                             //ADDING TO PREDICTION.
                             source.Add(x);
-                            textBox1.AutoCompleteCustomSource = source;
+                            textBoxAssemblySearch.AutoCompleteCustomSource = source;
                         }
                     }
                 }
@@ -185,9 +190,9 @@ namespace DynamicCodeCompiler
         public void AddToList(string inputitem)
         {
             //ADDING TO LIST.
-            for (int i = listView1.Items.Count - 1; i >= 0; i--)
+            for (int i = listViewAssemblyList.Items.Count - 1; i >= 0; i--)
             {
-                if (listView1.Items[i].Text == inputitem)
+                if (listViewAssemblyList.Items[i].Text == inputitem)
                 {
                     MessageBox.Show("Item already exists.Cannot be inserted.");
                     Duplicate = true;
@@ -196,11 +201,17 @@ namespace DynamicCodeCompiler
 
             if (Duplicate == false)
             {
-                listView1.Items.Add(inputitem);
+                listViewAssemblyList.Items.Add(inputitem);
                 MessageBox.Show("Item has been inserted.");
             }
 
             Duplicate = false;
+        }
+
+        private void btnCompile_Click(object sender, EventArgs e)
+        {
+            string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text);
+            richTextBoxOutput.Text = result;
         }
     }
 }
