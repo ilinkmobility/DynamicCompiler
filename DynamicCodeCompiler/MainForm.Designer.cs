@@ -38,9 +38,10 @@
             this.tableLayoutOutput = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBoxOutput = new System.Windows.Forms.RichTextBox();
-            this.tabPageAssemblies = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnRun = new System.Windows.Forms.Button();
+            this.btnCompile = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.listViewAssemblyList = new System.Windows.Forms.ListView();
             this.btnRemoveAssembly = new System.Windows.Forms.Button();
             this.btnAddAssembly = new System.Windows.Forms.Button();
@@ -50,9 +51,8 @@
             this.radioCodeOnly = new System.Windows.Forms.RadioButton();
             this.radioMethodOnly = new System.Windows.Forms.RadioButton();
             this.radioWholeClass = new System.Windows.Forms.RadioButton();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnCompile = new System.Windows.Forms.Button();
-            this.btnRun = new System.Windows.Forms.Button();
+            this.tabPageAssemblies = new System.Windows.Forms.TabPage();
+            this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -62,9 +62,9 @@
             this.splitContainer.SuspendLayout();
             this.tableLayoutSource.SuspendLayout();
             this.tableLayoutOutput.SuspendLayout();
-            this.tabPageAssemblies.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tabPageAssemblies.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -193,24 +193,6 @@
             this.richTextBoxOutput.TabIndex = 1;
             this.richTextBoxOutput.Text = "";
             // 
-            // tabPageAssemblies
-            // 
-            this.tabPageAssemblies.Controls.Add(this.treeView1);
-            this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
-            this.tabPageAssemblies.Name = "tabPageAssemblies";
-            this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAssemblies.Size = new System.Drawing.Size(929, 418);
-            this.tabPageAssemblies.TabIndex = 1;
-            this.tabPageAssemblies.Text = "Assemblies";
-            this.tabPageAssemblies.UseVisualStyleBackColor = true;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Location = new System.Drawing.Point(25, 44);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(237, 350);
-            this.treeView1.TabIndex = 0;
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.btnRun);
@@ -227,6 +209,36 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(294, 406);
             this.panel2.TabIndex = 1;
+            // 
+            // btnRun
+            // 
+            this.btnRun.Location = new System.Drawing.Point(149, 310);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(142, 44);
+            this.btnRun.TabIndex = 24;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            // 
+            // btnCompile
+            // 
+            this.btnCompile.Location = new System.Drawing.Point(3, 310);
+            this.btnCompile.Name = "btnCompile";
+            this.btnCompile.Size = new System.Drawing.Size(142, 44);
+            this.btnCompile.TabIndex = 23;
+            this.btnCompile.Text = "Compile";
+            this.btnCompile.UseVisualStyleBackColor = true;
+            this.btnCompile.Click += new System.EventHandler(this.btnCompile_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(3, 0);
+            this.label3.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 16);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "Source Type";
             // 
             // listViewAssemblyList
             // 
@@ -318,35 +330,23 @@
             this.radioWholeClass.Text = "Whole Class";
             this.radioWholeClass.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // tabPageAssemblies
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(3, 0);
-            this.label3.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 16);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Source Type";
+            this.tabPageAssemblies.Controls.Add(this.treeView1);
+            this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAssemblies.Name = "tabPageAssemblies";
+            this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAssemblies.Size = new System.Drawing.Size(929, 418);
+            this.tabPageAssemblies.TabIndex = 1;
+            this.tabPageAssemblies.Text = "Assemblies";
+            this.tabPageAssemblies.UseVisualStyleBackColor = true;
             // 
-            // btnCompile
+            // treeView1
             // 
-            this.btnCompile.Location = new System.Drawing.Point(3, 310);
-            this.btnCompile.Name = "btnCompile";
-            this.btnCompile.Size = new System.Drawing.Size(142, 44);
-            this.btnCompile.TabIndex = 23;
-            this.btnCompile.Text = "Compile";
-            this.btnCompile.UseVisualStyleBackColor = true;
-            this.btnCompile.Click += new System.EventHandler(this.btnCompile_Click);
-            // 
-            // btnRun
-            // 
-            this.btnRun.Location = new System.Drawing.Point(149, 310);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(142, 44);
-            this.btnRun.TabIndex = 24;
-            this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
+            this.treeView1.Location = new System.Drawing.Point(25, 44);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.Size = new System.Drawing.Size(237, 350);
+            this.treeView1.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -367,11 +367,11 @@
             this.tableLayoutSource.PerformLayout();
             this.tableLayoutOutput.ResumeLayout(false);
             this.tableLayoutOutput.PerformLayout();
-            this.tabPageAssemblies.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabPageAssemblies.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
