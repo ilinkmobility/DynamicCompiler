@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace DynamicCodeCompiler
 {
     public static class Extensions
-    {
+    { 
         public static void AddContextMenu(this RichTextBox rtb)
         {
             if (rtb.ContextMenuStrip == null)
