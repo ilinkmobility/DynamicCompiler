@@ -20,6 +20,8 @@ namespace DynamicCodeCompiler
 
             listViewAssemblyList.LoadList(CompilerHelper.Instance.GetLoadedAssembliesPathFromAppDomain());
 
+            radioWholeClass.Checked = true;
+
             // Create the list to use as the custom source for prediction. 
             source.AddRange(new string[]
                             {
@@ -41,7 +43,7 @@ namespace DynamicCodeCompiler
             listViewAssemblyList.FullRowSelect = true;
             //Add column headers.
             listViewAssemblyList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewAssemblyList.Columns.Add("",300);
+            listViewAssemblyList.Columns.Add("",284);
 
             TreeView();
         }
@@ -231,6 +233,7 @@ namespace DynamicCodeCompiler
                 string result = CompilerHelper.Instance.Compile(Codefinal);
                 richTextBoxOutput.Text = result;
             }
+            
             ErrorCount();
         }
 
@@ -243,12 +246,35 @@ namespace DynamicCodeCompiler
             else
             {
                 label2.Text = "Output";
+                treeViewCompiledAssembly.Nodes.Clear();
+                treeViewCompiledAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(CompilerHelper.Instance.GetCompiledAssembly())));
             }
         }
 
         private void btnRun_Click(object sender, EventArgs e)
         {
-            CompilerHelper.Instance.InvokeConstructor();
+            var selectedNode = treeViewCompiledAssembly.SelectedNode;
+            if (selectedNode == null)
+            {
+                MessageBox.Show("No constructor or methods are selected. Please selece a valid one. Make sure codes are compiled already", "Warning");
+            }
+            else
+            {
+                if (selectedNode.Parent.Text == "Constructors")
+                {
+                    CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+                }
+                else if (selectedNode.Parent.Text == "Methods")
+                {
+                    CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Selected member cannot be executed.", "Warning");
+                }
+            }
+            
+            //CompilerHelper.Instance.InvokeConstructor();
         }
     }
 }

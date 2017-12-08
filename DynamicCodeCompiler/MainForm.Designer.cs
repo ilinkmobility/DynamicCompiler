@@ -39,6 +39,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBoxOutput = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.treeViewCompiledAssembly = new System.Windows.Forms.TreeView();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnCompile = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
@@ -51,6 +53,7 @@
             this.radioCodeOnly = new System.Windows.Forms.RadioButton();
             this.radioMethodOnly = new System.Windows.Forms.RadioButton();
             this.radioWholeClass = new System.Windows.Forms.RadioButton();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPageAssemblies = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -75,12 +78,13 @@
             // tabControlMain
             // 
             this.tabControlMain.Controls.Add(this.tabPageCompiler);
+            this.tabControlMain.Controls.Add(this.tabPage1);
             this.tabControlMain.Controls.Add(this.tabPageAssemblies);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(937, 444);
+            this.tabControlMain.Size = new System.Drawing.Size(1009, 598);
             this.tabControlMain.TabIndex = 0;
             // 
             // tabPageCompiler
@@ -89,7 +93,7 @@
             this.tabPageCompiler.Location = new System.Drawing.Point(4, 22);
             this.tabPageCompiler.Name = "tabPageCompiler";
             this.tabPageCompiler.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCompiler.Size = new System.Drawing.Size(929, 418);
+            this.tabPageCompiler.Size = new System.Drawing.Size(1001, 572);
             this.tabPageCompiler.TabIndex = 0;
             this.tabPageCompiler.Text = "Compiler";
             this.tabPageCompiler.UseVisualStyleBackColor = true;
@@ -107,7 +111,7 @@
             this.tableLayoutCompiler.Name = "tableLayoutCompiler";
             this.tableLayoutCompiler.RowCount = 1;
             this.tableLayoutCompiler.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutCompiler.Size = new System.Drawing.Size(923, 412);
+            this.tableLayoutCompiler.Size = new System.Drawing.Size(995, 566);
             this.tableLayoutCompiler.TabIndex = 1;
             // 
             // splitContainer
@@ -124,8 +128,8 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.tableLayoutOutput);
-            this.splitContainer.Size = new System.Drawing.Size(617, 406);
-            this.splitContainer.SplitterDistance = 285;
+            this.splitContainer.Size = new System.Drawing.Size(689, 560);
+            this.splitContainer.SplitterDistance = 393;
             this.splitContainer.TabIndex = 0;
             // 
             // tableLayoutSource
@@ -140,7 +144,7 @@
             this.tableLayoutSource.RowCount = 2;
             this.tableLayoutSource.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutSource.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutSource.Size = new System.Drawing.Size(617, 285);
+            this.tableLayoutSource.Size = new System.Drawing.Size(689, 393);
             this.tableLayoutSource.TabIndex = 0;
             // 
             // label1
@@ -150,7 +154,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(611, 20);
+            this.label1.Size = new System.Drawing.Size(683, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Source";
             // 
@@ -159,7 +163,7 @@
             this.richTextBoxSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxSource.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxSource.Name = "richTextBoxSource";
-            this.richTextBoxSource.Size = new System.Drawing.Size(611, 259);
+            this.richTextBoxSource.Size = new System.Drawing.Size(683, 367);
             this.richTextBoxSource.TabIndex = 1;
             this.richTextBoxSource.Text = "";
             // 
@@ -175,7 +179,7 @@
             this.tableLayoutOutput.RowCount = 2;
             this.tableLayoutOutput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutOutput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutOutput.Size = new System.Drawing.Size(617, 117);
+            this.tableLayoutOutput.Size = new System.Drawing.Size(689, 163);
             this.tableLayoutOutput.TabIndex = 0;
             // 
             // label2
@@ -185,7 +189,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(611, 20);
+            this.label2.Size = new System.Drawing.Size(683, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "Output";
             // 
@@ -194,12 +198,14 @@
             this.richTextBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxOutput.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxOutput.Name = "richTextBoxOutput";
-            this.richTextBoxOutput.Size = new System.Drawing.Size(611, 91);
+            this.richTextBoxOutput.Size = new System.Drawing.Size(683, 137);
             this.richTextBoxOutput.TabIndex = 1;
             this.richTextBoxOutput.Text = "";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Controls.Add(this.treeViewCompiledAssembly);
             this.panel2.Controls.Add(this.btnRun);
             this.panel2.Controls.Add(this.btnCompile);
             this.panel2.Controls.Add(this.label3);
@@ -212,21 +218,38 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(294, 406);
+            this.panel2.Size = new System.Drawing.Size(294, 560);
             this.panel2.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(0, 264);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(97, 13);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Compiled Assembly";
+            // 
+            // treeViewCompiledAssembly
+            // 
+            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(2, 280);
+            this.treeViewCompiledAssembly.Name = "treeViewCompiledAssembly";
+            this.treeViewCompiledAssembly.Size = new System.Drawing.Size(289, 180);
+            this.treeViewCompiledAssembly.TabIndex = 25;
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(149, 310);
+            this.btnRun.Location = new System.Drawing.Point(149, 511);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(142, 44);
             this.btnRun.TabIndex = 24;
             this.btnRun.Text = "Run";
             this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
             // 
             // btnCompile
             // 
-            this.btnCompile.Location = new System.Drawing.Point(3, 310);
+            this.btnCompile.Location = new System.Drawing.Point(3, 511);
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new System.Drawing.Size(142, 44);
             this.btnCompile.TabIndex = 23;
@@ -249,7 +272,7 @@
             // 
             this.listViewAssemblyList.Location = new System.Drawing.Point(3, 89);
             this.listViewAssemblyList.Name = "listViewAssemblyList";
-            this.listViewAssemblyList.Size = new System.Drawing.Size(288, 208);
+            this.listViewAssemblyList.Size = new System.Drawing.Size(288, 163);
             this.listViewAssemblyList.TabIndex = 21;
             this.listViewAssemblyList.UseCompatibleStateImageBehavior = false;
             // 
@@ -335,13 +358,23 @@
             this.radioWholeClass.Text = "Whole Class";
             this.radioWholeClass.UseVisualStyleBackColor = true;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1001, 572);
+            this.tabPage1.TabIndex = 2;
+            this.tabPage1.Text = "Execute";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
             // tabPageAssemblies
             // 
             this.tabPageAssemblies.Controls.Add(this.tableLayoutPanel1);
             this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
             this.tabPageAssemblies.Name = "tabPageAssemblies";
             this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAssemblies.Size = new System.Drawing.Size(929, 418);
+            this.tabPageAssemblies.Size = new System.Drawing.Size(1001, 572);
             this.tabPageAssemblies.TabIndex = 1;
             this.tabPageAssemblies.Text = "Assemblies";
             this.tabPageAssemblies.UseVisualStyleBackColor = true;
@@ -388,7 +421,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(937, 444);
+            this.ClientSize = new System.Drawing.Size(1009, 598);
             this.Controls.Add(this.tabControlMain);
             this.Name = "MainForm";
             this.Text = "Dynamic Code Compiler";
@@ -444,6 +477,9 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TreeView ExternalyLoadedAssembly;
         private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TreeView treeViewCompiledAssembly;
+        private System.Windows.Forms.Label label4;
     }
 }
 
