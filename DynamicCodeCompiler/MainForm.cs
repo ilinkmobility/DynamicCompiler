@@ -262,19 +262,27 @@ namespace DynamicCodeCompiler
             {
                 if (selectedNode.Parent.Text == "Constructors")
                 {
-                    CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+                    int count = CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+
+                    if(count == 0)
+                    {
+                        CompilerHelper.Instance.InvokeConstructor();
+                    }
                 }
                 else if (selectedNode.Parent.Text == "Methods")
                 {
-                    CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+                    int count = CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+
+                    if (count == 0)
+                    {
+                        CompilerHelper.Instance.InvokeMethod("SayHello");
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Selected member cannot be executed.", "Warning");
                 }
             }
-            
-            //CompilerHelper.Instance.InvokeConstructor();
         }
     }
 }
