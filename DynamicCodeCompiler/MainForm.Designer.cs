@@ -55,7 +55,10 @@
             this.radioWholeClass = new System.Windows.Forms.RadioButton();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPageAssemblies = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.ExternalyLoadedAssembly = new System.Windows.Forms.TreeView();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -68,6 +71,8 @@
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPageAssemblies.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -365,7 +370,7 @@
             // 
             // tabPageAssemblies
             // 
-            this.tabPageAssemblies.Controls.Add(this.treeView1);
+            this.tabPageAssemblies.Controls.Add(this.tableLayoutPanel1);
             this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
             this.tabPageAssemblies.Name = "tabPageAssemblies";
             this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
@@ -374,12 +379,43 @@
             this.tabPageAssemblies.Text = "Assemblies";
             this.tabPageAssemblies.UseVisualStyleBackColor = true;
             // 
-            // treeView1
+            // tableLayoutPanel1
             // 
-            this.treeView1.Location = new System.Drawing.Point(25, 44);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(237, 350);
-            this.treeView1.TabIndex = 0;
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.01095F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.98905F));
+            this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 0, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 6);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(913, 404);
+            this.tableLayoutPanel1.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.ExternalyLoadedAssembly);
+            this.panel3.Location = new System.Drawing.Point(3, 23);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(267, 369);
+            this.panel3.TabIndex = 0;
+            // 
+            // ExternalyLoadedAssembly
+            // 
+            this.ExternalyLoadedAssembly.Location = new System.Drawing.Point(3, 7);
+            this.ExternalyLoadedAssembly.Name = "ExternalyLoadedAssembly";
+            this.ExternalyLoadedAssembly.Size = new System.Drawing.Size(261, 351);
+            this.ExternalyLoadedAssembly.TabIndex = 0;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(6, 3);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(264, 21);
+            this.comboBox1.TabIndex = 1;
             // 
             // MainForm
             // 
@@ -405,6 +441,8 @@
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPageAssemblies.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -422,7 +460,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutOutput;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox richTextBoxOutput;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ListView listViewAssemblyList;
         private System.Windows.Forms.Button btnRemoveAssembly;
@@ -436,6 +473,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.Button btnCompile;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.TreeView ExternalyLoadedAssembly;
+        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TreeView treeViewCompiledAssembly;
         private System.Windows.Forms.Label label4;
