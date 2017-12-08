@@ -68,6 +68,18 @@ namespace DynamicCodeCompiler
 
             parameters.ReferencedAssemblies.AddRange(assemblies.ToArray());
 
+            //Refering external assemblies
+            if (Session.ExternalAssembly.Count > 0)
+            {
+                foreach (KeyValuePair<string, string> entry in Session.ExternalAssembly)
+                {
+                    if(!parameters.ReferencedAssemblies.Contains(entry.Value))
+                    {
+                        parameters.ReferencedAssemblies.Add(entry.Value);
+                    }
+                }
+            }
+
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, source);
 
             string result = string.Empty;
@@ -117,6 +129,28 @@ namespace DynamicCodeCompiler
 
             assemblies.Sort();
             return assemblies;
+        }
+        
+        public Type GetAssembly()
+        {
+            var assembly = Assembly.LoadFile(CompiledDllPath);
+
+            return assembly.GetTypes()[0];
+        }
+
+        public void InvokeConstructor()
+        {
+            try
+            {
+                MessageBox.Show("Calling constructor", "Started", MessageBoxButtons.OK);
+                Type type = GetAssembly();
+                ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
+                ctor.Invoke(null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
         }
 
         //public void GetTypeDetails(Type type)

@@ -99,13 +99,15 @@ namespace DynamicCodeCompiler
             OpenFileDialog fdlg = new OpenFileDialog();
             fdlg.Title = "File Browser";
             fdlg.InitialDirectory = @"c:\";
-            fdlg.Filter = "dll files (*.dll)|*.dll";
+            fdlg.Filter = "Dll files (*.dll)|*.dll|Exe files (*.exe)|*.exe|Winmd files (*.winmd)|*.winmd";
             fdlg.FilterIndex = 2;
             fdlg.RestoreDirectory = true;
 
             if (fdlg.ShowDialog() == DialogResult.OK)
             {
                 string file = Path.GetFileName(fdlg.FileName);
+
+                Session.ExternalAssembly.Add(file, fdlg.FileName);
 
                 //ADDING TO LIST.
                 AddToList(file);
@@ -212,6 +214,11 @@ namespace DynamicCodeCompiler
         {
             string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text);
             richTextBoxOutput.Text = result;
+        }
+
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            CompilerHelper.Instance.InvokeConstructor();
         }
     }
 }
