@@ -23,6 +23,7 @@ namespace DynamicCodeCompiler
         private Helpers helpers;
 
         public string CompiledDllPath { get; set; }
+        public int Count { get; set; }
 
         private CompilerHelper()
         {
@@ -84,7 +85,8 @@ namespace DynamicCodeCompiler
 
             string result = string.Empty;
 
-            if (results.Errors.Count > 0)
+            Count = results.Errors.Count;
+            if (Count > 0)
             {
                 foreach (CompilerError CompErr in results.Errors)
                 {
@@ -99,6 +101,13 @@ namespace DynamicCodeCompiler
             {
                 return CompiledDllPath;
             }
+        }
+
+        public Type[] GetAllTypesFromAssembly(string path)
+        {
+            var assembly = Assembly.LoadFile(path);
+
+            return assembly.GetTypes();
         }
 
         public Assembly[] GetAppDomainAssemblies()

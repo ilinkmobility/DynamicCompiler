@@ -88,9 +88,9 @@ namespace DynamicCodeCompiler
                 TreeNode Methods = new TreeNode("Methods", MethodsArray);
                 TreeNode[] MainComponents = new TreeNode[] { Properties, Constructors, Methods };
                 
-                // Final node.
+                //Final node.
                 TreeNode treeNode = new TreeNode(Data[i].Name, MainComponents);
-                treeView1.Nodes.Add(treeNode);                
+                ExternalyLoadedAssembly.Nodes.Add(treeNode);                
             }            
         }
 
@@ -130,7 +130,7 @@ namespace DynamicCodeCompiler
 
                 textBoxAssemblySearch.Text = null;
             }
-        }
+        }        
 
         private void btnRemoveAssembly_Click(object sender, EventArgs e)
         {
@@ -161,7 +161,6 @@ namespace DynamicCodeCompiler
                                     MessageBox.Show("Item has been Deleted.");
                                 }
                             }
-
                             //ADDING TO PREDICTION.
                             source.Add(x);
                             textBoxAssemblySearch.AutoCompleteCustomSource = source;
@@ -174,7 +173,7 @@ namespace DynamicCodeCompiler
 
         public bool Dialog()
         {
-            DialogResult result = MessageBox.Show("Do you want to delete this item from the list?", "Confirmation", MessageBoxButtons.YesNoCancel);
+            DialogResult result = MessageBox.Show("Sure to delete item(s) from the list?", "Confirmation", MessageBoxButtons.YesNoCancel);
             if (result == DialogResult.Yes)
             {
                 return true;
@@ -231,6 +230,19 @@ namespace DynamicCodeCompiler
                 var Codefinal = CodeTemplate.Replace("CODESOURCE", richTextBoxSource.Text);
                 string result = CompilerHelper.Instance.Compile(Codefinal);
                 richTextBoxOutput.Text = result;
+            }
+            ErrorCount();
+        }
+
+        public void ErrorCount()
+        {
+            if (CompilerHelper.Instance.Count > 0)
+            {
+                label2.Text = "Output" + " , Error(s) : " + CompilerHelper.Instance.Count;
+            }
+            else
+            {
+                label2.Text = "Output";
             }
         }
 
