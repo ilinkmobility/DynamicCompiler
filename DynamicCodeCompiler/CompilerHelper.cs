@@ -147,13 +147,6 @@ namespace DynamicCodeCompiler
             return assembly.GetTypes();
         }
 
-        public Type[] GetAllTypesFromAssembly(string path)
-        {
-            var assembly = Assembly.LoadFile(path);
-
-            return assembly.GetTypes();
-        }
-
         public int GetNumberOfParameters(string method)
         {
             if (!method.Contains("(  )"))

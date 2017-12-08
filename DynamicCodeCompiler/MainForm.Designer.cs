@@ -397,7 +397,7 @@
             // panel3
             // 
             this.panel3.Controls.Add(this.ExternalyLoadedAssembly);
-            this.panel3.Location = new System.Drawing.Point(3, 23);
+            this.panel3.Location = new System.Drawing.Point(3, 28);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(267, 369);
             this.panel3.TabIndex = 0;
@@ -412,7 +412,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 3);
+            this.comboBox1.Location = new System.Drawing.Point(3, 3);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(264, 21);
             this.comboBox1.TabIndex = 1;

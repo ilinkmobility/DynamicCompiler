@@ -92,7 +92,7 @@ namespace DynamicCodeCompiler
                 
                 //Final node.
                 TreeNode treeNode = new TreeNode(Data[i].Name, MainComponents);
-                ExternalyLoadedAssembly.Nodes.Add(treeNode);                
+                //ExternalyLoadedAssembly.Nodes.Add(treeNode);                
             }            
         }
 
@@ -110,6 +110,9 @@ namespace DynamicCodeCompiler
                 string file = Path.GetFileName(fdlg.FileName);
 
                 Session.ExternalAssembly.Add(file, fdlg.FileName);
+
+                Type[] allTypes = CompilerHelper.Instance.GetAllTypesFromAssembly(fdlg.FileName);
+                ExternalyLoadedAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(allTypes)));
 
                 //ADDING TO LIST.
                 AddToList(file);
