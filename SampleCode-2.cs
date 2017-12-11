@@ -168,9 +168,14 @@ namespace UWPAPITest
 		public UWPAPITestClass()
 		{
 			MessageBox.Show("Inside Dynamic Code 1", "Started", MessageBoxButtons.OK);
+			ShowUWPMessageDialog();
+			MessageBox.Show("Inside Dynamic Code 2", "Started", MessageBoxButtons.OK);
+		}
+		
+		public void ShowUWPMessageDialog()
+		{
 			var messageDialog = new MessageDialog("No internet connection has been found.");
 			messageDialog.ShowAsync();
-			MessageBox.Show("Inside Dynamic Code 2", "Started", MessageBoxButtons.OK);
 		}
 	}
 }
