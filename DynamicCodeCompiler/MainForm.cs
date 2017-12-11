@@ -250,14 +250,11 @@ namespace DynamicCodeCompiler
                     richTextBoxOutput.Text = result;
                 }
 
-                ErrorCount();
-
-                treeViewCompiledAssembly.Nodes.Clear();
-                treeViewCompiledAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(CompilerHelper.Instance.GetCompiledAssembly())));
+                CheckForError();
             }
         }
 
-        public void ErrorCount()
+        public void CheckForError()
         {
             if (CompilerHelper.Instance.Count > 0)
             {
@@ -266,6 +263,9 @@ namespace DynamicCodeCompiler
             else
             {
                 label2.Text = "Output";
+
+                treeViewCompiledAssembly.Nodes.Clear();
+                treeViewCompiledAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(CompilerHelper.Instance.GetCompiledAssembly())));
             }
         }
 
