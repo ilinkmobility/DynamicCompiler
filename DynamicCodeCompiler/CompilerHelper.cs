@@ -22,6 +22,7 @@ namespace DynamicCodeCompiler
         private Helpers helpers;
 
         public string CompiledDllPath { get; set; }
+
         public int Count { get; set; }
 
         private CompilerHelper()
@@ -98,12 +99,17 @@ namespace DynamicCodeCompiler
             }
             else
             {
-                AssemblyHelper.Instance.GenerateTypeModel(GetCompiledAssembly());
+                //AssemblyHelper.Instance.GenerateTypeModel(GetCompiledAssembly());
 
                 return CompiledDllPath;
             }
         }
 
+        /// <summary>
+        /// Get the list of types from externally loaded assemblly
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public Type[] GetAllTypesFromAssembly(string path)
         {
             var assembly = Assembly.LoadFile(path);
@@ -111,6 +117,10 @@ namespace DynamicCodeCompiler
             return assembly.GetTypes();
         }
 
+        /// <summary>
+        /// Get the list of assemblies referenced in the running application. It will be loaded for dynamic compiler
+        /// </summary>
+        /// <returns></returns>
         public Assembly[] GetAppDomainAssemblies()
         {
             return AppDomain.CurrentDomain.GetAssemblies();
@@ -146,17 +156,6 @@ namespace DynamicCodeCompiler
             var assembly = Assembly.LoadFile(CompiledDllPath);
 
             return assembly.GetTypes();
-        }
-
-        public int GetNumberOfParameters(string method)
-        {
-            if (!method.Contains("(  )"))
-            {
-                var parameters = method.Substring(method.IndexOf('(')).Split(',');
-                return parameters.Length;
-            }
-
-            return 0;
         }
 
         public string GetMethodName(string method)
