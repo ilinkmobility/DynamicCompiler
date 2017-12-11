@@ -201,6 +201,7 @@ namespace DynamicCodeCompiler
             }
             catch (Exception ex)
             {
+                var x = ex.ToString();
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
