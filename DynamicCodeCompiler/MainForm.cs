@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 using System.Windows.Forms;
+using System.Drawing;
+
 namespace DynamicCodeCompiler
 {
     public partial class MainForm : Form
@@ -14,11 +17,11 @@ namespace DynamicCodeCompiler
             InitializeComponent();
 
             CompilerHelper.Instance.GetAppDomainAssemblies();
-
+            
             richTextBoxSource.AddContextMenu();
             richTextBoxOutput.AddContextMenu();
 
-            listViewAssemblyList.LoadList(CompilerHelper.Instance.GetLoadedAssembliesPathFromAppDomain());
+            //listViewAssemblyList.LoadList(CompilerHelper.Instance.GetLoadedAssembliesPathFromAppDomain());
 
             radioWholeClass.Checked = true;
 
@@ -219,25 +222,35 @@ namespace DynamicCodeCompiler
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
-            if (radioWholeClass.Checked)
+            if (string.IsNullOrEmpty(richTextBoxSource.Text))
             {
-                string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text);
-                richTextBoxOutput.Text = result;
-            }
-            else if(radioMethodOnly.Checked)
-            {
-                var Methodfinal = MethodTemplate.Replace("METHODSOURCE", richTextBoxSource.Text);
-                string result = CompilerHelper.Instance.Compile(Methodfinal);
-                richTextBoxOutput.Text = result;
+                MessageBox.Show("Source code cannot be empty.", "Error");
             }
             else
             {
-                var Codefinal = CodeTemplate.Replace("CODESOURCE", richTextBoxSource.Text);
-                string result = CompilerHelper.Instance.Compile(Codefinal);
-                richTextBoxOutput.Text = result;
+                if (radioWholeClass.Checked)
+                {
+                    string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text);
+                    richTextBoxOutput.Text = result;
+                }
+                else if (radioMethodOnly.Checked)
+                {
+                    var Methodfinal = MethodTemplate.Replace("METHODSOURCE", richTextBoxSource.Text);
+                    string result = CompilerHelper.Instance.Compile(Methodfinal);
+                    richTextBoxOutput.Text = result;
+                }
+                else
+                {
+                    var Codefinal = CodeTemplate.Replace("CODESOURCE", richTextBoxSource.Text);
+                    string result = CompilerHelper.Instance.Compile(Codefinal);
+                    richTextBoxOutput.Text = result;
+                }
+
+                ErrorCount();
+
+                treeViewCompiledAssembly.Nodes.Clear();
+                treeViewCompiledAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(CompilerHelper.Instance.GetCompiledAssembly())));
             }
-            
-            ErrorCount();
         }
 
         public void ErrorCount()
@@ -249,8 +262,6 @@ namespace DynamicCodeCompiler
             else
             {
                 label2.Text = "Output";
-                treeViewCompiledAssembly.Nodes.Clear();
-                treeViewCompiledAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(CompilerHelper.Instance.GetCompiledAssembly())));
             }
         }
 
@@ -259,26 +270,55 @@ namespace DynamicCodeCompiler
             var selectedNode = treeViewCompiledAssembly.SelectedNode;
             if (selectedNode == null)
             {
-                MessageBox.Show("No constructor or methods are selected. Please selece a valid one. Make sure codes are compiled already", "Warning");
+                MessageBox.Show("1. No constructor or methods selected to runn. Please selece a valid one. \n2. Make sure codes are compiled already", "Warning");
             }
             else
             {
                 if (selectedNode.Parent.Text == "Constructors")
-                {
-                    int count = CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+                {                    
+                    var list = CompilerHelper.Instance.GetParameterList(treeViewCompiledAssembly.SelectedNode.Text);
+                    var givenParameterValues = (string.IsNullOrEmpty(richTextBoxArguments.Text)) ? new string[0] : richTextBoxArguments.Text.Trim().Split(',').Select(p => p.Trim()).ToArray();
 
-                    if(count == 0)
+                    if (givenParameterValues.Length == list.Count)
                     {
-                        CompilerHelper.Instance.InvokeConstructor();
+                        var types = new Type[list.Count];
+                        var parameters = new object[list.Count];
+
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            types[i] = Type.GetType(list[i].Key);
+                            parameters[i] = Convert.ChangeType(givenParameterValues[i], types[i]);
+                        }
+
+                        CompilerHelper.Instance.InvokeConstructor(types, parameters);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid number of arguments.", "Warning");
                     }
                 }
                 else if (selectedNode.Parent.Text == "Methods")
                 {
-                    int count = CompilerHelper.Instance.GetNumberOfParameters(treeViewCompiledAssembly.SelectedNode.Text);
+                    var methodName = CompilerHelper.Instance.GetMethodName(treeViewCompiledAssembly.SelectedNode.Text);
+                    var list = CompilerHelper.Instance.GetParameterList(treeViewCompiledAssembly.SelectedNode.Text);
+                    var givenParameterValues = (list.Count == 0) ? new string[0] : richTextBoxArguments.Text.Trim().Split(',').Select(p => p.Trim()).ToArray();
 
-                    if (count == 0)
+                    if (givenParameterValues.Length == list.Count)
                     {
-                        CompilerHelper.Instance.InvokeMethod("SayHello");
+                        var types = new Type[list.Count];
+                        var parameters = new object[list.Count];
+
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            types[i] = (givenParameterValues[i] == "this") ? this.GetType() : Type.GetType(list[i].Key);
+                            parameters[i] = (givenParameterValues[i] =="this") ? this : Convert.ChangeType(givenParameterValues[i], types[i]);
+                        }
+                        
+                        CompilerHelper.Instance.InvokeMethod(methodName, types, parameters);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid number of arguments.", "Warning");
                     }
                 }
                 else
@@ -286,6 +326,11 @@ namespace DynamicCodeCompiler
                     MessageBox.Show("Selected member cannot be executed.", "Warning");
                 }
             }
+        }
+
+        public void ChangeSourceEditorBackground(string colorCode)
+        {
+            richTextBoxSource.BackColor = ColorTranslator.FromHtml(colorCode);
         }
     }
 }
