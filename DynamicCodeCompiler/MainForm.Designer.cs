@@ -39,16 +39,22 @@
             this.label2 = new System.Windows.Forms.Label();
             this.richTextBoxOutput = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPageNamespace = new System.Windows.Forms.TabPage();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.listViewAssemblyList = new System.Windows.Forms.ListView();
+            this.btnRemoveAssembly = new System.Windows.Forms.Button();
+            this.btnAddAssembly = new System.Windows.Forms.Button();
+            this.textBoxAssemblySearch = new System.Windows.Forms.TextBox();
+            this.tabPageExternalAssembly = new System.Windows.Forms.TabPage();
+            this.btnBrowseAssembly = new System.Windows.Forms.Button();
+            this.richTextBoxArguments = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.treeViewCompiledAssembly = new System.Windows.Forms.TreeView();
             this.btnRun = new System.Windows.Forms.Button();
             this.btnCompile = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.listViewAssemblyList = new System.Windows.Forms.ListView();
-            this.btnRemoveAssembly = new System.Windows.Forms.Button();
-            this.btnAddAssembly = new System.Windows.Forms.Button();
-            this.btnBrowseAssembly = new System.Windows.Forms.Button();
-            this.textBoxAssemblySearch = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.radioCodeOnly = new System.Windows.Forms.RadioButton();
             this.radioMethodOnly = new System.Windows.Forms.RadioButton();
@@ -59,8 +65,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.ExternalyLoadedAssembly = new System.Windows.Forms.TreeView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.richTextBoxArguments = new System.Windows.Forms.RichTextBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -71,6 +75,10 @@
             this.tableLayoutSource.SuspendLayout();
             this.tableLayoutOutput.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPageNamespace.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.tabPageExternalAssembly.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPageAssemblies.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -206,6 +214,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Controls.Add(this.richTextBoxArguments);
             this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
@@ -213,11 +222,6 @@
             this.panel2.Controls.Add(this.btnRun);
             this.panel2.Controls.Add(this.btnCompile);
             this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.listViewAssemblyList);
-            this.panel2.Controls.Add(this.btnRemoveAssembly);
-            this.panel2.Controls.Add(this.btnAddAssembly);
-            this.panel2.Controls.Add(this.btnBrowseAssembly);
-            this.panel2.Controls.Add(this.textBoxAssemblySearch);
             this.panel2.Controls.Add(this.panel1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
@@ -225,10 +229,118 @@
             this.panel2.Size = new System.Drawing.Size(294, 579);
             this.panel2.TabIndex = 1;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPageNamespace);
+            this.tabControl1.Controls.Add(this.tabPageExternalAssembly);
+            this.tabControl1.Location = new System.Drawing.Point(3, 62);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(291, 183);
+            this.tabControl1.TabIndex = 29;
+            // 
+            // tabPageNamespace
+            // 
+            this.tabPageNamespace.Controls.Add(this.panel4);
+            this.tabPageNamespace.Location = new System.Drawing.Point(4, 22);
+            this.tabPageNamespace.Name = "tabPageNamespace";
+            this.tabPageNamespace.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageNamespace.Size = new System.Drawing.Size(283, 157);
+            this.tabPageNamespace.TabIndex = 0;
+            this.tabPageNamespace.Text = "Namespace";
+            this.tabPageNamespace.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.listViewAssemblyList);
+            this.panel4.Controls.Add(this.btnRemoveAssembly);
+            this.panel4.Controls.Add(this.btnAddAssembly);
+            this.panel4.Controls.Add(this.textBoxAssemblySearch);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(277, 151);
+            this.panel4.TabIndex = 0;
+            // 
+            // listViewAssemblyList
+            // 
+            this.listViewAssemblyList.Location = new System.Drawing.Point(0, 30);
+            this.listViewAssemblyList.Name = "listViewAssemblyList";
+            this.listViewAssemblyList.Size = new System.Drawing.Size(277, 118);
+            this.listViewAssemblyList.TabIndex = 25;
+            this.listViewAssemblyList.UseCompatibleStateImageBehavior = false;
+            // 
+            // btnRemoveAssembly
+            // 
+            this.btnRemoveAssembly.Location = new System.Drawing.Point(227, 3);
+            this.btnRemoveAssembly.Name = "btnRemoveAssembly";
+            this.btnRemoveAssembly.Size = new System.Drawing.Size(47, 21);
+            this.btnRemoveAssembly.TabIndex = 24;
+            this.btnRemoveAssembly.Text = "-";
+            this.btnRemoveAssembly.UseVisualStyleBackColor = true;
+            this.btnRemoveAssembly.Click += new System.EventHandler(this.btnRemoveAssembly_Click);
+            // 
+            // btnAddAssembly
+            // 
+            this.btnAddAssembly.Location = new System.Drawing.Point(178, 3);
+            this.btnAddAssembly.Name = "btnAddAssembly";
+            this.btnAddAssembly.Size = new System.Drawing.Size(47, 21);
+            this.btnAddAssembly.TabIndex = 23;
+            this.btnAddAssembly.Text = "+";
+            this.btnAddAssembly.UseVisualStyleBackColor = true;
+            this.btnAddAssembly.Click += new System.EventHandler(this.btnAddAssembly_Click);
+            // 
+            // textBoxAssemblySearch
+            // 
+            this.textBoxAssemblySearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.textBoxAssemblySearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.textBoxAssemblySearch.Location = new System.Drawing.Point(0, 3);
+            this.textBoxAssemblySearch.Name = "textBoxAssemblySearch";
+            this.textBoxAssemblySearch.Size = new System.Drawing.Size(176, 20);
+            this.textBoxAssemblySearch.TabIndex = 22;
+            // 
+            // tabPageExternalAssembly
+            // 
+            this.tabPageExternalAssembly.Controls.Add(this.btnBrowseAssembly);
+            this.tabPageExternalAssembly.Location = new System.Drawing.Point(4, 22);
+            this.tabPageExternalAssembly.Name = "tabPageExternalAssembly";
+            this.tabPageExternalAssembly.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageExternalAssembly.Size = new System.Drawing.Size(283, 157);
+            this.tabPageExternalAssembly.TabIndex = 1;
+            this.tabPageExternalAssembly.Text = "External Assembly";
+            this.tabPageExternalAssembly.UseVisualStyleBackColor = true;
+            // 
+            // btnBrowseAssembly
+            // 
+            this.btnBrowseAssembly.Location = new System.Drawing.Point(6, 6);
+            this.btnBrowseAssembly.Name = "btnBrowseAssembly";
+            this.btnBrowseAssembly.Size = new System.Drawing.Size(271, 21);
+            this.btnBrowseAssembly.TabIndex = 18;
+            this.btnBrowseAssembly.Text = "Browse";
+            this.btnBrowseAssembly.UseVisualStyleBackColor = true;
+            this.btnBrowseAssembly.Click += new System.EventHandler(this.btnBrowseAssembly_Click);
+            // 
+            // richTextBoxArguments
+            // 
+            this.richTextBoxArguments.Location = new System.Drawing.Point(3, 452);
+            this.richTextBoxArguments.Name = "richTextBoxArguments";
+            this.richTextBoxArguments.Size = new System.Drawing.Size(289, 64);
+            this.richTextBoxArguments.TabIndex = 28;
+            this.richTextBoxArguments.Text = "";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(0, 436);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(158, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Arguments (seperate by comma)";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(0, 227);
+            this.label4.Location = new System.Drawing.Point(-2, 254);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 26;
@@ -236,9 +348,9 @@
             // 
             // treeViewCompiledAssembly
             // 
-            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(2, 243);
+            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(0, 270);
             this.treeViewCompiledAssembly.Name = "treeViewCompiledAssembly";
-            this.treeViewCompiledAssembly.Size = new System.Drawing.Size(289, 180);
+            this.treeViewCompiledAssembly.Size = new System.Drawing.Size(289, 150);
             this.treeViewCompiledAssembly.TabIndex = 25;
             // 
             // btnRun
@@ -271,53 +383,6 @@
             this.label3.Size = new System.Drawing.Size(97, 16);
             this.label3.TabIndex = 22;
             this.label3.Text = "Source Type";
-            // 
-            // listViewAssemblyList
-            // 
-            this.listViewAssemblyList.Location = new System.Drawing.Point(3, 89);
-            this.listViewAssemblyList.Name = "listViewAssemblyList";
-            this.listViewAssemblyList.Size = new System.Drawing.Size(288, 128);
-            this.listViewAssemblyList.TabIndex = 21;
-            this.listViewAssemblyList.UseCompatibleStateImageBehavior = false;
-            // 
-            // btnRemoveAssembly
-            // 
-            this.btnRemoveAssembly.Location = new System.Drawing.Point(270, 63);
-            this.btnRemoveAssembly.Name = "btnRemoveAssembly";
-            this.btnRemoveAssembly.Size = new System.Drawing.Size(22, 21);
-            this.btnRemoveAssembly.TabIndex = 20;
-            this.btnRemoveAssembly.Text = "-";
-            this.btnRemoveAssembly.UseVisualStyleBackColor = true;
-            this.btnRemoveAssembly.Click += new System.EventHandler(this.btnRemoveAssembly_Click);
-            // 
-            // btnAddAssembly
-            // 
-            this.btnAddAssembly.Location = new System.Drawing.Point(243, 63);
-            this.btnAddAssembly.Name = "btnAddAssembly";
-            this.btnAddAssembly.Size = new System.Drawing.Size(24, 21);
-            this.btnAddAssembly.TabIndex = 19;
-            this.btnAddAssembly.Text = "+";
-            this.btnAddAssembly.UseVisualStyleBackColor = true;
-            this.btnAddAssembly.Click += new System.EventHandler(this.btnAddAssembly_Click);
-            // 
-            // btnBrowseAssembly
-            // 
-            this.btnBrowseAssembly.Location = new System.Drawing.Point(183, 63);
-            this.btnBrowseAssembly.Name = "btnBrowseAssembly";
-            this.btnBrowseAssembly.Size = new System.Drawing.Size(58, 21);
-            this.btnBrowseAssembly.TabIndex = 18;
-            this.btnBrowseAssembly.Text = "Browse";
-            this.btnBrowseAssembly.UseVisualStyleBackColor = true;
-            this.btnBrowseAssembly.Click += new System.EventHandler(this.btnBrowseAssembly_Click);
-            // 
-            // textBoxAssemblySearch
-            // 
-            this.textBoxAssemblySearch.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.textBoxAssemblySearch.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBoxAssemblySearch.Location = new System.Drawing.Point(3, 63);
-            this.textBoxAssemblySearch.Name = "textBoxAssemblySearch";
-            this.textBoxAssemblySearch.Size = new System.Drawing.Size(176, 20);
-            this.textBoxAssemblySearch.TabIndex = 17;
             // 
             // panel1
             // 
@@ -367,7 +432,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1001, 572);
+            this.tabPage1.Size = new System.Drawing.Size(1001, 591);
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Execute";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -378,7 +443,7 @@
             this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
             this.tabPageAssemblies.Name = "tabPageAssemblies";
             this.tabPageAssemblies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAssemblies.Size = new System.Drawing.Size(1001, 572);
+            this.tabPageAssemblies.Size = new System.Drawing.Size(1001, 591);
             this.tabPageAssemblies.TabIndex = 1;
             this.tabPageAssemblies.Text = "Assemblies";
             this.tabPageAssemblies.UseVisualStyleBackColor = true;
@@ -421,23 +486,6 @@
             this.comboBox1.Size = new System.Drawing.Size(264, 21);
             this.comboBox1.TabIndex = 1;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(0, 436);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(158, 13);
-            this.label5.TabIndex = 27;
-            this.label5.Text = "Arguments (seperate by comma)";
-            // 
-            // richTextBoxArguments
-            // 
-            this.richTextBoxArguments.Location = new System.Drawing.Point(3, 452);
-            this.richTextBoxArguments.Name = "richTextBoxArguments";
-            this.richTextBoxArguments.Size = new System.Drawing.Size(289, 64);
-            this.richTextBoxArguments.TabIndex = 28;
-            this.richTextBoxArguments.Text = "";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -460,6 +508,11 @@
             this.tableLayoutOutput.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPageNamespace.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
+            this.tabPageExternalAssembly.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPageAssemblies.ResumeLayout(false);
@@ -483,11 +536,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.RichTextBox richTextBoxOutput;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListView listViewAssemblyList;
-        private System.Windows.Forms.Button btnRemoveAssembly;
-        private System.Windows.Forms.Button btnAddAssembly;
         private System.Windows.Forms.Button btnBrowseAssembly;
-        private System.Windows.Forms.TextBox textBoxAssemblySearch;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton radioCodeOnly;
         private System.Windows.Forms.RadioButton radioMethodOnly;
@@ -504,6 +553,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox richTextBoxArguments;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPageNamespace;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.ListView listViewAssemblyList;
+        private System.Windows.Forms.Button btnRemoveAssembly;
+        private System.Windows.Forms.Button btnAddAssembly;
+        private System.Windows.Forms.TextBox textBoxAssemblySearch;
+        private System.Windows.Forms.TabPage tabPageExternalAssembly;
     }
 }
 
