@@ -59,7 +59,6 @@
             this.radioCodeOnly = new System.Windows.Forms.RadioButton();
             this.radioMethodOnly = new System.Windows.Forms.RadioButton();
             this.radioWholeClass = new System.Windows.Forms.RadioButton();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPageAssemblies = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -88,7 +87,6 @@
             // tabControlMain
             // 
             this.tabControlMain.Controls.Add(this.tabPageCompiler);
-            this.tabControlMain.Controls.Add(this.tabPage1);
             this.tabControlMain.Controls.Add(this.tabPageAssemblies);
             this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
@@ -427,16 +425,6 @@
             this.radioWholeClass.Text = "Whole Class";
             this.radioWholeClass.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1001, 591);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Execute";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // tabPageAssemblies
             // 
             this.tabPageAssemblies.Controls.Add(this.tableLayoutPanel1);
@@ -548,7 +536,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TreeView ExternalyLoadedAssembly;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TreeView treeViewCompiledAssembly;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox richTextBoxArguments;
