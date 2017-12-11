@@ -59,6 +59,8 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.ExternalyLoadedAssembly = new System.Windows.Forms.TreeView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.richTextBoxArguments = new System.Windows.Forms.RichTextBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -84,7 +86,7 @@
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(1009, 598);
+            this.tabControlMain.Size = new System.Drawing.Size(1009, 617);
             this.tabControlMain.TabIndex = 0;
             // 
             // tabPageCompiler
@@ -93,7 +95,7 @@
             this.tabPageCompiler.Location = new System.Drawing.Point(4, 22);
             this.tabPageCompiler.Name = "tabPageCompiler";
             this.tabPageCompiler.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCompiler.Size = new System.Drawing.Size(1001, 572);
+            this.tabPageCompiler.Size = new System.Drawing.Size(1001, 591);
             this.tabPageCompiler.TabIndex = 0;
             this.tabPageCompiler.Text = "Compiler";
             this.tabPageCompiler.UseVisualStyleBackColor = true;
@@ -111,7 +113,7 @@
             this.tableLayoutCompiler.Name = "tableLayoutCompiler";
             this.tableLayoutCompiler.RowCount = 1;
             this.tableLayoutCompiler.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutCompiler.Size = new System.Drawing.Size(995, 566);
+            this.tableLayoutCompiler.Size = new System.Drawing.Size(995, 585);
             this.tableLayoutCompiler.TabIndex = 1;
             // 
             // splitContainer
@@ -128,8 +130,8 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.tableLayoutOutput);
-            this.splitContainer.Size = new System.Drawing.Size(689, 560);
-            this.splitContainer.SplitterDistance = 393;
+            this.splitContainer.Size = new System.Drawing.Size(689, 579);
+            this.splitContainer.SplitterDistance = 406;
             this.splitContainer.TabIndex = 0;
             // 
             // tableLayoutSource
@@ -144,7 +146,7 @@
             this.tableLayoutSource.RowCount = 2;
             this.tableLayoutSource.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutSource.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutSource.Size = new System.Drawing.Size(689, 393);
+            this.tableLayoutSource.Size = new System.Drawing.Size(689, 406);
             this.tableLayoutSource.TabIndex = 0;
             // 
             // label1
@@ -163,7 +165,7 @@
             this.richTextBoxSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxSource.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxSource.Name = "richTextBoxSource";
-            this.richTextBoxSource.Size = new System.Drawing.Size(683, 367);
+            this.richTextBoxSource.Size = new System.Drawing.Size(683, 380);
             this.richTextBoxSource.TabIndex = 1;
             this.richTextBoxSource.Text = "";
             // 
@@ -179,7 +181,7 @@
             this.tableLayoutOutput.RowCount = 2;
             this.tableLayoutOutput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutOutput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutOutput.Size = new System.Drawing.Size(689, 163);
+            this.tableLayoutOutput.Size = new System.Drawing.Size(689, 169);
             this.tableLayoutOutput.TabIndex = 0;
             // 
             // label2
@@ -198,12 +200,14 @@
             this.richTextBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxOutput.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxOutput.Name = "richTextBoxOutput";
-            this.richTextBoxOutput.Size = new System.Drawing.Size(683, 137);
+            this.richTextBoxOutput.Size = new System.Drawing.Size(683, 143);
             this.richTextBoxOutput.TabIndex = 1;
             this.richTextBoxOutput.Text = "";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.richTextBoxArguments);
+            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.treeViewCompiledAssembly);
             this.panel2.Controls.Add(this.btnRun);
@@ -218,13 +222,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(294, 560);
+            this.panel2.Size = new System.Drawing.Size(294, 579);
             this.panel2.TabIndex = 1;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(0, 264);
+            this.label4.Location = new System.Drawing.Point(0, 227);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 26;
@@ -232,14 +236,14 @@
             // 
             // treeViewCompiledAssembly
             // 
-            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(2, 280);
+            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(2, 243);
             this.treeViewCompiledAssembly.Name = "treeViewCompiledAssembly";
             this.treeViewCompiledAssembly.Size = new System.Drawing.Size(289, 180);
             this.treeViewCompiledAssembly.TabIndex = 25;
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(149, 511);
+            this.btnRun.Location = new System.Drawing.Point(149, 532);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(142, 44);
             this.btnRun.TabIndex = 24;
@@ -249,7 +253,7 @@
             // 
             // btnCompile
             // 
-            this.btnCompile.Location = new System.Drawing.Point(3, 511);
+            this.btnCompile.Location = new System.Drawing.Point(3, 532);
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new System.Drawing.Size(142, 44);
             this.btnCompile.TabIndex = 23;
@@ -272,7 +276,7 @@
             // 
             this.listViewAssemblyList.Location = new System.Drawing.Point(3, 89);
             this.listViewAssemblyList.Name = "listViewAssemblyList";
-            this.listViewAssemblyList.Size = new System.Drawing.Size(288, 163);
+            this.listViewAssemblyList.Size = new System.Drawing.Size(288, 128);
             this.listViewAssemblyList.TabIndex = 21;
             this.listViewAssemblyList.UseCompatibleStateImageBehavior = false;
             // 
@@ -417,13 +421,31 @@
             this.comboBox1.Size = new System.Drawing.Size(264, 21);
             this.comboBox1.TabIndex = 1;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(0, 436);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(158, 13);
+            this.label5.TabIndex = 27;
+            this.label5.Text = "Arguments (seperate by comma)";
+            // 
+            // richTextBoxArguments
+            // 
+            this.richTextBoxArguments.Location = new System.Drawing.Point(3, 452);
+            this.richTextBoxArguments.Name = "richTextBoxArguments";
+            this.richTextBoxArguments.Size = new System.Drawing.Size(289, 64);
+            this.richTextBoxArguments.TabIndex = 28;
+            this.richTextBoxArguments.Text = "";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 598);
+            this.ClientSize = new System.Drawing.Size(1009, 617);
             this.Controls.Add(this.tabControlMain);
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Dynamic Code Compiler";
             this.tabControlMain.ResumeLayout(false);
             this.tabPageCompiler.ResumeLayout(false);
@@ -480,6 +502,8 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TreeView treeViewCompiledAssembly;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.RichTextBox richTextBoxArguments;
+        private System.Windows.Forms.Label label5;
     }
 }
 

@@ -70,7 +70,7 @@ namespace DynamicCodeCompiler
 
                 for (j = 0; j < parameters.Length; j++)
                 {
-                    constructorModel.ArgumentTypes[j] = parameters[j].ParameterType.Name + " " + parameters[j].Name;
+                    constructorModel.ArgumentTypes[j] = parameters[j].ParameterType.Namespace.ToString() + "." + parameters[j].ParameterType.Name + " " + parameters[j].Name;
                 }
 
                 typeModel.Constructors.Add(constructorModel);
@@ -94,7 +94,7 @@ namespace DynamicCodeCompiler
 
                     for (j = 0; j < parameters.Length; j++)
                     {
-                        methodModel.ArgumentTypes[j] = parameters[j].ParameterType.Name + " " + parameters[j].Name;
+                        methodModel.ArgumentTypes[j] = parameters[j].ParameterType.Namespace.ToString() + "." + parameters[j].ParameterType.Name + " " + parameters[j].Name;
                     }
 
                     typeModel.Methods.Add(methodModel);
