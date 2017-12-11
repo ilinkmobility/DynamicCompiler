@@ -65,6 +65,8 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.ExternalyLoadedAssembly = new System.Windows.Forms.TreeView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.ExternalAssemblyList = new System.Windows.Forms.ListView();
+            this.DeleteExternalAssembly = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -301,6 +303,8 @@
             // 
             // tabPageExternalAssembly
             // 
+            this.tabPageExternalAssembly.Controls.Add(this.DeleteExternalAssembly);
+            this.tabPageExternalAssembly.Controls.Add(this.ExternalAssemblyList);
             this.tabPageExternalAssembly.Controls.Add(this.btnBrowseAssembly);
             this.tabPageExternalAssembly.Location = new System.Drawing.Point(4, 22);
             this.tabPageExternalAssembly.Name = "tabPageExternalAssembly";
@@ -314,7 +318,7 @@
             // 
             this.btnBrowseAssembly.Location = new System.Drawing.Point(6, 6);
             this.btnBrowseAssembly.Name = "btnBrowseAssembly";
-            this.btnBrowseAssembly.Size = new System.Drawing.Size(271, 21);
+            this.btnBrowseAssembly.Size = new System.Drawing.Size(233, 21);
             this.btnBrowseAssembly.TabIndex = 18;
             this.btnBrowseAssembly.Text = "Browse";
             this.btnBrowseAssembly.UseVisualStyleBackColor = true;
@@ -486,6 +490,24 @@
             this.comboBox1.Size = new System.Drawing.Size(264, 21);
             this.comboBox1.TabIndex = 1;
             // 
+            // ExternalAssemblyList
+            // 
+            this.ExternalAssemblyList.Location = new System.Drawing.Point(6, 34);
+            this.ExternalAssemblyList.Name = "ExternalAssemblyList";
+            this.ExternalAssemblyList.Size = new System.Drawing.Size(271, 120);
+            this.ExternalAssemblyList.TabIndex = 19;
+            this.ExternalAssemblyList.UseCompatibleStateImageBehavior = false;
+            // 
+            // DeleteExternalAssembly
+            // 
+            this.DeleteExternalAssembly.Location = new System.Drawing.Point(246, 6);
+            this.DeleteExternalAssembly.Name = "DeleteExternalAssembly";
+            this.DeleteExternalAssembly.Size = new System.Drawing.Size(31, 21);
+            this.DeleteExternalAssembly.TabIndex = 20;
+            this.DeleteExternalAssembly.Text = "-";
+            this.DeleteExternalAssembly.UseVisualStyleBackColor = true;
+            this.DeleteExternalAssembly.Click += new System.EventHandler(this.DeleteExternalAssembly_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -561,6 +583,8 @@
         private System.Windows.Forms.Button btnAddAssembly;
         private System.Windows.Forms.TextBox textBoxAssemblySearch;
         private System.Windows.Forms.TabPage tabPageExternalAssembly;
+        private System.Windows.Forms.ListView ExternalAssemblyList;
+        private System.Windows.Forms.Button DeleteExternalAssembly;
     }
 }
 
