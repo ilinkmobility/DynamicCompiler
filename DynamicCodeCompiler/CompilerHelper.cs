@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows.Storage;
@@ -158,14 +159,46 @@ namespace DynamicCodeCompiler
             return 0;
         }
 
-        public void InvokeConstructor()
+        public string GetMethodName(string method)
+        {
+            Match matches = new Regex(@": (.+)\(", RegexOptions.IgnoreCase).Match(method);
+            return matches.Groups[1].ToString();
+        }
+
+        public List<KeyValuePair<string, string>> GetParameterList(string method)
+        {
+            List<KeyValuePair<string, string>> parameterList = new List<KeyValuePair<string, string>>();
+
+            if (!method.Contains("(  )"))
+            {
+                Match matches = new Regex(@"\(\s(.+)\s\)", RegexOptions.IgnoreCase).Match(method);
+                if (matches.Groups.Count > 0)
+                {
+                    var group = matches.Groups[1];
+                    var parameters = group.ToString().Split(',');
+
+                    foreach (var parameter in parameters)
+                    {
+                        var items = parameter.Trim().Split(' ');
+                        parameterList.Add(new KeyValuePair<string, string>(items[0], items[1]));
+                    }
+                }
+            }
+
+            return parameterList;
+        }
+
+        public void InvokeConstructor(Type[] paremeterTypes, object[] parametersValues)
         {
             try
             {
                 Type[] types = GetCompiledAssembly();
                 Type type = types[0];
-                ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
-                ctor.Invoke(null);
+                ConstructorInfo ctor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
+                    null,
+                    paremeterTypes,
+                    null);
+                ctor.Invoke(parametersValues);
             }
             catch (Exception ex)
             {
@@ -173,7 +206,7 @@ namespace DynamicCodeCompiler
             }
         }
 
-        public void InvokeMethod(string method)
+        public void InvokeMethod(string method, Type[] paremeterTypes, object[] parametersValues)
         {
             try
             {
@@ -182,11 +215,11 @@ namespace DynamicCodeCompiler
                 MethodInfo methodInfo = type.GetMethod(method, 
                     BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
                     null,
-                    new Type[] { },
+                    paremeterTypes,
                     null);
 
                 object classInstance = Activator.CreateInstance(type, null);
-                methodInfo.Invoke(classInstance, null);
+                methodInfo.Invoke(classInstance, parametersValues);
             }
             catch (Exception ex)
             {
