@@ -9,6 +9,7 @@ namespace DynamicCodeCompiler
 {
     public partial class MainForm : Form
     {
+        List<string> Namespace = new List<string>();
         public bool Duplicate { get; set; } = false;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
@@ -25,20 +26,8 @@ namespace DynamicCodeCompiler
 
             radioWholeClass.Checked = true;
 
-            // Create the list to use as the custom source for prediction. 
-            source.AddRange(new string[]
-                            {
-                        "xamarin.dll",
-                        "winforms.dll",
-                        "WPF.dll",
-                        "WCF.dll",
-                        "Angular.dll",
-                        "CSharp.dll",
-                        "JQuery.dll",
-                        "Javascript.dll",
-                        "ASP.NET.dll"                 
-                            });
-            textBoxAssemblySearch.AutoCompleteCustomSource = source;
+            source = Constants.Source;
+            textBoxAssemblySearch.AutoCompleteCustomSource = Constants.Source;
 
             //creating listview with columns.
             listViewAssemblyList.View = View.Details;
@@ -165,8 +154,9 @@ namespace DynamicCodeCompiler
                             {
                                 if (listViewAssemblyList.Items[i].Text == ITEM)
                                 {
+                                    RemoveNamespace(listViewAssemblyList.Items[i].Text);
                                     listViewAssemblyList.Items[i].Remove();
-                                    MessageBox.Show("Item has been Deleted.");
+                                    //MessageBox.Show("Item has been Deleted.");
                                 }
                             }
                             //ADDING TO PREDICTION.
@@ -211,14 +201,24 @@ namespace DynamicCodeCompiler
             if (Duplicate == false)
             {
                 listViewAssemblyList.Items.Add(inputitem);
-                MessageBox.Show("Item has been inserted.");
+                //MessageBox.Show("Item has been inserted.");
+                AddNamespace(inputitem);
             }
 
             Duplicate = false;
         }
 
-        const string MethodTemplate = "using System;namespace DynamicNamespace{public class DynamicClass{ METHODSOURCE }}";
-        const string CodeTemplate = "using System;namespace DynamicNamespace{public class DynamicClass{public void DynamicMethod(){ CODESOURCE }}}";
+        public void AddNamespace(string item)
+        {
+           Namespace.Add("using " + item + ";");          
+        }
+
+        public void RemoveNamespace(string item)
+        {
+            Namespace.Remove("using " + item + ";");
+        }
+
+
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
@@ -235,13 +235,17 @@ namespace DynamicCodeCompiler
                 }
                 else if (radioMethodOnly.Checked)
                 {
-                    var Methodfinal = MethodTemplate.Replace("METHODSOURCE", richTextBoxSource.Text);
+                    var methodnames = string.Join(" ", Namespace.ToArray());
+                    var methodaddnamespace = methodnames + Constants.MethodTemplate;
+                    var Methodfinal = methodaddnamespace.Replace("METHODSOURCE", richTextBoxSource.Text);
                     string result = CompilerHelper.Instance.Compile(Methodfinal);
                     richTextBoxOutput.Text = result;
                 }
                 else
                 {
-                    var Codefinal = CodeTemplate.Replace("CODESOURCE", richTextBoxSource.Text);
+                    var codenames = string.Join(" ", Namespace.ToArray());
+                    var codeaddnamespace = codenames + Constants.CodeTemplate;
+                    var Codefinal = codeaddnamespace.Replace("CODESOURCE", richTextBoxSource.Text);
                     string result = CompilerHelper.Instance.Compile(Codefinal);
                     richTextBoxOutput.Text = result;
                 }
