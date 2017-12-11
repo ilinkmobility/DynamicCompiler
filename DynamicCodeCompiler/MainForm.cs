@@ -37,6 +37,14 @@ namespace DynamicCodeCompiler
             listViewAssemblyList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             listViewAssemblyList.Columns.Add("",284);
 
+            //creating ExternalAssembly listview with columns.
+            ExternalAssemblyList.View = View.Details;
+            ExternalAssemblyList.GridLines = true;
+            ExternalAssemblyList.FullRowSelect = true;
+            //Add column headers.
+            ExternalAssemblyList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            ExternalAssemblyList.Columns.Add("", 284);
+
             TreeView();
         }
 
@@ -101,13 +109,16 @@ namespace DynamicCodeCompiler
             {
                 string file = Path.GetFileName(fdlg.FileName);
 
-                Session.ExternalAssembly.Add(file, fdlg.FileName);
+                //ADDING TO EXTERNAL ASSEMBLY LIST.
+                AddToExternalAssemblyList(file);
+                if(!Duplicate)
+                {          
+                    Session.ExternalAssembly.Add(file, fdlg.FileName);
 
-                Type[] allTypes = CompilerHelper.Instance.GetAllTypesFromAssembly(fdlg.FileName);
-                ExternalyLoadedAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(allTypes)));
-
-                //ADDING TO LIST.
-                AddToList(file);
+                    Type[] allTypes = CompilerHelper.Instance.GetAllTypesFromAssembly(fdlg.FileName);
+                    ExternalyLoadedAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(allTypes)));
+                }
+                Duplicate = false;
             }
         }
 
@@ -183,6 +194,25 @@ namespace DynamicCodeCompiler
             else
             {
                 return false;
+            }
+        }
+
+        public void AddToExternalAssemblyList(string inputitem)
+        {
+            //Adding to ExternalAssemblyList.
+            for (int i = ExternalAssemblyList.Items.Count - 1; i >= 0; i--)
+            {
+                if (ExternalAssemblyList.Items[i].Text == inputitem)
+                {
+                    MessageBox.Show("Item already exists.Cannot be inserted.");
+                    Duplicate = true;
+                }
+            }
+
+            if (Duplicate == false)
+            {
+                ExternalAssemblyList.Items.Add(inputitem);
+                //MessageBox.Show("Item has been inserted.");
             }
         }
 
@@ -335,6 +365,40 @@ namespace DynamicCodeCompiler
         public void ChangeSourceEditorBackground(string colorCode)
         {
             richTextBoxSource.BackColor = ColorTranslator.FromHtml(colorCode);
+        }
+
+        private void DeleteExternalAssembly_Click(object sender, EventArgs e)
+        {
+            string ITEM = null;
+
+            if (ExternalAssemblyList.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Please select an item to delete.");
+            }
+            else
+            {
+                ITEM = ExternalAssemblyList.SelectedItems[0].SubItems[0].Text;
+
+                if (Dialog())
+                {
+                    if (ExternalAssemblyList.SelectedItems.Count > 0)
+                    {
+                        if (ExternalAssemblyList.FocusedItem.Text != null)
+                        {
+                            //DELETING FROM THE OBJECT & LIST.
+                            for (int i = ExternalAssemblyList.Items.Count - 1; i >= 0; i--)
+                            {
+                                if (ExternalAssemblyList.Items[i].Text == ITEM)
+                                {
+                                    Session.ExternalAssembly.Remove(ExternalAssemblyList.Items[i].Text);
+                                    ExternalAssemblyList.Items[i].Remove();
+                                    //MessageBox.Show("Item has been Deleted.");
+                                }
+                            }                           
+                        }
+                    }
+                }
+            }
         }
     }
 }
