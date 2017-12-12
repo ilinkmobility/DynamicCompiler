@@ -47,6 +47,8 @@
             this.btnAddAssembly = new System.Windows.Forms.Button();
             this.textBoxAssemblySearch = new System.Windows.Forms.TextBox();
             this.tabPageExternalAssembly = new System.Windows.Forms.TabPage();
+            this.DeleteExternalAssembly = new System.Windows.Forms.Button();
+            this.ExternalAssemblyList = new System.Windows.Forms.ListView();
             this.btnBrowseAssembly = new System.Windows.Forms.Button();
             this.richTextBoxArguments = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -64,8 +66,9 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.ExternalyLoadedAssembly = new System.Windows.Forms.TreeView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.ExternalAssemblyList = new System.Windows.Forms.ListView();
-            this.DeleteExternalAssembly = new System.Windows.Forms.Button();
+            this.tabPageDefaultAssemblies = new System.Windows.Forms.TabPage();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.listViewDefaultAssemblies = new System.Windows.Forms.ListView();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -84,6 +87,8 @@
             this.tabPageAssemblies.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.tabPageDefaultAssemblies.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -233,6 +238,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPageNamespace);
             this.tabControl1.Controls.Add(this.tabPageExternalAssembly);
+            this.tabControl1.Controls.Add(this.tabPageDefaultAssemblies);
             this.tabControl1.Location = new System.Drawing.Point(3, 62);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -311,6 +317,24 @@
             this.tabPageExternalAssembly.TabIndex = 1;
             this.tabPageExternalAssembly.Text = "External Assembly";
             this.tabPageExternalAssembly.UseVisualStyleBackColor = true;
+            // 
+            // DeleteExternalAssembly
+            // 
+            this.DeleteExternalAssembly.Location = new System.Drawing.Point(246, 6);
+            this.DeleteExternalAssembly.Name = "DeleteExternalAssembly";
+            this.DeleteExternalAssembly.Size = new System.Drawing.Size(31, 21);
+            this.DeleteExternalAssembly.TabIndex = 20;
+            this.DeleteExternalAssembly.Text = "-";
+            this.DeleteExternalAssembly.UseVisualStyleBackColor = true;
+            this.DeleteExternalAssembly.Click += new System.EventHandler(this.DeleteExternalAssembly_Click);
+            // 
+            // ExternalAssemblyList
+            // 
+            this.ExternalAssemblyList.Location = new System.Drawing.Point(6, 34);
+            this.ExternalAssemblyList.Name = "ExternalAssemblyList";
+            this.ExternalAssemblyList.Size = new System.Drawing.Size(271, 120);
+            this.ExternalAssemblyList.TabIndex = 19;
+            this.ExternalAssemblyList.UseCompatibleStateImageBehavior = false;
             // 
             // btnBrowseAssembly
             // 
@@ -478,23 +502,33 @@
             this.comboBox1.Size = new System.Drawing.Size(264, 21);
             this.comboBox1.TabIndex = 1;
             // 
-            // ExternalAssemblyList
+            // tabPageDefaultAssemblies
             // 
-            this.ExternalAssemblyList.Location = new System.Drawing.Point(6, 34);
-            this.ExternalAssemblyList.Name = "ExternalAssemblyList";
-            this.ExternalAssemblyList.Size = new System.Drawing.Size(271, 120);
-            this.ExternalAssemblyList.TabIndex = 19;
-            this.ExternalAssemblyList.UseCompatibleStateImageBehavior = false;
+            this.tabPageDefaultAssemblies.Controls.Add(this.panel5);
+            this.tabPageDefaultAssemblies.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDefaultAssemblies.Name = "tabPageDefaultAssemblies";
+            this.tabPageDefaultAssemblies.Size = new System.Drawing.Size(283, 157);
+            this.tabPageDefaultAssemblies.TabIndex = 2;
+            this.tabPageDefaultAssemblies.Text = "Default Assemblies";
+            this.tabPageDefaultAssemblies.UseVisualStyleBackColor = true;
             // 
-            // DeleteExternalAssembly
+            // panel5
             // 
-            this.DeleteExternalAssembly.Location = new System.Drawing.Point(246, 6);
-            this.DeleteExternalAssembly.Name = "DeleteExternalAssembly";
-            this.DeleteExternalAssembly.Size = new System.Drawing.Size(31, 21);
-            this.DeleteExternalAssembly.TabIndex = 20;
-            this.DeleteExternalAssembly.Text = "-";
-            this.DeleteExternalAssembly.UseVisualStyleBackColor = true;
-            this.DeleteExternalAssembly.Click += new System.EventHandler(this.DeleteExternalAssembly_Click);
+            this.panel5.Controls.Add(this.listViewDefaultAssemblies);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(283, 157);
+            this.panel5.TabIndex = 0;
+            // 
+            // listViewDefaultAssemblies
+            // 
+            this.listViewDefaultAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewDefaultAssemblies.Location = new System.Drawing.Point(0, 0);
+            this.listViewDefaultAssemblies.Name = "listViewDefaultAssemblies";
+            this.listViewDefaultAssemblies.Size = new System.Drawing.Size(283, 157);
+            this.listViewDefaultAssemblies.TabIndex = 0;
+            this.listViewDefaultAssemblies.UseCompatibleStateImageBehavior = false;
             // 
             // MainForm
             // 
@@ -528,6 +562,8 @@
             this.tabPageAssemblies.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.tabPageDefaultAssemblies.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -572,6 +608,9 @@
         private System.Windows.Forms.TabPage tabPageExternalAssembly;
         private System.Windows.Forms.ListView ExternalAssemblyList;
         private System.Windows.Forms.Button DeleteExternalAssembly;
+        private System.Windows.Forms.TabPage tabPageDefaultAssemblies;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.ListView listViewDefaultAssemblies;
     }
 }
 

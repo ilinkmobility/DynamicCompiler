@@ -27,21 +27,11 @@ namespace DynamicCodeCompiler
             source = Constants.Source;
             textBoxAssemblySearch.AutoCompleteCustomSource = Constants.Source;
 
-            //creating listview with columns.
-            listViewAssemblyList.View = View.Details;
-            listViewAssemblyList.GridLines = true;
-            listViewAssemblyList.FullRowSelect = true;
-            //Add column headers.
-            listViewAssemblyList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewAssemblyList.Columns.Add("",284);
+            listViewDefaultAssemblies.LoadList(CompilerHelper.Instance.GetLoadedAssembliesFileNameFromAppDomain());
 
-            //creating ExternalAssembly listview with columns.
-            ExternalAssemblyList.View = View.Details;
-            ExternalAssemblyList.GridLines = true;
-            ExternalAssemblyList.FullRowSelect = true;
-            //Add column headers.
-            ExternalAssemblyList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            ExternalAssemblyList.Columns.Add("", 284);
+            UpdateListViewDesign(listViewDefaultAssemblies);
+            UpdateListViewDesign(listViewAssemblyList);
+            UpdateListViewDesign(ExternalAssemblyList);
         }        
 
         private void btnBrowseAssembly_Click(object sender, EventArgs e)
@@ -125,7 +115,17 @@ namespace DynamicCodeCompiler
                     }
                 }
             }
-            
+        }
+
+        private void UpdateListViewDesign(ListView listView)
+        {
+            //creating ExternalAssembly listview with columns.
+            listView.View = View.Details;
+            listView.GridLines = true;
+            listView.FullRowSelect = true;
+            //Add column headers.
+            listView.HeaderStyle = ColumnHeaderStyle.None;
+            listView.Columns.Add("", 284);
         }
 
         public bool Dialog()

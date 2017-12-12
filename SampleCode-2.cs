@@ -181,34 +181,24 @@ namespace UWPAPITest
 }
 
 
-using System;
-
-using System.Windows.Forms;
-
-namespace HelloApp
+namespace User
 {
-	public class HelloApp
+	public class UserInfo
 	{
-		public string Name { get; set; }
-		
-		public HelloApp()
-		{
-			MessageBox.Show("Hello World - Constructor!", "Info", MessageBoxButtons.OK);
-		}
-		
-		public HelloApp(int index)
-		{
-		}
-		
-		public void SayHello()
-		{
-			MessageBox.Show("Hello World!", "Info", MessageBoxButtons.OK);
-		}
-		
-		public void SayHello(string name)
-		{
-			Console.WriteLine("Hello, " + name);
-		}
+		public static string Name = "iLink Systems";
 	}
 }
+
+using User;
+using System.Windows.Forms;
+
+public class Test
+{
+	public Test()
+	{
+		MessageBox.Show("Name : " + UserInfo.Name);
+	}
+}
+
+
 
