@@ -70,10 +70,10 @@ Method Only
 
 public void SayHello()
 {
-	Console.WriteLine("Hello World!");
+	MessageBox.Show("From Method Only");
 }
 
 Code Only
 -----------
 
-Console.WriteLine("Hello World!");
+MessageBox.Show("From Code Only");

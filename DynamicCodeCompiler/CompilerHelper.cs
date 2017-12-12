@@ -81,6 +81,9 @@ namespace DynamicCodeCompiler
                 }
             }
 
+            //Externally adding Windows.winmd UWP runtime component reference UWP namespaces
+            //parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\Windows.winmd");
+
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, source);
 
             string result = string.Empty;
@@ -138,7 +141,7 @@ namespace DynamicCodeCompiler
             return assemblies;
         }
 
-        public List<string> GetLoadedAssembliesPathFromAppDomain()
+        public List<string> GetLoadedAssembliesFileNameFromAppDomain()
         {
             var assemblies = new List<string>();
 
