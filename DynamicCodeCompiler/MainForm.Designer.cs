@@ -50,6 +50,9 @@
             this.DeleteExternalAssembly = new System.Windows.Forms.Button();
             this.ExternalAssemblyList = new System.Windows.Forms.ListView();
             this.btnBrowseAssembly = new System.Windows.Forms.Button();
+            this.tabPageDefaultAssemblies = new System.Windows.Forms.TabPage();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.listViewDefaultAssemblies = new System.Windows.Forms.ListView();
             this.richTextBoxArguments = new System.Windows.Forms.RichTextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -66,9 +69,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.ExternalyLoadedAssembly = new System.Windows.Forms.TreeView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.tabPageDefaultAssemblies = new System.Windows.Forms.TabPage();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.listViewDefaultAssemblies = new System.Windows.Forms.ListView();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -83,12 +83,12 @@
             this.tabPageNamespace.SuspendLayout();
             this.panel4.SuspendLayout();
             this.tabPageExternalAssembly.SuspendLayout();
+            this.tabPageDefaultAssemblies.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabPageAssemblies.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.tabPageDefaultAssemblies.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -346,6 +346,34 @@
             this.btnBrowseAssembly.UseVisualStyleBackColor = true;
             this.btnBrowseAssembly.Click += new System.EventHandler(this.btnBrowseAssembly_Click);
             // 
+            // tabPageDefaultAssemblies
+            // 
+            this.tabPageDefaultAssemblies.Controls.Add(this.panel5);
+            this.tabPageDefaultAssemblies.Location = new System.Drawing.Point(4, 22);
+            this.tabPageDefaultAssemblies.Name = "tabPageDefaultAssemblies";
+            this.tabPageDefaultAssemblies.Size = new System.Drawing.Size(283, 157);
+            this.tabPageDefaultAssemblies.TabIndex = 2;
+            this.tabPageDefaultAssemblies.Text = "Default Assemblies";
+            this.tabPageDefaultAssemblies.UseVisualStyleBackColor = true;
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.listViewDefaultAssemblies);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(283, 157);
+            this.panel5.TabIndex = 0;
+            // 
+            // listViewDefaultAssemblies
+            // 
+            this.listViewDefaultAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewDefaultAssemblies.Location = new System.Drawing.Point(0, 0);
+            this.listViewDefaultAssemblies.Name = "listViewDefaultAssemblies";
+            this.listViewDefaultAssemblies.Size = new System.Drawing.Size(283, 157);
+            this.listViewDefaultAssemblies.TabIndex = 0;
+            this.listViewDefaultAssemblies.UseCompatibleStateImageBehavior = false;
+            // 
             // richTextBoxArguments
             // 
             this.richTextBoxArguments.Location = new System.Drawing.Point(3, 452);
@@ -466,69 +494,46 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.01095F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.98905F));
             this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.comboBox1, 0, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(8, 6);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(913, 404);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(995, 585);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel3
             // 
             this.panel3.Controls.Add(this.ExternalyLoadedAssembly);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 28);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(267, 369);
+            this.panel3.Size = new System.Drawing.Size(989, 554);
             this.panel3.TabIndex = 0;
             // 
             // ExternalyLoadedAssembly
             // 
-            this.ExternalyLoadedAssembly.Location = new System.Drawing.Point(3, 7);
+            this.ExternalyLoadedAssembly.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ExternalyLoadedAssembly.Location = new System.Drawing.Point(0, 0);
             this.ExternalyLoadedAssembly.Name = "ExternalyLoadedAssembly";
-            this.ExternalyLoadedAssembly.Size = new System.Drawing.Size(261, 351);
+            this.ExternalyLoadedAssembly.Size = new System.Drawing.Size(989, 554);
             this.ExternalyLoadedAssembly.TabIndex = 0;
             // 
             // comboBox1
             // 
+            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(3, 3);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(264, 21);
+            this.comboBox1.Size = new System.Drawing.Size(989, 21);
             this.comboBox1.TabIndex = 1;
-            // 
-            // tabPageDefaultAssemblies
-            // 
-            this.tabPageDefaultAssemblies.Controls.Add(this.panel5);
-            this.tabPageDefaultAssemblies.Location = new System.Drawing.Point(4, 22);
-            this.tabPageDefaultAssemblies.Name = "tabPageDefaultAssemblies";
-            this.tabPageDefaultAssemblies.Size = new System.Drawing.Size(283, 157);
-            this.tabPageDefaultAssemblies.TabIndex = 2;
-            this.tabPageDefaultAssemblies.Text = "Default Assemblies";
-            this.tabPageDefaultAssemblies.UseVisualStyleBackColor = true;
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.listViewDefaultAssemblies);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(0, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(283, 157);
-            this.panel5.TabIndex = 0;
-            // 
-            // listViewDefaultAssemblies
-            // 
-            this.listViewDefaultAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewDefaultAssemblies.Location = new System.Drawing.Point(0, 0);
-            this.listViewDefaultAssemblies.Name = "listViewDefaultAssemblies";
-            this.listViewDefaultAssemblies.Size = new System.Drawing.Size(283, 157);
-            this.listViewDefaultAssemblies.TabIndex = 0;
-            this.listViewDefaultAssemblies.UseCompatibleStateImageBehavior = false;
+            this.comboBox1.Text = "Select an item to load assemblies";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -557,13 +562,13 @@
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.tabPageExternalAssembly.ResumeLayout(false);
+            this.tabPageDefaultAssemblies.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tabPageAssemblies.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            this.tabPageDefaultAssemblies.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
