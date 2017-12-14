@@ -26,7 +26,7 @@ namespace DynamicCodeCompiler
         public int Count { get; set; }
 
         private CompilerHelper()
-        {
+        {             
             helpers = new Helpers();
             codeProvider = CodeDomProvider.CreateProvider("CSharp");
         }
@@ -137,9 +137,26 @@ namespace DynamicCodeCompiler
             {
                 assemblies.Add(assembly.CodeBase.Replace(@"file:///", ""));
             }
-
-            return assemblies;
+            //var exefilepaths = GetLoadedAssembliesWithExtension(assemblies);
+            //LoadToDictionaryAndComboBox(exefilepaths);
+            return assemblies;            
         }
+
+        //public void LoadToDictionaryAndComboBox(List<string> paths)
+        //{
+        //    for (int i=0;i<paths.Count;i++)
+        //    {
+        //        Session.ExternalAssembly.Add(Path.GetFileName(paths[i]), paths[i]);
+        //        //comboBox1.Items.Add(Path.GetFileName(paths[i]));
+        //    }
+        //}
+
+
+        //public List<string> GetLoadedAssembliesWithExtension(List<string> Assemblies)
+        //{
+        //    var exeFilePaths = Assemblies.Where(s => s.EndsWith(".exe")).ToList();            
+        //    return exeFilePaths;
+        //}
 
         public List<string> GetLoadedAssembliesFileNameFromAppDomain()
         {

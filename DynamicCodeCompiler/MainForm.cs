@@ -9,6 +9,7 @@ namespace DynamicCodeCompiler
 {
     public partial class MainForm : Form
     {
+        List<string> ExternalLoadedAssemblies = new List<string>();
         List<string> Namespace = new List<string>();
         public bool Duplicate { get; set; } = false;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
@@ -28,11 +29,30 @@ namespace DynamicCodeCompiler
             textBoxAssemblySearch.AutoCompleteCustomSource = Constants.Source;
 
             listViewDefaultAssemblies.LoadList(CompilerHelper.Instance.GetLoadedAssembliesFileNameFromAppDomain());
+            ExternalLoadedAssemblies = CompilerHelper.Instance.GetLoadedAssembliesFromAppDomain();
+            GetLoadedAssembliesWithExtension(ExternalLoadedAssemblies);
 
             UpdateListViewDesign(listViewDefaultAssemblies);
             UpdateListViewDesign(listViewAssemblyList);
             UpdateListViewDesign(ExternalAssemblyList);
-        }        
+        }
+
+
+
+        public void LoadToDictionaryAndComboBox(List<string> paths)
+        {
+            for (int i = 0; i < paths.Count; i++)
+            {
+                Session.ExternalAssembly.Add(Path.GetFileName(paths[i]), paths[i]);
+                comboBox1.Items.Add(Path.GetFileName(paths[i]));
+            }
+        }
+
+        public void GetLoadedAssembliesWithExtension(List<string> Assemblies)
+        {
+            var exeFilePaths = Assemblies.Where(s => s.EndsWith(".exe")).ToList();
+            LoadToDictionaryAndComboBox(exeFilePaths);
+        }
 
         private void btnBrowseAssembly_Click(object sender, EventArgs e)
         {
@@ -49,16 +69,45 @@ namespace DynamicCodeCompiler
 
                 //ADDING TO EXTERNAL ASSEMBLY LIST.
                 AddToExternalAssemblyList(file);
-                if(!Duplicate)
-                {          
+                
+                if (!Duplicate)
+                {
                     Session.ExternalAssembly.Add(file, fdlg.FileName);
 
-                    Type[] allTypes = CompilerHelper.Instance.GetAllTypesFromAssembly(fdlg.FileName);
-                    ExternalyLoadedAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(allTypes)));
+                    //LoadExternalAssemblies(file, fdlg.FileName);
+
+                    //Type[] allTypes = CompilerHelper.Instance.GetAllTypesFromAssembly(fdlg.FileName);
+
+                    //ExternalyLoadedAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(allTypes)));
                 }
                 Duplicate = false;
             }
         }
+
+        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var cmb = sender as ComboBox;
+            string filename = cmb.SelectedItem.ToString();
+
+            foreach(var External in Session.ExternalAssembly)
+            {
+                if(External.Key == filename.ToString())
+                {
+                    string filepath = External.Value;
+                    LoadExternalAssemblies(filename,filepath);
+                }                
+            }
+           
+        }
+
+        public void LoadExternalAssemblies(string FileName,string FilePath)
+        {
+           ExternalyLoadedAssembly.Nodes.Clear();
+           Type[] allTypes = CompilerHelper.Instance.GetAllTypesFromAssembly(FilePath);
+           ExternalyLoadedAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(allTypes)));
+        }
+
+
 
         private void btnAddAssembly_Click(object sender, EventArgs e)
         {
@@ -160,6 +209,7 @@ namespace DynamicCodeCompiler
             if (Duplicate == false)
             {
                 ExternalAssemblyList.Items.Add(inputitem);
+                comboBox1.Items.Add(inputitem);
                 //MessageBox.Show("Item has been inserted.");
             }
         }
@@ -339,7 +389,8 @@ namespace DynamicCodeCompiler
                                 if (ExternalAssemblyList.Items[i].Text == ITEM)
                                 {
                                     Session.ExternalAssembly.Remove(ExternalAssemblyList.Items[i].Text);
-                                    ExternalAssemblyList.Items[i].Remove();
+                                    comboBox1.Items.Remove(ExternalAssemblyList.Items[i].Text);
+                                    ExternalAssemblyList.Items[i].Remove();                                    
                                     //MessageBox.Show("Item has been Deleted.");
                                 }
                             }                           
