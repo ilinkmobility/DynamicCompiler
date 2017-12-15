@@ -47,11 +47,11 @@ namespace DynamicCodeCompiler
         {
             if (helpers.IsRunningAsUwp())
             {
-                CompiledDllPath = ApplicationData.Current.LocalFolder.Path + @"\DynamicAssembly.dll";
+                CompiledDllPath = ApplicationData.Current.LocalFolder.Path + @"\Dynamic.dll";
             }
             else
             {
-                CompiledDllPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\DynamicAssembly.dll";
+                CompiledDllPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Dynamic.dll";
             }
 
             CompilerParameters parameters = new CompilerParameters
@@ -67,14 +67,14 @@ namespace DynamicCodeCompiler
                             .Where(a => !a.IsDynamic)
                             .Select(a => a.Location);
 
-            parameters.ReferencedAssemblies.AddRange(assemblies.ToArray());
+            parameters.ReferencedAssemblies.AddRange(assemblies.ToArray());            
 
-            //Refering external assemblies
+            //Adding all external assemblies as embedded resource
             if (Session.ExternalAssembly.Count > 0)
             {
                 foreach (KeyValuePair<string, string> entry in Session.ExternalAssembly)
                 {
-                    if(!parameters.ReferencedAssemblies.Contains(entry.Value))
+                    if (!parameters.ReferencedAssemblies.Contains(entry.Value))
                     {
                         parameters.ReferencedAssemblies.Add(entry.Value);
                     }
@@ -211,6 +211,7 @@ namespace DynamicCodeCompiler
         {
             try
             {
+                CopyDependencyAssemblies();
                 Type[] types = GetCompiledAssembly();
                 Type type = types[0];
                 ConstructorInfo ctor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
@@ -230,6 +231,7 @@ namespace DynamicCodeCompiler
         {
             try
             {
+                CopyDependencyAssemblies();
                 Type[] types = GetCompiledAssembly();
                 Type type = types[0];
                 MethodInfo methodInfo = type.GetMethod(method, 
@@ -244,6 +246,19 @@ namespace DynamicCodeCompiler
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        public void CopyDependencyAssemblies()
+        {
+            var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            //MessageBox.Show(appDirectory);
+
+            foreach (var externalAssembly in Session.ExternalAssembly)
+            {
+                var fileName = Path.GetFileName(externalAssembly.Value);
+                File.Copy(externalAssembly.Value, appDirectory + @"\" + fileName, true);
             }
         }
     }

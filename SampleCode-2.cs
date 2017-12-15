@@ -185,7 +185,10 @@ namespace User
 {
 	public class UserInfo
 	{
-		public static string Name = "iLink Systems";
+		public string GetName()
+		{
+			return "iLink Systems";
+		}
 	}
 }
 
@@ -193,12 +196,46 @@ using User;
 using System.Windows.Forms;
 
 public class Test
-{
-	public Test()
+{	
+	public void TestMethod()
 	{
-		MessageBox.Show("Name : " + UserInfo.Name);
+		var userInfo = new UserInfo();
+		MessageBox.Show("Name : " + userInfo.GetName());
 	}
 }
 
+using User;
+using System;
+
+public class TestConsole
+{
+	public static void Main(string[] args)
+	{
+		Console.WriteLine("Name : " + UserInfo.Name);
+		Console.ReadKey();
+	}
+}
+
+using User;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace WFA
+{
+    public partial class MainForm : Form
+    {
+        public MainForm()
+        {
+			this.Text = new UserInfo().GetName();
+            this.BackColor = Color.Brown;
+            this.Size = new Size(350, 125);
+            this.Location = new Point(300, 300);
+            this.MaximizeBox = false;
+			
+            Show();
+        }
+    }
+}
 
 

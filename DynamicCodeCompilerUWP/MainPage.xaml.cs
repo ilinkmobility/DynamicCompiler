@@ -27,7 +27,13 @@ namespace DynamicCodeCompilerUWP
         {
             this.InitializeComponent();
 
-            MessageCenter.ShowMessage("1", "2");
+            ShowUWPMessageDialog();
+        }
+
+        public void ShowUWPMessageDialog()
+        {
+            var messageDialog = new MessageDialog("No internet connection has been found.");
+            messageDialog.ShowAsync();
         }
     }
 }
