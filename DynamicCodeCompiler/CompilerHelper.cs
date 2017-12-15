@@ -29,6 +29,17 @@ namespace DynamicCodeCompiler
         {             
             helpers = new Helpers();
             codeProvider = CodeDomProvider.CreateProvider("CSharp");
+
+            
+            AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs args) =>
+            {
+                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DynamicAssembly.dll"))
+                {
+                    byte[] assemblyData = new byte[stream.Length];
+                }
+
+                return null;
+            };
         }
 
         public static CompilerHelper Instance
@@ -47,11 +58,11 @@ namespace DynamicCodeCompiler
         {
             if (helpers.IsRunningAsUwp())
             {
-                CompiledDllPath = ApplicationData.Current.LocalFolder.Path + @"\DynamicAssembly.dll";
+                CompiledDllPath = ApplicationData.Current.LocalFolder.Path + @"\Dynamic.dll";
             }
             else
             {
-                CompiledDllPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\DynamicAssembly.dll";
+                CompiledDllPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Dynamic.dll";
             }
 
             CompilerParameters parameters = new CompilerParameters
@@ -69,14 +80,14 @@ namespace DynamicCodeCompiler
 
             parameters.ReferencedAssemblies.AddRange(assemblies.ToArray());
 
-            //Refering external assemblies
+            //Adding all external assemblies as embedded resource
             if (Session.ExternalAssembly.Count > 0)
             {
                 foreach (KeyValuePair<string, string> entry in Session.ExternalAssembly)
                 {
-                    if(!parameters.ReferencedAssemblies.Contains(entry.Value))
+                    if (!parameters.EmbeddedResources.Contains(entry.Value))
                     {
-                        parameters.ReferencedAssemblies.Add(entry.Value);
+                        parameters.EmbeddedResources.Add(entry.Value);
                     }
                 }
             }
@@ -211,7 +222,7 @@ namespace DynamicCodeCompiler
         {
             try
             {
-                Type[] types = GetCompiledAssembly();
+                Type[] types = Assembly.LoadFrom(CompiledDllPath).GetTypes(); //GetCompiledAssembly();
                 Type type = types[0];
                 ConstructorInfo ctor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
                     null,
