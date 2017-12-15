@@ -9,5 +9,6 @@ namespace DynamicCodeCompiler
     public class Session
     {
         public static Dictionary<string, string> ExternalAssembly = new Dictionary<string, string>();
+        public static Dictionary<string, string> ExternalAssemblyComboBox = new Dictionary<string, string>();
     }
 }
