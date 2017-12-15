@@ -11,6 +11,8 @@ namespace DynamicCodeCompiler
     {
         List<string> ExternalLoadedAssemblies = new List<string>();
         List<string> Namespace = new List<string>();
+        public string filename { get; set; }
+        public string comboboxtext { get; set; } = "select an item to load assemblies";
         public bool Duplicate { get; set; } = false;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
@@ -28,6 +30,8 @@ namespace DynamicCodeCompiler
             source = Constants.Source;
             textBoxAssemblySearch.AutoCompleteCustomSource = Constants.Source;
 
+            comboBox1.Text = comboboxtext;
+
             listViewDefaultAssemblies.LoadList(CompilerHelper.Instance.GetLoadedAssembliesFileNameFromAppDomain());
             ExternalLoadedAssemblies = CompilerHelper.Instance.GetLoadedAssembliesFromAppDomain();
             GetLoadedAssembliesWithExtension(ExternalLoadedAssemblies);
@@ -43,7 +47,7 @@ namespace DynamicCodeCompiler
         {
             for (int i = 0; i < paths.Count; i++)
             {
-                Session.ExternalAssembly.Add(Path.GetFileName(paths[i]), paths[i]);
+                Session.ExternalAssemblyComboBox.Add(Path.GetFileName(paths[i]), paths[i]);
                 comboBox1.Items.Add(Path.GetFileName(paths[i]));
             }
         }
@@ -67,18 +71,13 @@ namespace DynamicCodeCompiler
             {
                 string file = Path.GetFileName(fdlg.FileName);
 
-                //ADDING TO EXTERNAL ASSEMBLY LIST.
+                //ADDING TO EXTERNAL ASSEMBLY LIST AND COMBOBOXLIST DICTIONARY.
                 AddToExternalAssemblyList(file);
                 
                 if (!Duplicate)
                 {
                     Session.ExternalAssembly.Add(file, fdlg.FileName);
-
-                    //LoadExternalAssemblies(file, fdlg.FileName);
-
-                    //Type[] allTypes = CompilerHelper.Instance.GetAllTypesFromAssembly(fdlg.FileName);
-
-                    //ExternalyLoadedAssembly.Nodes.AddRange(AssemblyHelper.Instance.GenereateTreeNode(AssemblyHelper.Instance.GenerateTypeModel(allTypes)));
+                    Session.ExternalAssemblyComboBox.Add(file, fdlg.FileName);
                 }
                 Duplicate = false;
             }
@@ -87,17 +86,16 @@ namespace DynamicCodeCompiler
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             var cmb = sender as ComboBox;
-            string filename = cmb.SelectedItem.ToString();
+            filename = cmb.SelectedItem.ToString();
 
-            foreach(var External in Session.ExternalAssembly)
+            foreach(var External in Session.ExternalAssemblyComboBox)
             {
                 if(External.Key == filename.ToString())
                 {
                     string filepath = External.Value;
                     LoadExternalAssemblies(filename,filepath);
                 }                
-            }
-           
+            }           
         }
 
         public void LoadExternalAssemblies(string FileName,string FilePath)
@@ -388,8 +386,17 @@ namespace DynamicCodeCompiler
                             {
                                 if (ExternalAssemblyList.Items[i].Text == ITEM)
                                 {
+                                    //DELETING FROM EXTERNAL ASSEMBLY DICTIONARY LIST.
                                     Session.ExternalAssembly.Remove(ExternalAssemblyList.Items[i].Text);
+                                    //DELETING FROM EXTERNAL ASSEMBLY COMBOBOX DICTIONARY LIST.
+                                    Session.ExternalAssemblyComboBox.Remove(ExternalAssemblyList.Items[i].Text);
+                                    //DELETING FROM COMBOBOX DROPDOWN LIST.
                                     comboBox1.Items.Remove(ExternalAssemblyList.Items[i].Text);
+                                    //REFRESHING ASSEMBLIES TAB (If deleted external assembly item is the selected item in combobox dropdown)
+                                    if (ExternalAssemblyList.Items[i].Text == filename)
+                                    {
+                                        RefreshExternalAssembliesTab();
+                                    }
                                     ExternalAssemblyList.Items[i].Remove();                                    
                                     //MessageBox.Show("Item has been Deleted.");
                                 }
@@ -398,6 +405,23 @@ namespace DynamicCodeCompiler
                     }
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RefreshExternalAssembliesTab();
+        }
+
+        //REFRESHING ASSEMBLIES TAB.
+        public void RefreshExternalAssembliesTab()
+        {
+            ExternalyLoadedAssembly.Nodes.Clear();
+            comboBox1.Text = comboboxtext;
+            comboBox1.Items.Clear();
+            foreach(var q in Session.ExternalAssemblyComboBox)
+            {
+                comboBox1.Items.Add(q.Key);
+            }            
         }
     }
 }
