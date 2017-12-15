@@ -29,17 +29,6 @@ namespace DynamicCodeCompiler
         {             
             helpers = new Helpers();
             codeProvider = CodeDomProvider.CreateProvider("CSharp");
-
-            
-            AppDomain.CurrentDomain.AssemblyResolve += (object sender, ResolveEventArgs args) =>
-            {
-                using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DynamicAssembly.dll"))
-                {
-                    byte[] assemblyData = new byte[stream.Length];
-                }
-
-                return null;
-            };
         }
 
         public static CompilerHelper Instance
@@ -78,16 +67,16 @@ namespace DynamicCodeCompiler
                             .Where(a => !a.IsDynamic)
                             .Select(a => a.Location);
 
-            parameters.ReferencedAssemblies.AddRange(assemblies.ToArray());
+            parameters.ReferencedAssemblies.AddRange(assemblies.ToArray());            
 
             //Adding all external assemblies as embedded resource
             if (Session.ExternalAssembly.Count > 0)
             {
                 foreach (KeyValuePair<string, string> entry in Session.ExternalAssembly)
                 {
-                    if (!parameters.EmbeddedResources.Contains(entry.Value))
+                    if (!parameters.ReferencedAssemblies.Contains(entry.Value))
                     {
-                        parameters.EmbeddedResources.Add(entry.Value);
+                        parameters.ReferencedAssemblies.Add(entry.Value);
                     }
                 }
             }
@@ -222,7 +211,8 @@ namespace DynamicCodeCompiler
         {
             try
             {
-                Type[] types = Assembly.LoadFrom(CompiledDllPath).GetTypes(); //GetCompiledAssembly();
+                CopyDependencyAssemblies();
+                Type[] types = GetCompiledAssembly();
                 Type type = types[0];
                 ConstructorInfo ctor = type.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly,
                     null,
@@ -241,6 +231,7 @@ namespace DynamicCodeCompiler
         {
             try
             {
+                CopyDependencyAssemblies();
                 Type[] types = GetCompiledAssembly();
                 Type type = types[0];
                 MethodInfo methodInfo = type.GetMethod(method, 
@@ -255,6 +246,19 @@ namespace DynamicCodeCompiler
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
+        }
+
+        public void CopyDependencyAssemblies()
+        {
+            var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+            //MessageBox.Show(appDirectory);
+
+            foreach (var externalAssembly in Session.ExternalAssembly)
+            {
+                var fileName = Path.GetFileName(externalAssembly.Value);
+                File.Copy(externalAssembly.Value, appDirectory + @"\" + fileName, true);
             }
         }
     }

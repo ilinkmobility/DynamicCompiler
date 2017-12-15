@@ -43,7 +43,7 @@ namespace DynamicCodeCompiler
         {
             for (int i = 0; i < paths.Count; i++)
             {
-                Session.ExternalAssembly.Add(Path.GetFileName(paths[i]), paths[i]);
+                //Session.ExternalAssembly.Add(Path.GetFileName(paths[i]), paths[i]);
                 comboBox1.Items.Add(Path.GetFileName(paths[i]));
             }
         }
