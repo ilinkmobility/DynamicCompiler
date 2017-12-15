@@ -193,12 +193,28 @@ using User;
 using System.Windows.Forms;
 
 public class Test
-{
+{	
 	public Test()
 	{
 		MessageBox.Show("Name : " + UserInfo.Name);
 	}
+	
+	public void Show()
+	{
+		MessageBox.Show("Name : ");
+	}
 }
 
+using User;
+using System;
+
+public class TestConsole
+{
+	public static void Main(string[] args)
+	{
+		Console.WriteLine("Name : " + UserInfo.Name);
+		Console.ReadKey();
+	}
+}
 
 
