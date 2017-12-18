@@ -185,7 +185,7 @@ namespace User
 {
 	public class UserInfo
 	{
-		public string GetName()
+		public static string GetName()
 		{
 			return "iLink Systems";
 		}
@@ -227,7 +227,7 @@ namespace WFA
     {
         public MainForm()
         {
-			this.Text = new UserInfo().GetName();
+			this.Text = UserInfo.GetName();
             this.BackColor = Color.Brown;
             this.Size = new Size(350, 125);
             this.Location = new Point(300, 300);
@@ -236,6 +236,17 @@ namespace WFA
             Show();
         }
     }
+}
+
+using Calculator;
+using System;
+
+public class InvokeCalculator
+{
+	public InvokeCalculator()
+	{
+		new Calculator.Calculator().Show();
+	}
 }
 
 
