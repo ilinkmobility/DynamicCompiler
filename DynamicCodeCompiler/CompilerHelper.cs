@@ -102,9 +102,10 @@ namespace DynamicCodeCompiler
             }
             else
             {
-                //AssemblyHelper.Instance.GenerateTypeModel(GetCompiledAssembly());
+                var successResult = "Assembly Path : " + CompiledDllPath
+                    + "\n\nExternal Assembly Coping Path : " + GetAppExecutableDirectory();
 
-                return CompiledDllPath;
+                return successResult;
             }
         }
 
@@ -249,9 +250,14 @@ namespace DynamicCodeCompiler
             }
         }
 
+        public string GetAppExecutableDirectory()
+        {
+            return AppDomain.CurrentDomain.BaseDirectory;
+        }
+
         public void CopyDependencyAssemblies()
         {
-            var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var appDirectory = GetAppExecutableDirectory();
 
             //MessageBox.Show(appDirectory);
 
