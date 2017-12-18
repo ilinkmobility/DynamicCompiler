@@ -68,8 +68,10 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.ExternalyLoadedAssembly = new System.Windows.Forms.TreeView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.comboBoxExternalAssemblies = new System.Windows.Forms.ComboBox();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -90,6 +92,8 @@
             this.tabPageAssemblies.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlMain
@@ -484,7 +488,6 @@
             // 
             // tabPageAssemblies
             // 
-            this.tabPageAssemblies.Controls.Add(this.button1);
             this.tabPageAssemblies.Controls.Add(this.tableLayoutPanel1);
             this.tabPageAssemblies.Location = new System.Drawing.Point(4, 22);
             this.tabPageAssemblies.Name = "tabPageAssemblies";
@@ -497,14 +500,14 @@
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.01095F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel3, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.comboBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(995, 585);
             this.tableLayoutPanel1.TabIndex = 1;
@@ -513,9 +516,9 @@
             // 
             this.panel3.Controls.Add(this.ExternalyLoadedAssembly);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(3, 28);
+            this.panel3.Location = new System.Drawing.Point(3, 36);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(989, 554);
+            this.panel3.Size = new System.Drawing.Size(989, 546);
             this.panel3.TabIndex = 0;
             // 
             // ExternalyLoadedAssembly
@@ -523,29 +526,59 @@
             this.ExternalyLoadedAssembly.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ExternalyLoadedAssembly.Location = new System.Drawing.Point(0, 0);
             this.ExternalyLoadedAssembly.Name = "ExternalyLoadedAssembly";
-            this.ExternalyLoadedAssembly.Size = new System.Drawing.Size(989, 554);
+            this.ExternalyLoadedAssembly.Size = new System.Drawing.Size(989, 546);
             this.ExternalyLoadedAssembly.TabIndex = 0;
             // 
-            // comboBox1
+            // tableLayoutPanel2
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(3, 3);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 3, 70, 3);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(922, 21);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.ComboBox1_SelectedIndexChanged);
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(995, 33);
+            this.tableLayoutPanel2.TabIndex = 1;
             // 
-            // button1
+            // tableLayoutPanel3
             // 
-            this.button1.Location = new System.Drawing.Point(931, 6);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(64, 21);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Refresh";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel3.Controls.Add(this.comboBoxExternalAssemblies, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btnRefresh, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(989, 27);
+            this.tableLayoutPanel3.TabIndex = 0;
+            // 
+            // comboBoxExternalAssemblies
+            // 
+            this.comboBoxExternalAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxExternalAssemblies.FormattingEnabled = true;
+            this.comboBoxExternalAssemblies.Location = new System.Drawing.Point(3, 3);
+            this.comboBoxExternalAssemblies.Name = "comboBoxExternalAssemblies";
+            this.comboBoxExternalAssemblies.Size = new System.Drawing.Size(903, 21);
+            this.comboBoxExternalAssemblies.TabIndex = 0;
+            this.comboBoxExternalAssemblies.SelectedIndexChanged += new System.EventHandler(this.comboBoxExternalAssemblies_SelectedIndexChanged);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Location = new System.Drawing.Point(912, 3);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(74, 21);
+            this.btnRefresh.TabIndex = 1;
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // MainForm
             // 
@@ -581,6 +614,8 @@
             this.tabPageAssemblies.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -610,7 +645,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TreeView ExternalyLoadedAssembly;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TreeView treeViewCompiledAssembly;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RichTextBox richTextBoxArguments;
@@ -628,7 +662,10 @@
         private System.Windows.Forms.TabPage tabPageDefaultAssemblies;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.ListView listViewDefaultAssemblies;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.ComboBox comboBoxExternalAssemblies;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }
 

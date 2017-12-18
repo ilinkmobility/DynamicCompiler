@@ -12,7 +12,7 @@ namespace DynamicCodeCompiler
         List<string> ExternalLoadedAssemblies = new List<string>();
         List<string> Namespace = new List<string>();
         public string filename { get; set; }
-        public string comboboxtext { get; set; } = "select an item to load assemblies";
+        public string comboboxtext { get; set; } = "Select an item to load assemblies";
         public bool Duplicate { get; set; } = false;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
@@ -29,8 +29,8 @@ namespace DynamicCodeCompiler
 
             source = Constants.Source;
             textBoxAssemblySearch.AutoCompleteCustomSource = Constants.Source;
-
-            comboBox1.Text = comboboxtext;
+            
+            comboBoxExternalAssemblies.Text = comboboxtext;
 
             listViewDefaultAssemblies.LoadList(CompilerHelper.Instance.GetLoadedAssembliesFileNameFromAppDomain());
             ExternalLoadedAssemblies = CompilerHelper.Instance.GetLoadedAssembliesFromAppDomain();
@@ -41,14 +41,12 @@ namespace DynamicCodeCompiler
             UpdateListViewDesign(ExternalAssemblyList);
         }
 
-
-
         public void LoadToDictionaryAndComboBox(List<string> paths)
         {
             for (int i = 0; i < paths.Count; i++)
             {
                 Session.ExternalAssemblyComboBox.Add(Path.GetFileName(paths[i]), paths[i]);
-                comboBox1.Items.Add(Path.GetFileName(paths[i]));
+                comboBoxExternalAssemblies.Items.Add(Path.GetFileName(paths[i]));
             }
         }
 
@@ -83,7 +81,7 @@ namespace DynamicCodeCompiler
             }
         }
 
-        private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void comboBoxExternalAssemblies_SelectedIndexChanged(object sender, EventArgs e)
         {
             var cmb = sender as ComboBox;
             filename = cmb.SelectedItem.ToString();
@@ -207,7 +205,7 @@ namespace DynamicCodeCompiler
             if (Duplicate == false)
             {
                 ExternalAssemblyList.Items.Add(inputitem);
-                comboBox1.Items.Add(inputitem);
+                comboBoxExternalAssemblies.Items.Add(inputitem);
                 //MessageBox.Show("Item has been inserted.");
             }
         }
@@ -391,7 +389,7 @@ namespace DynamicCodeCompiler
                                     //DELETING FROM EXTERNAL ASSEMBLY COMBOBOX DICTIONARY LIST.
                                     Session.ExternalAssemblyComboBox.Remove(ExternalAssemblyList.Items[i].Text);
                                     //DELETING FROM COMBOBOX DROPDOWN LIST.
-                                    comboBox1.Items.Remove(ExternalAssemblyList.Items[i].Text);
+                                    comboBoxExternalAssemblies.Items.Remove(ExternalAssemblyList.Items[i].Text);
                                     //REFRESHING ASSEMBLIES TAB (If deleted external assembly item is the selected item in combobox dropdown)
                                     if (ExternalAssemblyList.Items[i].Text == filename)
                                     {
@@ -406,22 +404,22 @@ namespace DynamicCodeCompiler
                 }
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            RefreshExternalAssembliesTab();
-        }
-
+        
         //REFRESHING ASSEMBLIES TAB.
         public void RefreshExternalAssembliesTab()
         {
             ExternalyLoadedAssembly.Nodes.Clear();
-            comboBox1.Text = comboboxtext;
-            comboBox1.Items.Clear();
+            comboBoxExternalAssemblies.Text = comboboxtext;
+            comboBoxExternalAssemblies.Items.Clear();
             foreach(var q in Session.ExternalAssemblyComboBox)
             {
-                comboBox1.Items.Add(q.Key);
+                comboBoxExternalAssemblies.Items.Add(q.Key);
             }            
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshExternalAssembliesTab();
         }
     }
 }
