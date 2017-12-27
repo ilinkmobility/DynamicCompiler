@@ -250,3 +250,111 @@ public class InvokeCalculator
 }
 
 
+using System;
+using Windows.UI.Notifications;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+public class UWPToastExample
+{
+	public UWPToastExample()
+	{
+		ShowToastNotification("1", "Hello");
+	}
+	
+	private void ShowToastNotification(string title, string stringContent)
+	{
+		ToastNotifier ToastNotifier = ToastNotificationManager.CreateToastNotifier();
+		Windows.Data.Xml.Dom.XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+		Windows.Data.Xml.Dom.XmlNodeList toastNodeList = toastXml.GetElementsByTagName("text");
+		toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(title));
+		toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(stringContent));
+		Windows.Data.Xml.Dom.IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
+		Windows.Data.Xml.Dom.XmlElement audio = toastXml.CreateElement("audio");
+		audio.SetAttribute("src", "ms-winsoundevent:Notification.SMS");
+
+		ToastNotification toast = new ToastNotification(toastXml);
+		toast.ExpirationTime = DateTime.Now.AddSeconds(4);
+		ToastNotifier.Show(toast);
+	}
+}
+
+using System;
+using Windows.UI.Popups;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+public class UWPMessageDialog
+{
+	public UWPMessageDialog()
+	{
+		ShowDialog();
+	}
+	
+	private async void ShowDialog()
+	{
+		MessageDialog showDialog = new MessageDialog("Hi Welcome to Windows 10");  
+		
+		var result = await showDialog.ShowAsync();  
+	}
+}
+
+using System;
+using Windows.UI.Popups;
+
+namespace UWPAPITest
+{
+	public class UWPAPITestClass
+	{
+		public UWPAPITestClass()
+		{
+			ShowUWPMessageDialog();
+		}
+		
+		public async void ShowUWPMessageDialog()
+		{
+			var messageDialog = new MessageDialog("No internet connection has been found.");
+			messageDialog.ShowAsync();
+		}
+	}
+}
+
+using System;
+using Windows.UI.Core;
+using Windows.UI.Notifications;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+
+public class MyPage : Page
+{
+	public MyPage()
+	{
+		DoNavigate();
+	}
+	
+	void DoNavigate()
+	{
+		Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+		{
+			ShowToastNotification("1", "Hello");
+			this.Frame.Navigate(typeof(MyPage));        
+		});
+	}
+	
+	private void ShowToastNotification(string title, string stringContent)
+	{
+		ToastNotifier ToastNotifier = ToastNotificationManager.CreateToastNotifier();
+		Windows.Data.Xml.Dom.XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
+		Windows.Data.Xml.Dom.XmlNodeList toastNodeList = toastXml.GetElementsByTagName("text");
+		toastNodeList.Item(0).AppendChild(toastXml.CreateTextNode(title));
+		toastNodeList.Item(1).AppendChild(toastXml.CreateTextNode(stringContent));
+		Windows.Data.Xml.Dom.IXmlNode toastNode = toastXml.SelectSingleNode("/toast");
+		Windows.Data.Xml.Dom.XmlElement audio = toastXml.CreateElement("audio");
+		audio.SetAttribute("src", "ms-winsoundevent:Notification.SMS");
+
+		ToastNotification toast = new ToastNotification(toastXml);
+		toast.ExpirationTime = DateTime.Now.AddSeconds(4);
+		ToastNotifier.Show(toast);
+	}
+}
+
