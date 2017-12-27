@@ -4,11 +4,13 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Text.RegularExpressions;
 
 namespace DynamicCodeCompiler
 {
     public partial class MainForm : Form
     {
+        public string Assemblyname { get; set; }
         List<string> ExternalLoadedAssemblies = new List<string>();
         List<string> Namespace = new List<string>();
         public string filename { get; set; }
@@ -242,19 +244,57 @@ namespace DynamicCodeCompiler
             Namespace.Remove("using " + item + ";");
         }
 
-
-
-        private void btnCompile_Click(object sender, EventArgs e)
+        public bool AssemblyValidation()
         {
+            Regex Numbers = new Regex("^[0-9]*$");
+            Regex specialchar = new Regex(@"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]");
+
+            //RichTextBox validation.
             if (string.IsNullOrEmpty(richTextBoxSource.Text))
             {
-                MessageBox.Show("Source code cannot be empty.", "Error");
+                MessageBox.Show("Source code cannot be empty.", "Validation");
+                return false;
+            }
+
+            //AssemblyTextBox validation.
+            if(string.IsNullOrEmpty(AssemblyName.Text))
+            {
+                Assemblyname = @"\Dynamic.dll";
+                return true;
             }
             else
             {
+                if (AssemblyName.Text.Contains(" ") && AssemblyName.Text.Length > 0)
+                {
+                    MessageBox.Show("Assembly Name cannot have space.", "Validation");
+                    return false;
+                }
+                else if (Numbers.IsMatch(AssemblyName.Text))
+                {
+                    MessageBox.Show("Assembly Name cannot have Numbers.", "Validation");
+                    return false;
+                }
+                else if (specialchar.IsMatch(AssemblyName.Text))
+                {
+                    MessageBox.Show("Assembly Name cannot have Special characters.", "Validation");
+                    return false;
+                }
+                else
+                {
+                    Assemblyname = @"\" + AssemblyName.Text + ".dll";
+                    return true;
+                }
+            }
+            
+        }
+
+        private void btnCompile_Click(object sender, EventArgs e)
+        {
+            if(AssemblyValidation())
+            {
                 if (radioWholeClass.Checked)
                 {
-                    string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text);
+                    string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text, Assemblyname);
                     richTextBoxOutput.Text = result;
                 }
                 else if (radioMethodOnly.Checked)
@@ -262,7 +302,7 @@ namespace DynamicCodeCompiler
                     var methodnames = string.Join(" ", Namespace.ToArray());
                     var methodaddnamespace = methodnames + Constants.MethodTemplate;
                     var Methodfinal = methodaddnamespace.Replace("METHODSOURCE", richTextBoxSource.Text);
-                    string result = CompilerHelper.Instance.Compile(Methodfinal);
+                    string result = CompilerHelper.Instance.Compile(Methodfinal, Assemblyname);
                     richTextBoxOutput.Text = result;
                 }
                 else
@@ -270,7 +310,7 @@ namespace DynamicCodeCompiler
                     var codenames = string.Join(" ", Namespace.ToArray());
                     var codeaddnamespace = codenames + Constants.CodeTemplate;
                     var Codefinal = codeaddnamespace.Replace("CODESOURCE", richTextBoxSource.Text);
-                    string result = CompilerHelper.Instance.Compile(Codefinal);
+                    string result = CompilerHelper.Instance.Compile(Codefinal, Assemblyname);
                     richTextBoxOutput.Text = result;
                 }
 

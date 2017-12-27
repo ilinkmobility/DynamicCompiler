@@ -33,7 +33,10 @@
             this.tableLayoutCompiler = new System.Windows.Forms.TableLayoutPanel();
             this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.tableLayoutSource = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.AssemblyName = new System.Windows.Forms.TextBox();
             this.richTextBoxSource = new System.Windows.Forms.RichTextBox();
             this.tableLayoutOutput = new System.Windows.Forms.TableLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
@@ -80,6 +83,7 @@
             this.splitContainer.Panel2.SuspendLayout();
             this.splitContainer.SuspendLayout();
             this.tableLayoutSource.SuspendLayout();
+            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutOutput.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -156,7 +160,7 @@
             // 
             this.tableLayoutSource.ColumnCount = 1;
             this.tableLayoutSource.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutSource.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutSource.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutSource.Controls.Add(this.richTextBoxSource, 0, 1);
             this.tableLayoutSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutSource.Location = new System.Drawing.Point(0, 0);
@@ -167,6 +171,25 @@
             this.tableLayoutSource.Size = new System.Drawing.Size(689, 406);
             this.tableLayoutSource.TabIndex = 0;
             // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.ColumnCount = 3;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 140F));
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
+            this.tableLayoutPanel4.Controls.Add(this.label1, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.label6, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.AssemblyName, 2, 0);
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(689, 20);
+            this.tableLayoutPanel4.TabIndex = 2;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -174,9 +197,30 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(683, 20);
+            this.label1.Size = new System.Drawing.Size(395, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Source";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Location = new System.Drawing.Point(404, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(134, 20);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Assembly Name (Optional):";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // AssemblyName
+            // 
+            this.AssemblyName.Dock = System.Windows.Forms.DockStyle.Left;
+            this.AssemblyName.Location = new System.Drawing.Point(541, 0);
+            this.AssemblyName.Margin = new System.Windows.Forms.Padding(0);
+            this.AssemblyName.MaxLength = 32760;
+            this.AssemblyName.Name = "AssemblyName";
+            this.AssemblyName.Size = new System.Drawing.Size(144, 20);
+            this.AssemblyName.TabIndex = 2;
             // 
             // richTextBoxSource
             // 
@@ -556,7 +600,7 @@
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(989, 27);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
@@ -597,7 +641,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
             this.splitContainer.ResumeLayout(false);
             this.tableLayoutSource.ResumeLayout(false);
-            this.tableLayoutSource.PerformLayout();
+            this.tableLayoutPanel4.ResumeLayout(false);
+            this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutOutput.ResumeLayout(false);
             this.tableLayoutOutput.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -628,7 +673,6 @@
         private System.Windows.Forms.SplitContainer splitContainer;
         private System.Windows.Forms.TabPage tabPageAssemblies;
         private System.Windows.Forms.TableLayoutPanel tableLayoutSource;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.RichTextBox richTextBoxSource;
         private System.Windows.Forms.TableLayoutPanel tableLayoutOutput;
         private System.Windows.Forms.Label label2;
@@ -666,6 +710,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.ComboBox comboBoxExternalAssemblies;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox AssemblyName;
     }
 }
 
