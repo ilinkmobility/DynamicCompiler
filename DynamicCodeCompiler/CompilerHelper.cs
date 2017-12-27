@@ -43,15 +43,15 @@ namespace DynamicCodeCompiler
             }
         }
 
-        public string Compile(string source)
+        public string Compile(string source,string assemblyname)
         {
             if (helpers.IsRunningAsUwp())
             {
-                CompiledDllPath = ApplicationData.Current.LocalFolder.Path + @"\Dynamic.dll";
+                CompiledDllPath = ApplicationData.Current.LocalFolder.Path + assemblyname;
             }
             else
             {
-                CompiledDllPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Dynamic.dll";
+                CompiledDllPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + assemblyname;
             }
 
             CompilerParameters parameters = new CompilerParameters
@@ -102,8 +102,11 @@ namespace DynamicCodeCompiler
             }
             else
             {
-                var successResult = "Assembly Path : " + CompiledDllPath
-                    + "\n\nExternal Assembly Coping Path : " + GetAppExecutableDirectory();
+                var successResult = "Assembly Path : " + CompiledDllPath;
+                if (Session.ExternalAssembly.Count > 0)
+                {
+                    successResult += "\n\nExternal Assembly Coping Path : " + GetAppExecutableDirectory();
+                }   
 
                 return successResult;
             }
