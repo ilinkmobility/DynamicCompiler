@@ -371,7 +371,38 @@ public class ExpandoObjectTest
 		
 		MessageBox.Show(obj1.Name);
 		MessageBox.Show(obj2.Name.ToString());
-		MessageBox.Show((string) typeof(obj2));
+		MessageBox.Show(obj2.GetType().Name);
+	}
+}
+
+using System;
+using Windows.System;
+
+public class DataExchange
+{
+	public  void StartDataExchange(string content)
+	{
+		Uri uri = new Uri("open.dynamiccompiler://message?content=" + content);
+		Launcher.LaunchUriAsync(uri);
+	}
+}
+
+using System;
+using Windows.System;
+
+using Newtonsoft.Json;
+
+public class DataExchange
+{
+	public  void StartDataExchange()
+	{
+		dynamic obj = new System.Dynamic.ExpandoObject();
+		obj.Name = "iLink Systems";
+		
+		string content = JsonConvert.SerializeObject(obj);
+		
+		Uri uri = new Uri("open.dynamiccompiler://message?content=" + content + "&isjson=true");
+		Launcher.LaunchUriAsync(uri);
 	}
 }
 

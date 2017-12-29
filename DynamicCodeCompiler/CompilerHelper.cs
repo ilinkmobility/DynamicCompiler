@@ -142,26 +142,9 @@ namespace DynamicCodeCompiler
             {
                 assemblies.Add(assembly.CodeBase.Replace(@"file:///", ""));
             }
-            //var exefilepaths = GetLoadedAssembliesWithExtension(assemblies);
-            //LoadToDictionaryAndComboBox(exefilepaths);
+
             return assemblies;            
         }
-
-        //public void LoadToDictionaryAndComboBox(List<string> paths)
-        //{
-        //    for (int i=0;i<paths.Count;i++)
-        //    {
-        //        Session.ExternalAssembly.Add(Path.GetFileName(paths[i]), paths[i]);
-        //        //comboBox1.Items.Add(Path.GetFileName(paths[i]));
-        //    }
-        //}
-
-
-        //public List<string> GetLoadedAssembliesWithExtension(List<string> Assemblies)
-        //{
-        //    var exeFilePaths = Assemblies.Where(s => s.EndsWith(".exe")).ToList();            
-        //    return exeFilePaths;
-        //}
 
         public List<string> GetLoadedAssembliesFileNameFromAppDomain()
         {
@@ -263,12 +246,15 @@ namespace DynamicCodeCompiler
         {
             var appDirectory = GetAppExecutableDirectory();
 
-            //MessageBox.Show(appDirectory);
-
             foreach (var externalAssembly in Session.ExternalAssembly)
             {
-                var fileName = Path.GetFileName(externalAssembly.Value);
-                File.Copy(externalAssembly.Value, appDirectory + @"\" + fileName, true);
+                try
+                {
+                    var fileName = Path.GetFileName(externalAssembly.Value);
+                    File.Copy(externalAssembly.Value, appDirectory + @"\" + fileName, true);
+                }
+                catch (Exception)
+                { }
             }
         }
     }
