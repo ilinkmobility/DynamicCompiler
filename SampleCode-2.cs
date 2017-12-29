@@ -257,12 +257,7 @@ using Windows.UI.Xaml.Controls;
 
 public class UWPToastExample
 {
-	public UWPToastExample()
-	{
-		ShowToastNotification("1", "Hello");
-	}
-	
-	private void ShowToastNotification(string title, string stringContent)
+	public void ShowToastNotification(string title, string stringContent)
 	{
 		ToastNotifier ToastNotifier = ToastNotificationManager.CreateToastNotifier();
 		Windows.Data.Xml.Dom.XmlDocument toastXml = ToastNotificationManager.GetTemplateContent(ToastTemplateType.ToastText02);
@@ -355,6 +350,59 @@ public class MyPage : Page
 		ToastNotification toast = new ToastNotification(toastXml);
 		toast.ExpirationTime = DateTime.Now.AddSeconds(4);
 		ToastNotifier.Show(toast);
+	}
+}
+
+using System;
+using System.Dynamic;
+using System.Windows.Forms;
+
+using Newtonsoft.Json.Linq;
+
+public class ExpandoObjectTest
+{
+	public void Test()
+	{
+		dynamic obj1 = new ExpandoObject();
+		obj1.Name = "iLink";
+		
+		dynamic obj2 = JObject.Parse("{ \"Name\":\"Systems\"}");
+		obj2.Name = "Systems";
+		
+		MessageBox.Show(obj1.Name);
+		MessageBox.Show(obj2.Name.ToString());
+		MessageBox.Show(obj2.GetType().Name);
+	}
+}
+
+using System;
+using Windows.System;
+
+public class DataExchange
+{
+	public  void StartDataExchange(string content)
+	{
+		Uri uri = new Uri("open.dynamiccompiler://message?content=" + content);
+		Launcher.LaunchUriAsync(uri);
+	}
+}
+
+using System;
+using Windows.System;
+
+using Newtonsoft.Json;
+
+public class DataExchange
+{
+	public  void StartDataExchange()
+	{
+		dynamic obj = new System.Dynamic.ExpandoObject();
+		obj.Name = "iLink Systems";
+		
+		string content = JsonConvert.SerializeObject(obj);
+		
+		Uri uri = new Uri("open.dynamiccompiler://message?content=" + content + "&isjson=true");
+		Launcher.LaunchUriAsync(uri);
 	}
 }
 
