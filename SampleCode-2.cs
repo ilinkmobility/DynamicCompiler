@@ -382,12 +382,13 @@ public class DataExchange
 {
 	public  void StartDataExchange(string content)
 	{
-		Uri uri = new Uri("open.dynamiccompiler://message?content=" + content);
+		Uri uri = new Uri("open.dynamiccompiler://message?content=" + content + "&isjson=false");
 		Launcher.LaunchUriAsync(uri);
 	}
 }
 
 using System;
+using System.Windows.Forms;
 using Windows.System;
 
 using Newtonsoft.Json;
@@ -398,7 +399,12 @@ public class DataExchange
 	{
 		dynamic obj = new System.Dynamic.ExpandoObject();
 		obj.Name = "iLink Systems";
-		
+		obj.Time = new Func<string>(() =>
+		{
+			MessageBox.Show(DateTime.Now.ToString());
+			return null;
+		});
+				
 		string content = JsonConvert.SerializeObject(obj);
 		
 		Uri uri = new Uri("open.dynamiccompiler://message?content=" + content + "&isjson=true");
