@@ -83,6 +83,8 @@ namespace DynamicCodeCompiler
 
             //Externally adding Windows.winmd UWP runtime component reference UWP namespaces
             //parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\Windows.winmd");
+
+            //To access Windows.System namespace. Launcher class need to be accessed.
             parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7\Microsoft.CSharp.dll");
 
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, source);
