@@ -50,6 +50,7 @@ namespace DynamicCodeCompiler
             toolTip.ShowAlways = true;
 
             DetectWindows10Kit();
+            SetupAzureDetails();
         }
 
         public void LoadToDictionaryAndComboBox(List<string> paths)
@@ -508,6 +509,108 @@ namespace DynamicCodeCompiler
                     toolTip.SetToolTip(checkBoxUWBAssembly, @"Unable to detect Windows 10 Kit installation directory.");
                 }
             }
+        }
+
+        private void SetupAzureDetails()
+        {
+            SetupUsers();
+
+            
+
+        }
+
+        private void SetupUsers()
+        {
+            var users = AzureBlobStroageHelper.Instance.DownloadFile("users.txt");
+            var userList = new List<string>();
+
+            if (!string.IsNullOrEmpty(users))
+            {
+                userList = users.Split(',').ToList();
+            }
+
+            if (!userList.Contains(Environment.UserName))
+            {
+                userList.Add(Environment.UserName);
+            }
+
+            userList = userList.OrderBy(q => q).ToList();
+
+            var newUsers = string.Join(",", userList.ToArray());
+
+            if (!users.Equals(newUsers))
+            {
+                AzureBlobStroageHelper.Instance.UploadFile("users.txt", users);
+            }
+
+            comboBoxUsers.DataSource = new BindingSource() { DataSource = userList };
+
+            comboBoxUsers.SelectedIndex = userList.IndexOf(Environment.UserName);
+
+            SetupFiles(Environment.UserName);
+        }
+
+        private void SetupFiles(string user)
+        {
+            var fileList = AzureBlobStroageHelper.Instance.GetListOfFiles();
+            var userFiles = new List<string>();
+
+            userFiles.Add("New");
+
+            foreach (var file in fileList)
+            {
+                if (file.StartsWith(user))
+                {
+                    userFiles.Add(file.Replace(user + "-", "").Replace(".txt", ""));
+                }
+            }
+
+            comboBoxFiles.DataSource = new BindingSource() { DataSource = userFiles };
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(richTextBoxSource.Text))
+            {
+                MessageBox.Show("Source code cannot be empty.");
+                return;
+            }
+
+            string fileName = string.Empty;
+
+            if (comboBoxFiles.SelectedItem.ToString().Equals("New"))
+            {
+                fileName = Microsoft.VisualBasic.Interaction.InputBox("Please enter the file name", "Input");
+            }
+            else
+            {
+                fileName = comboBoxFiles.SelectedItem.ToString();
+            }
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("File name cannot be empty.");
+                return;
+            }
+
+            if (fileName.Contains(" "))
+            {
+                MessageBox.Show("File name cannot have space.");
+                return;
+            }
+
+            fileName = comboBoxUsers.SelectedItem.ToString() + "-" + fileName + ".txt";
+
+            AzureBlobStroageHelper.Instance.UploadFile(fileName, richTextBoxSource.Text);
+        }
+
+        private void comboBoxFiles_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var fileName = comboBoxUsers.SelectedItem.ToString() + "-" + comboBoxFiles.SelectedItem.ToString() + ".txt";
+
+            var content = AzureBlobStroageHelper.Instance.DownloadFile(fileName);
+
+            richTextBoxSource.Text = content;
         }
     }
 }
