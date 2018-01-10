@@ -43,7 +43,7 @@ namespace DynamicCodeCompiler
             }
         }
 
-        public string Compile(string source,string assemblyname)
+        public string Compile(string source,string assemblyname, string windows10KitPath)
         {
             if (helpers.IsRunningAsUwp())
             {
@@ -84,8 +84,20 @@ namespace DynamicCodeCompiler
             //Externally adding Windows.winmd UWP runtime component reference UWP namespaces
             //parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\Windows.winmd");
 
+            if (!string.IsNullOrEmpty(windows10KitPath))
+            {
+                parameters.ReferencedAssemblies.Add(windows10KitPath);
+            }
+            
             //To access Windows.System namespace. Launcher class need to be accessed.
-            parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7\Microsoft.CSharp.dll");
+            try
+            {
+                parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7\Microsoft.CSharp.dll");
+            }
+            catch (Exception)
+            {
+            }
+            
 
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, source);
 
