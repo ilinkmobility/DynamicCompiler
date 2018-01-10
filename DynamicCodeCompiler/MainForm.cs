@@ -540,7 +540,7 @@ namespace DynamicCodeCompiler
 
             if (!users.Equals(newUsers))
             {
-                AzureBlobStroageHelper.Instance.UploadFile("users.txt", users);
+                AzureBlobStroageHelper.Instance.UploadFile("users.txt", newUsers);
             }
 
             comboBoxUsers.DataSource = new BindingSource() { DataSource = userList };
