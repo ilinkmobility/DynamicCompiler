@@ -61,6 +61,18 @@ namespace HelloApp
 	}
 }
 
+/*
+ * Example Inputs
+ *
+ * SayHello(string name) : iLink
+ *
+ * SayHello(string firstName, string lastName) : iLink, Systems
+ *
+ * ShowTable(int number) : 8
+ *
+ * ChangeSourceEditorBackground(MainForm mainForm, string colorCode) : this, #ccff99
+ */
+
 Sample Inputs
 -------------
 this, #ccff99
