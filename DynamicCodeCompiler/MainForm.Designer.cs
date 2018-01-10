@@ -75,6 +75,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBoxExternalAssemblies = new System.Windows.Forms.ComboBox();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.checkBoxUWBAssembly = new System.Windows.Forms.CheckBox();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -108,7 +109,7 @@
             this.tabControlMain.Location = new System.Drawing.Point(0, 0);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
-            this.tabControlMain.Size = new System.Drawing.Size(1009, 617);
+            this.tabControlMain.Size = new System.Drawing.Size(1009, 648);
             this.tabControlMain.TabIndex = 0;
             // 
             // tabPageCompiler
@@ -117,7 +118,7 @@
             this.tabPageCompiler.Location = new System.Drawing.Point(4, 22);
             this.tabPageCompiler.Name = "tabPageCompiler";
             this.tabPageCompiler.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCompiler.Size = new System.Drawing.Size(1001, 591);
+            this.tabPageCompiler.Size = new System.Drawing.Size(1001, 622);
             this.tabPageCompiler.TabIndex = 0;
             this.tabPageCompiler.Text = "Compiler";
             this.tabPageCompiler.UseVisualStyleBackColor = true;
@@ -135,7 +136,7 @@
             this.tableLayoutCompiler.Name = "tableLayoutCompiler";
             this.tableLayoutCompiler.RowCount = 1;
             this.tableLayoutCompiler.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutCompiler.Size = new System.Drawing.Size(995, 585);
+            this.tableLayoutCompiler.Size = new System.Drawing.Size(995, 616);
             this.tableLayoutCompiler.TabIndex = 1;
             // 
             // splitContainer
@@ -152,8 +153,8 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.tableLayoutOutput);
-            this.splitContainer.Size = new System.Drawing.Size(689, 579);
-            this.splitContainer.SplitterDistance = 406;
+            this.splitContainer.Size = new System.Drawing.Size(689, 610);
+            this.splitContainer.SplitterDistance = 427;
             this.splitContainer.TabIndex = 0;
             // 
             // tableLayoutSource
@@ -168,7 +169,7 @@
             this.tableLayoutSource.RowCount = 2;
             this.tableLayoutSource.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutSource.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutSource.Size = new System.Drawing.Size(689, 406);
+            this.tableLayoutSource.Size = new System.Drawing.Size(689, 427);
             this.tableLayoutSource.TabIndex = 0;
             // 
             // tableLayoutPanel4
@@ -227,7 +228,7 @@
             this.richTextBoxSource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxSource.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxSource.Name = "richTextBoxSource";
-            this.richTextBoxSource.Size = new System.Drawing.Size(683, 380);
+            this.richTextBoxSource.Size = new System.Drawing.Size(683, 401);
             this.richTextBoxSource.TabIndex = 1;
             this.richTextBoxSource.Text = "";
             // 
@@ -243,7 +244,7 @@
             this.tableLayoutOutput.RowCount = 2;
             this.tableLayoutOutput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutOutput.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutOutput.Size = new System.Drawing.Size(689, 169);
+            this.tableLayoutOutput.Size = new System.Drawing.Size(689, 179);
             this.tableLayoutOutput.TabIndex = 0;
             // 
             // label2
@@ -262,12 +263,13 @@
             this.richTextBoxOutput.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBoxOutput.Location = new System.Drawing.Point(3, 23);
             this.richTextBoxOutput.Name = "richTextBoxOutput";
-            this.richTextBoxOutput.Size = new System.Drawing.Size(683, 143);
+            this.richTextBoxOutput.Size = new System.Drawing.Size(683, 153);
             this.richTextBoxOutput.TabIndex = 1;
             this.richTextBoxOutput.Text = "";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.checkBoxUWBAssembly);
             this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Controls.Add(this.richTextBoxArguments);
             this.panel2.Controls.Add(this.label5);
@@ -280,7 +282,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(294, 579);
+            this.panel2.Size = new System.Drawing.Size(294, 610);
             this.panel2.TabIndex = 1;
             // 
             // tabControl1
@@ -288,7 +290,7 @@
             this.tabControl1.Controls.Add(this.tabPageNamespace);
             this.tabControl1.Controls.Add(this.tabPageExternalAssembly);
             this.tabControl1.Controls.Add(this.tabPageDefaultAssemblies);
-            this.tabControl1.Location = new System.Drawing.Point(3, 62);
+            this.tabControl1.Location = new System.Drawing.Point(3, 92);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(291, 183);
@@ -425,7 +427,7 @@
             // 
             // richTextBoxArguments
             // 
-            this.richTextBoxArguments.Location = new System.Drawing.Point(3, 452);
+            this.richTextBoxArguments.Location = new System.Drawing.Point(3, 482);
             this.richTextBoxArguments.Name = "richTextBoxArguments";
             this.richTextBoxArguments.Size = new System.Drawing.Size(289, 64);
             this.richTextBoxArguments.TabIndex = 28;
@@ -434,7 +436,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(0, 436);
+            this.label5.Location = new System.Drawing.Point(0, 466);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(158, 13);
             this.label5.TabIndex = 27;
@@ -443,7 +445,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(-2, 254);
+            this.label4.Location = new System.Drawing.Point(-2, 284);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 26;
@@ -451,14 +453,14 @@
             // 
             // treeViewCompiledAssembly
             // 
-            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(0, 270);
+            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(0, 300);
             this.treeViewCompiledAssembly.Name = "treeViewCompiledAssembly";
             this.treeViewCompiledAssembly.Size = new System.Drawing.Size(289, 150);
             this.treeViewCompiledAssembly.TabIndex = 25;
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(149, 532);
+            this.btnRun.Location = new System.Drawing.Point(149, 562);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(142, 44);
             this.btnRun.TabIndex = 24;
@@ -468,7 +470,7 @@
             // 
             // btnCompile
             // 
-            this.btnCompile.Location = new System.Drawing.Point(3, 532);
+            this.btnCompile.Location = new System.Drawing.Point(3, 562);
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new System.Drawing.Size(142, 44);
             this.btnCompile.TabIndex = 23;
@@ -624,11 +626,21 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // checkBoxUWBAssembly
+            // 
+            this.checkBoxUWBAssembly.AutoSize = true;
+            this.checkBoxUWBAssembly.Location = new System.Drawing.Point(5, 56);
+            this.checkBoxUWBAssembly.Name = "checkBoxUWBAssembly";
+            this.checkBoxUWBAssembly.Size = new System.Drawing.Size(223, 17);
+            this.checkBoxUWBAssembly.TabIndex = 30;
+            this.checkBoxUWBAssembly.Text = "Include UWP Assembly (Windows.winmd)";
+            this.checkBoxUWBAssembly.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1009, 617);
+            this.ClientSize = new System.Drawing.Size(1009, 648);
             this.Controls.Add(this.tabControlMain);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -714,6 +726,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox AssemblyName;
+        private System.Windows.Forms.CheckBox checkBoxUWBAssembly;
     }
 }
 

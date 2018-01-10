@@ -18,6 +18,8 @@ namespace DynamicCodeCompiler
         public bool Duplicate { get; set; } = false;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
+        ToolTip toolTip = new ToolTip();
+
         public MainForm()
         {
             InitializeComponent();
@@ -41,6 +43,13 @@ namespace DynamicCodeCompiler
             UpdateListViewDesign(listViewDefaultAssemblies);
             UpdateListViewDesign(listViewAssemblyList);
             UpdateListViewDesign(ExternalAssemblyList);
+
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
+
+            DetectWindows10Kit();
         }
 
         public void LoadToDictionaryAndComboBox(List<string> paths)
@@ -290,11 +299,13 @@ namespace DynamicCodeCompiler
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
+            string windows10KitPath = checkBoxUWBAssembly.Checked ? Session.Windows10KitPath : null;
+
             if(AssemblyValidation())
             {
                 if (radioWholeClass.Checked)
                 {
-                    string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text, Assemblyname);
+                    string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text, Assemblyname, windows10KitPath);
                     richTextBoxOutput.Text = result;
                 }
                 else if (radioMethodOnly.Checked)
@@ -302,7 +313,7 @@ namespace DynamicCodeCompiler
                     var methodnames = string.Join(" ", Namespace.ToArray());
                     var methodaddnamespace = methodnames + Constants.MethodTemplate;
                     var Methodfinal = methodaddnamespace.Replace("METHODSOURCE", richTextBoxSource.Text);
-                    string result = CompilerHelper.Instance.Compile(Methodfinal, Assemblyname);
+                    string result = CompilerHelper.Instance.Compile(Methodfinal, Assemblyname, windows10KitPath);
                     richTextBoxOutput.Text = result;
                 }
                 else
@@ -310,7 +321,7 @@ namespace DynamicCodeCompiler
                     var codenames = string.Join(" ", Namespace.ToArray());
                     var codeaddnamespace = codenames + Constants.CodeTemplate;
                     var Codefinal = codeaddnamespace.Replace("CODESOURCE", richTextBoxSource.Text);
-                    string result = CompilerHelper.Instance.Compile(Codefinal, Assemblyname);
+                    string result = CompilerHelper.Instance.Compile(Codefinal, Assemblyname, windows10KitPath);
                     richTextBoxOutput.Text = result;
                 }
 
@@ -460,6 +471,43 @@ namespace DynamicCodeCompiler
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             RefreshExternalAssembliesTab();
+        }
+
+        private void DetectWindows10Kit()
+        {
+            checkBoxUWBAssembly.Enabled = false;
+
+            if (Directory.Exists(@"C:\Program Files (x86)\Windows Kits\10\UnionMetadata"))
+            {
+                if (File.Exists(@"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\Windows.winmd"))
+                {
+                    checkBoxUWBAssembly.Enabled = true;
+                    Session.Windows10KitPath = @"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\Windows.winmd";
+                    toolTip.SetToolTip(checkBoxUWBAssembly, Session.Windows10KitPath);
+                }
+                else
+                {
+                    var versions = new string[]{ "10.0.14393.0", "10.0.15063.0", "10.0.16299.0" };
+
+                    foreach (var version in versions)
+                    {
+                        if (Directory.Exists(@"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\" + version))
+                        {
+                            if (File.Exists(@"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\" + version + @"\Windows.winmd"))
+                            {
+                                checkBoxUWBAssembly.Enabled = true;
+                                Session.Windows10KitPath = @"C:\Program Files (x86)\Windows Kits\10\UnionMetadata\" + version + @"\Windows.winmd";
+                                toolTip.SetToolTip(checkBoxUWBAssembly, Session.Windows10KitPath);
+                            }
+                        }
+                    }
+                }
+
+                if (!checkBoxUWBAssembly.Enabled)
+                {
+                    toolTip.SetToolTip(checkBoxUWBAssembly, @"Unable to detect Windows 10 Kit installation directory.");
+                }
+            }
         }
     }
 }

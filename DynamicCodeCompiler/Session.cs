@@ -8,6 +8,7 @@ namespace DynamicCodeCompiler
 {
     public class Session
     {
+        public static string Windows10KitPath = string.Empty;
         public static Dictionary<string, string> ExternalAssembly = new Dictionary<string, string>();
         public static Dictionary<string, string> ExternalAssemblyComboBox = new Dictionary<string, string>();
     }

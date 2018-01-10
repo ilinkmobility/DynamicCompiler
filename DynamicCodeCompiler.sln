@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicCodeCompilerUWP", "DynamicCodeCompilerUWP\DynamicCodeCompilerUWP.csproj", "{2786A98D-B92E-470F-84BD-D846E908ED04}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicCodeCompiler", "DynamicCodeCompiler\DynamicCodeCompiler.csproj", "{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicCodeCompiler.DesktopBridge", "DynamicCodeCompiler.DesktopBridge\DynamicCodeCompiler.DesktopBridge.csproj", "{FA38CD81-4440-4BAA-8ECB-CB81045B16E4}"
@@ -24,26 +22,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|ARM.ActiveCfg = Debug|ARM
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|ARM.Build.0 = Debug|ARM
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|ARM.Deploy.0 = Debug|ARM
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|x64.ActiveCfg = Debug|x64
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|x64.Build.0 = Debug|x64
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|x64.Deploy.0 = Debug|x64
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|x86.ActiveCfg = Debug|x86
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|x86.Build.0 = Debug|x86
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Debug|x86.Deploy.0 = Debug|x86
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|Any CPU.ActiveCfg = Release|x86
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|ARM.ActiveCfg = Release|ARM
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|ARM.Build.0 = Release|ARM
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|ARM.Deploy.0 = Release|ARM
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|x64.ActiveCfg = Release|x64
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|x64.Build.0 = Release|x64
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|x64.Deploy.0 = Release|x64
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|x86.ActiveCfg = Release|x86
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|x86.Build.0 = Release|x86
-		{2786A98D-B92E-470F-84BD-D846E908ED04}.Release|x86.Deploy.0 = Release|x86
 		{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}.Debug|ARM.ActiveCfg = Debug|Any CPU
