@@ -612,5 +612,10 @@ namespace DynamicCodeCompiler
 
             richTextBoxSource.Text = content;
         }
+
+        private void comboBoxUsers_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetupFiles(comboBoxUsers.SelectedItem.ToString());
+        }
     }
 }
