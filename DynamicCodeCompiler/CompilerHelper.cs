@@ -92,7 +92,7 @@ namespace DynamicCodeCompiler
             //To access Windows.System namespace. Launcher class need to be accessed.
             try
             {
-                parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7\Microsoft.CSharp.dll");
+                parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Microsoft.CSharp.dll");
             }
             catch (Exception)
             {
