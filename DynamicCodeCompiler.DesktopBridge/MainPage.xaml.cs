@@ -23,11 +23,18 @@ namespace DynamicCodeCompiler.DesktopBridge
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MainPage()
         {
             this.InitializeComponent();
         }
 
+        /// <summary>
+        /// Method to receive protocal invocation and process the arguments.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);

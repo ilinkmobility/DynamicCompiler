@@ -27,12 +27,20 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Contstructor.
+        /// </summary>
         private AzureBlobStroageHelper()
         {
             cloudBlobClient = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=blobstoragesample111;"
                  + "AccountKey=").CreateCloudBlobClient();
         }
 
+        /// <summary>
+        /// Upload file to azure.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="fileContent"></param>
         public void UploadFile(string fileName, string fileContent)
         {
             // Get Blob Container
@@ -55,6 +63,10 @@ namespace DynamicCodeCompiler
             blockBlob.BeginUploadFromStream(stream, UploadCompleted, blockBlob);
         }
 
+        /// <summary>
+        /// upload file confirmation message.
+        /// </summary>
+        /// <param name="result"></param>
         private void OnUploadCompleted(IAsyncResult result)
         {
             CloudBlockBlob blob = (CloudBlockBlob)result.AsyncState;
@@ -64,6 +76,12 @@ namespace DynamicCodeCompiler
             System.Windows.Forms.MessageBox.Show("Uploaded");
         }
 
+
+        /// <summary>
+        /// Download file from azure.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public string DownloadFile(string fileName)
         {
             // Get Blob Container
@@ -89,6 +107,10 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Gets the list of files from azure.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetListOfFiles()
         {
             // Get Blob Container

@@ -25,6 +25,9 @@ namespace DynamicCodeCompiler
 
         public int Count { get; set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         private CompilerHelper()
         {             
             helpers = new Helpers();
@@ -43,6 +46,14 @@ namespace DynamicCodeCompiler
             }
         }
 
+
+        /// <summary>
+        /// Compile process.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="assemblyname"></param>
+        /// <param name="windows10KitPath"></param>
+        /// <returns></returns>
         public string Compile(string source,string assemblyname, string windows10KitPath)
         {
             if (helpers.IsRunningAsUwp())
@@ -97,7 +108,6 @@ namespace DynamicCodeCompiler
             catch (Exception)
             {
             }
-            
 
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, source);
 
@@ -148,6 +158,10 @@ namespace DynamicCodeCompiler
             return AppDomain.CurrentDomain.GetAssemblies();
         }
 
+        /// <summary>
+        /// Gets the loaded assemblies from app domain.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetLoadedAssembliesFromAppDomain()
         {
             var assemblies = new List<string>();
@@ -160,6 +174,10 @@ namespace DynamicCodeCompiler
             return assemblies;            
         }
 
+        /// <summary>
+        /// Gets the loaded assemblies file name from app domain.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetLoadedAssembliesFileNameFromAppDomain()
         {
             var assemblies = new List<string>();
@@ -173,6 +191,10 @@ namespace DynamicCodeCompiler
             return assemblies;
         }
         
+        /// <summary>
+        /// Gets the compiled assembly.
+        /// </summary>
+        /// <returns></returns>
         public Type[] GetCompiledAssembly()
         {
             var assembly = Assembly.LoadFile(CompiledDllPath);
@@ -180,12 +202,22 @@ namespace DynamicCodeCompiler
             return assembly.GetTypes();
         }
 
+        /// <summary>
+        /// Gets the method name.
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public string GetMethodName(string method)
         {
             Match matches = new Regex(@": (.+)\(", RegexOptions.IgnoreCase).Match(method);
             return matches.Groups[1].ToString();
         }
 
+        /// <summary>
+        /// Gets the parameter list in form of key value pairs as parameter name and parameter type of passing method.
+        /// </summary>
+        /// <param name="method"></param>
+        /// <returns></returns>
         public List<KeyValuePair<string, string>> GetParameterList(string method)
         {
             List<KeyValuePair<string, string>> parameterList = new List<KeyValuePair<string, string>>();
@@ -209,6 +241,11 @@ namespace DynamicCodeCompiler
             return parameterList;
         }
 
+        /// <summary>
+        /// Invoke the dynamically created constructors with arguments using Reflection
+        /// </summary>
+        /// <param name="paremeterTypes"></param>
+        /// <param name="parametersValues"></param>
         public void InvokeConstructor(Type[] paremeterTypes, object[] parametersValues)
         {
             try
@@ -229,6 +266,12 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Invoke the dynamically created methods with arguments using Reflection
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="paremeterTypes"></param>
+        /// <param name="parametersValues"></param>
         public void InvokeMethod(string method, Type[] paremeterTypes, object[] parametersValues)
         {
             try
@@ -251,11 +294,18 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Gets the directory of the app executable.
+        /// </summary>
+        /// <returns></returns>
         public string GetAppExecutableDirectory()
         {
             return AppDomain.CurrentDomain.BaseDirectory;
         }
 
+        /// <summary>
+        /// Copies the dependency assemblies to app execution directory.
+        /// </summary>
         public void CopyDependencyAssemblies()
         {
             var appDirectory = GetAppExecutableDirectory();

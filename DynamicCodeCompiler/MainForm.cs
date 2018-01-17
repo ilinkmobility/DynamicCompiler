@@ -20,6 +20,9 @@ namespace DynamicCodeCompiler
 
         ToolTip toolTip = new ToolTip();
 
+        /// <summary>
+        /// constructor.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -53,6 +56,10 @@ namespace DynamicCodeCompiler
             SetupAzureDetails();
         }
 
+        /// <summary>
+        /// Loads the data to combobox and dictionary.
+        /// </summary>
+        /// <param name="paths"></param>
         public void LoadToDictionaryAndComboBox(List<string> paths)
         {
             for (int i = 0; i < paths.Count; i++)
@@ -62,12 +69,21 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Gets the loaded assemblies with extension.
+        /// </summary>
+        /// <param name="Assemblies"></param>
         public void GetLoadedAssembliesWithExtension(List<string> Assemblies)
         {
             var exeFilePaths = Assemblies.Where(s => s.EndsWith(".exe")).ToList();
             LoadToDictionaryAndComboBox(exeFilePaths);
         }
 
+        /// <summary>
+        /// Assembly Browse button click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnBrowseAssembly_Click(object sender, EventArgs e)
         {
             OpenFileDialog fdlg = new OpenFileDialog();
@@ -93,6 +109,11 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// External assembly Combobox selection change. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxExternalAssemblies_SelectedIndexChanged(object sender, EventArgs e)
         {
             var cmb = sender as ComboBox;
@@ -108,6 +129,11 @@ namespace DynamicCodeCompiler
             }           
         }
 
+        /// <summary>
+        /// Loading external assemblies to node.
+        /// </summary>
+        /// <param name="FileName"></param>
+        /// <param name="FilePath"></param>
         public void LoadExternalAssemblies(string FileName,string FilePath)
         {
            ExternalyLoadedAssembly.Nodes.Clear();
@@ -116,7 +142,11 @@ namespace DynamicCodeCompiler
         }
 
 
-
+        /// <summary>
+        /// Adding assembly to list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddAssembly_Click(object sender, EventArgs e)
         {
             if (textBoxAssemblySearch.Text == "" || textBoxAssemblySearch.Text == null)
@@ -135,6 +165,11 @@ namespace DynamicCodeCompiler
             }
         }        
 
+        /// <summary>
+        /// Removing assembly from list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRemoveAssembly_Click(object sender, EventArgs e)
         {
             string ITEM = null;
@@ -174,6 +209,10 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// creating external assembly listview.
+        /// </summary>
+        /// <param name="listView"></param>
         private void UpdateListViewDesign(ListView listView)
         {
             //creating ExternalAssembly listview with columns.
@@ -185,6 +224,10 @@ namespace DynamicCodeCompiler
             listView.Columns.Add("", 284);
         }
 
+        /// <summary>
+        /// Dialog for confirmation.
+        /// </summary>
+        /// <returns></returns>
         public bool Dialog()
         {
             DialogResult result = MessageBox.Show("Sure to delete item(s) from the list?", "Confirmation", MessageBoxButtons.YesNoCancel);
@@ -202,6 +245,10 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// adding to external assembly list.
+        /// </summary>
+        /// <param name="inputitem"></param>
         public void AddToExternalAssemblyList(string inputitem)
         {
             //Adding to ExternalAssemblyList.
@@ -222,6 +269,10 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Adding to assembly list.
+        /// </summary>
+        /// <param name="inputitem"></param>
         public void AddToList(string inputitem)
         {
             //ADDING TO LIST.
@@ -244,16 +295,28 @@ namespace DynamicCodeCompiler
             Duplicate = false;
         }
 
+        /// <summary>
+        /// Adding the namespace.
+        /// </summary>
+        /// <param name="item"></param>
         public void AddNamespace(string item)
         {
            Namespace.Add("using " + item + ";");          
         }
 
+        /// <summary>
+        /// Removing the namespace.
+        /// </summary>
+        /// <param name="item"></param>
         public void RemoveNamespace(string item)
         {
             Namespace.Remove("using " + item + ";");
         }
 
+        /// <summary>
+        /// Assembly and richtextbox validation.
+        /// </summary>
+        /// <returns></returns>
         public bool AssemblyValidation()
         {
             Regex Numbers = new Regex("^[0-9]*$");
@@ -298,6 +361,11 @@ namespace DynamicCodeCompiler
             
         }
 
+        /// <summary>
+        /// Compile button click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCompile_Click(object sender, EventArgs e)
         {
             string windows10KitPath = checkBoxUWBAssembly.Checked ? Session.Windows10KitPath : null;
@@ -330,6 +398,9 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Error count display.
+        /// </summary>
         public void CheckForError()
         {
             if (CompilerHelper.Instance.Count > 0)
@@ -345,6 +416,11 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Run button click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnRun_Click(object sender, EventArgs e)
         {
             var selectedNode = treeViewCompiledAssembly.SelectedNode;
@@ -408,11 +484,20 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Change color of the source editor.
+        /// </summary>
+        /// <param name="colorCode"></param>
         public void ChangeSourceEditorBackground(string colorCode)
         {
             richTextBoxSource.BackColor = ColorTranslator.FromHtml(colorCode);
         }
 
+        /// <summary>
+        /// Deleting external assembly list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteExternalAssembly_Click(object sender, EventArgs e)
         {
             string ITEM = null;
@@ -456,8 +541,10 @@ namespace DynamicCodeCompiler
                 }
             }
         }
-        
-        //REFRESHING ASSEMBLIES TAB.
+
+        /// <summary>
+        /// Refreshing assemblies tab.
+        /// </summary>
         public void RefreshExternalAssembliesTab()
         {
             ExternalyLoadedAssembly.Nodes.Clear();
@@ -474,6 +561,9 @@ namespace DynamicCodeCompiler
             RefreshExternalAssembliesTab();
         }
 
+        /// <summary>
+        /// Detection of windows 10 kit.
+        /// </summary>
         private void DetectWindows10Kit()
         {
             checkBoxUWBAssembly.Enabled = false;
@@ -511,14 +601,17 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Setting up Azure details.
+        /// </summary>
         private void SetupAzureDetails()
         {
             SetupUsers();
-
-            
-
         }
 
+        /// <summary>
+        /// Setting up azure users list.
+        /// </summary>
         private void SetupUsers()
         {
             var users = AzureBlobStroageHelper.Instance.DownloadFile("users.txt");
@@ -550,6 +643,10 @@ namespace DynamicCodeCompiler
             SetupFiles(Environment.UserName);
         }
 
+        /// <summary>
+        /// Setting up azure file list.
+        /// </summary>
+        /// <param name="user"></param>
         private void SetupFiles(string user)
         {
             var fileList = AzureBlobStroageHelper.Instance.GetListOfFiles();
@@ -568,7 +665,31 @@ namespace DynamicCodeCompiler
             comboBoxFiles.DataSource = new BindingSource() { DataSource = userFiles };
         }
 
+        /// <summary>
+        /// Save button click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSave_Click(object sender, EventArgs e)
+        {
+            AzureFileUpload((sender as Button).Text);
+        }
+
+        /// <summary>
+        /// Save As button click.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSaveAs_Click(object sender, EventArgs e)
+        {
+            AzureFileUpload((sender as Button).Text);
+        }
+
+        /// <summary>
+        /// File upload to azure.
+        /// </summary>
+        /// <param name="buttontext"></param>
+        private void AzureFileUpload(string buttontext)
         {
             if (string.IsNullOrEmpty(richTextBoxSource.Text))
             {
@@ -578,13 +699,13 @@ namespace DynamicCodeCompiler
 
             string fileName = string.Empty;
 
-            if (comboBoxFiles.SelectedItem.ToString().Equals("New"))
+            if (comboBoxFiles.SelectedItem.ToString().Equals("New") || buttontext == "Save As")
             {
-                fileName = Microsoft.VisualBasic.Interaction.InputBox("Please enter the file name", "Input");
+                 fileName = Microsoft.VisualBasic.Interaction.InputBox("Please enter the file name", "Input");
             }
             else
             {
-                fileName = comboBoxFiles.SelectedItem.ToString();
+                 fileName = comboBoxFiles.SelectedItem.ToString();
             }
 
             if (string.IsNullOrEmpty(fileName))
@@ -604,6 +725,11 @@ namespace DynamicCodeCompiler
             AzureBlobStroageHelper.Instance.UploadFile(fileName, richTextBoxSource.Text);
         }
 
+        /// <summary>
+        /// Combobox files selection change.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxFiles_SelectedIndexChanged(object sender, EventArgs e)
         {
             var fileName = comboBoxUsers.SelectedItem.ToString() + "-" + comboBoxFiles.SelectedItem.ToString() + ".txt";
@@ -613,6 +739,11 @@ namespace DynamicCodeCompiler
             richTextBoxSource.Text = content;
         }
 
+        /// <summary>
+        /// Combobox users selection change.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBoxUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetupFiles(comboBoxUsers.SelectedItem.ToString());

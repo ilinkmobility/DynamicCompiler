@@ -13,6 +13,9 @@ namespace DynamicCodeCompiler
 
         private static AssemblyHelper instance;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         private AssemblyHelper()
         {
         }
@@ -29,6 +32,11 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Generates the type model.
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         public List<TypeModel> GenerateTypeModel(Type[] types)
         {
             var typeModels = new List<TypeModel>();
@@ -41,6 +49,11 @@ namespace DynamicCodeCompiler
             return typeModels;
         }
 
+        /// <summary>
+        /// Gets the type model(properties,constructors,methods).
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         public TypeModel GetTypeModel(Type type)
         {
             int i, j = 0;
@@ -104,6 +117,11 @@ namespace DynamicCodeCompiler
             return typeModel;
         }
 
+        /// <summary>
+        /// Generates the tree node.
+        /// </summary>
+        /// <param name="types"></param>
+        /// <returns></returns>
         public TreeNode[] GenereateTreeNode(List<TypeModel> types)
         {
             var treeNodes = new TreeNode[types.Count];

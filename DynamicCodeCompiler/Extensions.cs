@@ -9,6 +9,10 @@ namespace DynamicCodeCompiler
 {
     public static class Extensions
     { 
+        /// <summary>
+        /// Adds context menu options in the source code editor.
+        /// </summary>
+        /// <param name="rtb"></param>
         public static void AddContextMenu(this RichTextBox rtb)
         {
             if (rtb.ContextMenuStrip == null)
@@ -27,6 +31,11 @@ namespace DynamicCodeCompiler
             }
         }
 
+        /// <summary>
+        /// Loads the lists in the specified listview.
+        /// </summary>
+        /// <param name="listView"></param>
+        /// <param name="items"></param>
         public static void LoadList(this ListView listView, List<string> items)
         {
             listView.Items.Clear();

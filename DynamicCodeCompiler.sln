@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicCodeCompiler", "DynamicCodeCompiler\DynamicCodeCompiler.csproj", "{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}"
 EndProject
@@ -38,7 +38,7 @@ Global
 		{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}.Release|x64.Build.0 = Release|Any CPU
 		{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}.Release|x86.ActiveCfg = Release|Any CPU
 		{0F41CF1A-CC7A-4D41-B48A-40BFEFCF9214}.Release|x86.Build.0 = Release|Any CPU
-		{FA38CD81-4440-4BAA-8ECB-CB81045B16E4}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{FA38CD81-4440-4BAA-8ECB-CB81045B16E4}.Debug|Any CPU.ActiveCfg = Release|x86
 		{FA38CD81-4440-4BAA-8ECB-CB81045B16E4}.Debug|ARM.ActiveCfg = Debug|ARM
 		{FA38CD81-4440-4BAA-8ECB-CB81045B16E4}.Debug|ARM.Build.0 = Debug|ARM
 		{FA38CD81-4440-4BAA-8ECB-CB81045B16E4}.Debug|ARM.Deploy.0 = Debug|ARM
