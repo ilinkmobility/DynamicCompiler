@@ -97,6 +97,10 @@ namespace DynamicCodeCompiler.DesktopBridge
             deferral.Complete();
         }
 
+        /// <summary>
+        /// Handles URI activation.
+        /// </summary>
+        /// <param name="args"></param>
         protected override void OnActivated(IActivatedEventArgs args)
         {
             base.OnActivated(args);
