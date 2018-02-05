@@ -109,6 +109,9 @@
     </AppxManifest>
     <None Include="desktop\DynamicCodeCompiler.exe.config" />
     <None Include="DynamicCodeCompiler.DesktopBridge_TemporaryKey.pfx" />
+    <Content Include="Release.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="desktop\DesktopBridge.Helpers.dll" />
@@ -150,6 +153,17 @@
       <Link>desktop\%(RecursiveDir)%(FileName)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="desktop\de\" />
+    <Folder Include="desktop\es\" />
+    <Folder Include="desktop\fr\" />
+    <Folder Include="desktop\it\" />
+    <Folder Include="desktop\ja\" />
+    <Folder Include="desktop\ko\" />
+    <Folder Include="desktop\ru\" />
+    <Folder Include="desktop\zh-Hans\" />
+    <Folder Include="desktop\zh-Hant\" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
