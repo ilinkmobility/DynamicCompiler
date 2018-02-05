@@ -5,6 +5,8 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Text.RegularExpressions;
+using Windows.Storage;
+using System.IO.Compression;
 
 namespace DynamicCodeCompiler
 {
@@ -13,12 +15,13 @@ namespace DynamicCodeCompiler
         public string Assemblyname { get; set; }
         List<string> ExternalLoadedAssemblies = new List<string>();
         List<string> Namespace = new List<string>();
-        public string filename { get; set; }
-        public string comboboxtext { get; set; } = "Select an item to load assemblies";
+        public string Filename { get; set; }
+        public string ComboBoxText { get; set; } = "Select an item to load assemblies";
         public bool Duplicate { get; set; } = false;
         AutoCompleteStringCollection source = new AutoCompleteStringCollection();
 
         ToolTip toolTip = new ToolTip();
+
 
         /// <summary>
         /// constructor.
@@ -37,7 +40,7 @@ namespace DynamicCodeCompiler
             source = Constants.Source;
             textBoxAssemblySearch.AutoCompleteCustomSource = Constants.Source;
             
-            comboBoxExternalAssemblies.Text = comboboxtext;
+            comboBoxExternalAssemblies.Text = ComboBoxText;
 
             listViewDefaultAssemblies.LoadList(CompilerHelper.Instance.GetLoadedAssembliesFileNameFromAppDomain());
             ExternalLoadedAssemblies = CompilerHelper.Instance.GetLoadedAssembliesFromAppDomain();
@@ -117,14 +120,14 @@ namespace DynamicCodeCompiler
         private void comboBoxExternalAssemblies_SelectedIndexChanged(object sender, EventArgs e)
         {
             var cmb = sender as ComboBox;
-            filename = cmb.SelectedItem.ToString();
+            Filename = cmb.SelectedItem.ToString();
 
             foreach(var External in Session.ExternalAssemblyComboBox)
             {
-                if(External.Key == filename.ToString())
+                if(External.Key == Filename.ToString())
                 {
                     string filepath = External.Value;
-                    LoadExternalAssemblies(filename,filepath);
+                    LoadExternalAssemblies(Filename,filepath);
                 }                
             }           
         }
@@ -317,7 +320,7 @@ namespace DynamicCodeCompiler
         /// Assembly and richtextbox validation.
         /// </summary>
         /// <returns></returns>
-        public bool AssemblyValidation()
+        public bool AssemblyValidation(bool isUWPCompile = false)
         {
             Regex Numbers = new Regex("^[0-9]*$");
             Regex specialchar = new Regex(@"[~`!@#$%^&*()+=|\\{}':;.,<>/?[\]""_-]");
@@ -332,7 +335,7 @@ namespace DynamicCodeCompiler
             //AssemblyTextBox validation.
             if(string.IsNullOrEmpty(AssemblyName.Text))
             {
-                Assemblyname = @"\Dynamic.dll";
+                Assemblyname = @"\Dynamic" + (isUWPCompile ? ".exe" : ".dll");
                 return true;
             }
             else
@@ -354,7 +357,7 @@ namespace DynamicCodeCompiler
                 }
                 else
                 {
-                    Assemblyname = @"\" + AssemblyName.Text + ".dll";
+                    Assemblyname = @"\" + AssemblyName.Text + (isUWPCompile ? ".exe" : ".dll");
                     return true;
                 }
             }
@@ -368,13 +371,18 @@ namespace DynamicCodeCompiler
         /// <param name="e"></param>
         private void btnCompile_Click(object sender, EventArgs e)
         {
+            Compile();
+        }
+
+        private void Compile(bool isUWPCompile = false)
+        {
             string windows10KitPath = checkBoxUWBAssembly.Checked ? Session.Windows10KitPath : null;
 
-            if(AssemblyValidation())
+            if (AssemblyValidation(isUWPCompile))
             {
                 if (radioWholeClass.Checked)
                 {
-                    string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text, Assemblyname, windows10KitPath);
+                    string result = CompilerHelper.Instance.Compile(richTextBoxSource.Text, Assemblyname, windows10KitPath, isUWPCompile);
                     richTextBoxOutput.Text = result;
                 }
                 else if (radioMethodOnly.Checked)
@@ -382,7 +390,7 @@ namespace DynamicCodeCompiler
                     var methodnames = string.Join(" ", Namespace.ToArray());
                     var methodaddnamespace = methodnames + Constants.MethodTemplate;
                     var Methodfinal = methodaddnamespace.Replace("METHODSOURCE", richTextBoxSource.Text);
-                    string result = CompilerHelper.Instance.Compile(Methodfinal, Assemblyname, windows10KitPath);
+                    string result = CompilerHelper.Instance.Compile(Methodfinal, Assemblyname, windows10KitPath, isUWPCompile);
                     richTextBoxOutput.Text = result;
                 }
                 else
@@ -390,7 +398,7 @@ namespace DynamicCodeCompiler
                     var codenames = string.Join(" ", Namespace.ToArray());
                     var codeaddnamespace = codenames + Constants.CodeTemplate;
                     var Codefinal = codeaddnamespace.Replace("CODESOURCE", richTextBoxSource.Text);
-                    string result = CompilerHelper.Instance.Compile(Codefinal, Assemblyname, windows10KitPath);
+                    string result = CompilerHelper.Instance.Compile(Codefinal, Assemblyname, windows10KitPath, isUWPCompile);
                     richTextBoxOutput.Text = result;
                 }
 
@@ -528,7 +536,7 @@ namespace DynamicCodeCompiler
                                     //DELETING FROM COMBOBOX DROPDOWN LIST.
                                     comboBoxExternalAssemblies.Items.Remove(ExternalAssemblyList.Items[i].Text);
                                     //REFRESHING ASSEMBLIES TAB (If deleted external assembly item is the selected item in combobox dropdown)
-                                    if (ExternalAssemblyList.Items[i].Text == filename)
+                                    if (ExternalAssemblyList.Items[i].Text == Filename)
                                     {
                                         RefreshExternalAssembliesTab();
                                     }
@@ -548,7 +556,7 @@ namespace DynamicCodeCompiler
         public void RefreshExternalAssembliesTab()
         {
             ExternalyLoadedAssembly.Nodes.Clear();
-            comboBoxExternalAssemblies.Text = comboboxtext;
+            comboBoxExternalAssemblies.Text = ComboBoxText;
             comboBoxExternalAssemblies.Items.Clear();
             foreach(var q in Session.ExternalAssemblyComboBox)
             {
@@ -747,6 +755,13 @@ namespace DynamicCodeCompiler
         private void comboBoxUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetupFiles(comboBoxUsers.SelectedItem.ToString());
+        }
+
+        private void bUWPCompileDeploy_Click(object sender, EventArgs e)
+        {
+            Compile(true);
+
+            CompilerHelper.Instance.DeployAsUWPApp();
         }
     }
 }

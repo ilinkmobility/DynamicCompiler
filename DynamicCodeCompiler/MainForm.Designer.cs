@@ -84,6 +84,7 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBoxExternalAssemblies = new System.Windows.Forms.ComboBox();
             this.btnRefresh = new System.Windows.Forms.Button();
+            this.bUWPCompileDeploy = new System.Windows.Forms.Button();
             this.tabControlMain.SuspendLayout();
             this.tabPageCompiler.SuspendLayout();
             this.tableLayoutCompiler.SuspendLayout();
@@ -384,6 +385,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.bUWPCompileDeploy);
             this.panel2.Controls.Add(this.checkBoxUWBAssembly);
             this.panel2.Controls.Add(this.tabControl1);
             this.panel2.Controls.Add(this.richTextBoxArguments);
@@ -418,7 +420,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 92);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(291, 183);
+            this.tabControl1.Size = new System.Drawing.Size(291, 157);
             this.tabControl1.TabIndex = 29;
             // 
             // tabPageNamespace
@@ -427,7 +429,7 @@
             this.tabPageNamespace.Location = new System.Drawing.Point(4, 22);
             this.tabPageNamespace.Name = "tabPageNamespace";
             this.tabPageNamespace.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageNamespace.Size = new System.Drawing.Size(283, 157);
+            this.tabPageNamespace.Size = new System.Drawing.Size(283, 131);
             this.tabPageNamespace.TabIndex = 0;
             this.tabPageNamespace.Text = "Namespace";
             this.tabPageNamespace.UseVisualStyleBackColor = true;
@@ -441,7 +443,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(277, 151);
+            this.panel4.Size = new System.Drawing.Size(277, 125);
             this.panel4.TabIndex = 0;
             // 
             // listViewAssemblyList
@@ -552,7 +554,7 @@
             // 
             // richTextBoxArguments
             // 
-            this.richTextBoxArguments.Location = new System.Drawing.Point(3, 482);
+            this.richTextBoxArguments.Location = new System.Drawing.Point(3, 418);
             this.richTextBoxArguments.Name = "richTextBoxArguments";
             this.richTextBoxArguments.Size = new System.Drawing.Size(289, 64);
             this.richTextBoxArguments.TabIndex = 28;
@@ -561,7 +563,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(0, 466);
+            this.label5.Location = new System.Drawing.Point(0, 402);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(158, 13);
             this.label5.TabIndex = 27;
@@ -570,7 +572,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(-2, 284);
+            this.label4.Location = new System.Drawing.Point(-2, 253);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(97, 13);
             this.label4.TabIndex = 26;
@@ -578,14 +580,14 @@
             // 
             // treeViewCompiledAssembly
             // 
-            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(0, 300);
+            this.treeViewCompiledAssembly.Location = new System.Drawing.Point(0, 269);
             this.treeViewCompiledAssembly.Name = "treeViewCompiledAssembly";
-            this.treeViewCompiledAssembly.Size = new System.Drawing.Size(289, 150);
+            this.treeViewCompiledAssembly.Size = new System.Drawing.Size(289, 127);
             this.treeViewCompiledAssembly.TabIndex = 25;
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(149, 562);
+            this.btnRun.Location = new System.Drawing.Point(149, 494);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(142, 44);
             this.btnRun.TabIndex = 24;
@@ -595,7 +597,7 @@
             // 
             // btnCompile
             // 
-            this.btnCompile.Location = new System.Drawing.Point(3, 562);
+            this.btnCompile.Location = new System.Drawing.Point(3, 494);
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new System.Drawing.Size(142, 44);
             this.btnCompile.TabIndex = 23;
@@ -751,6 +753,16 @@
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
+            // bUWPCompileDeploy
+            // 
+            this.bUWPCompileDeploy.Location = new System.Drawing.Point(3, 544);
+            this.bUWPCompileDeploy.Name = "bUWPCompileDeploy";
+            this.bUWPCompileDeploy.Size = new System.Drawing.Size(288, 48);
+            this.bUWPCompileDeploy.TabIndex = 31;
+            this.bUWPCompileDeploy.Text = "UWP Compile && Deploy";
+            this.bUWPCompileDeploy.UseVisualStyleBackColor = true;
+            this.bUWPCompileDeploy.Click += new System.EventHandler(this.bUWPCompileDeploy_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -852,6 +864,7 @@
         private System.Windows.Forms.ComboBox comboBoxFiles;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonSaveAs;
+        private System.Windows.Forms.Button bUWPCompileDeploy;
     }
 }
 

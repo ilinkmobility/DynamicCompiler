@@ -2,8 +2,11 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Management.Automation;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -24,6 +27,9 @@ namespace DynamicCodeCompiler
         public string CompiledDllPath { get; set; }
 
         public int Count { get; set; }
+
+        string zipFile = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Release.zip");
+        string extractedFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Release");
 
         /// <summary>
         /// Constructor.
@@ -54,7 +60,7 @@ namespace DynamicCodeCompiler
         /// <param name="assemblyname"></param>
         /// <param name="windows10KitPath"></param>
         /// <returns></returns>
-        public string Compile(string source,string assemblyname, string windows10KitPath)
+        public string Compile(string source,string assemblyname, string windows10KitPath, bool isUWPCompileDeploy = false)
         {
             if (helpers.IsRunningAsUwp())
             {
@@ -67,10 +73,14 @@ namespace DynamicCodeCompiler
 
             CompilerParameters parameters = new CompilerParameters
             {
-                GenerateExecutable = false,
+                GenerateExecutable = isUWPCompileDeploy,
                 GenerateInMemory = true,
                 OutputAssembly = CompiledDllPath
             };
+
+            if (isUWPCompileDeploy) {
+                parameters.CompilerOptions = "/t:winexe";
+            }
 
             //Adding all referenced assemblies of running App to the compiler reference
             var assemblies = AppDomain.CurrentDomain
@@ -320,6 +330,147 @@ namespace DynamicCodeCompiler
                 catch (Exception)
                 { }
             }
+        }
+
+
+
+        private async void CopyReleaseZip()
+        {
+            MessageBox.Show("1");
+            try
+            {
+                StorageFile zipFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Release.zip"));
+
+                string sourcePath = zipFile.Path;
+                string targetPathToCopy = Path.Combine(ApplicationData.Current.LocalFolder.Path, zipFile.Name);
+
+                if (!File.Exists(targetPathToCopy))
+                {
+                    // To copy a file to another location
+                    File.Copy(sourcePath, targetPathToCopy);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void ExtractReleaseZip()
+        {
+            MessageBox.Show("2");
+            try
+            {
+                if (Directory.Exists(extractedFolder))
+                {
+                    Directory.Delete(extractedFolder, true);
+                    Directory.CreateDirectory(extractedFolder);
+                }
+
+                ZipFile.ExtractToDirectory(zipFile, extractedFolder);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void UpdateAppManifest(string assemblyName)
+        {
+            MessageBox.Show("3");
+            try
+            {
+                string appxManifestFilePath = Path.Combine(extractedFolder, "AppxManifest.xml");
+                string text = File.ReadAllText(appxManifestFilePath);
+                text = text.Replace("APPNAME", assemblyName);
+                File.WriteAllText(appxManifestFilePath, text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        public void DeployAsUWPApp()
+        {
+            try
+            {
+                CopyReleaseZip();
+                ExtractReleaseZip();
+
+                var assemblyName = Path.GetFileName(CompiledDllPath).Replace(".dll", "").Replace(".exe", "");
+
+                File.Copy(CompiledDllPath, Path.Combine(extractedFolder, assemblyName + ".exe"));
+
+                UpdateAppManifest(assemblyName);
+
+                var path = ApplicationData.Current.LocalFolder.Path;
+                var appx = Path.Combine(path, assemblyName + @".appx");
+
+                MessageBox.Show("MakeAppx");
+
+                string makeAppxCommand = @"MakeAppx pack /l /d " + Path.Combine(path, "Release") + @" /p " + appx;
+
+                ExecutePowerShell(makeAppxCommand);
+
+                MessageBox.Show("SignTool");
+
+                string signAppx = @"SignTool sign /fd sha256 /a /f D:\UWP\DynamicCompilerTools\iLink-Systems.pfx /p Welcome123 " + appx;
+
+                ExecutePowerShell(signAppx);
+                
+                string deploy = @"Add-AppxPackage -Path " + appx;
+
+                MessageBox.Show("Deploy : " + deploy);
+
+                ExecutePowerShell(deploy);
+
+                MessageBox.Show("Done");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private string ExecutePowerShell(string script)
+        {
+            string result = string.Empty;
+
+            try
+            {
+                using (PowerShell PowerShellInstance = PowerShell.Create())
+                {
+                    // use "AddScript" to add the contents of a script file to the end of the execution pipeline.
+                    // use "AddCommand" to add individual commands/cmdlets to the end of the execution pipeline.
+                    PowerShellInstance.AddScript(script);
+
+                    // invoke execution on the pipeline (collecting output)
+                    Collection<PSObject> PSOutput = PowerShellInstance.Invoke();
+
+                    // loop through each output object item
+                    foreach (PSObject outputItem in PSOutput)
+                    {
+                        // if null object was dumped to the pipeline during the script then a null
+                        // object may be present here. check for null to prevent potential NRE.
+                        if (outputItem != null)
+                        {
+                            //TODO: do something with the output item 
+
+                            if (outputItem.BaseObject.GetType().FullName != "System.ServiceProcess.ServiceController")
+                            {
+                                result += outputItem.BaseObject.ToString() + "\r\n";
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+            return result;
         }
     }
 }
