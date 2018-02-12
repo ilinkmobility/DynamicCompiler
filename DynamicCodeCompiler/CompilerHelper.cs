@@ -8,10 +8,13 @@ using System.IO.Compression;
 using System.Linq;
 using System.Management.Automation;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Store;
 using Windows.Storage;
 
 namespace DynamicCodeCompiler
@@ -27,6 +30,8 @@ namespace DynamicCodeCompiler
         public string CompiledDllPath { get; set; }
 
         public int Count { get; set; }
+
+        public string AppPackageId { get; set; } = "244891f1-8d7d-4f90-8a31-6b968672039b";
 
         string zipFile = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Release.zip");
         string extractedFolder = Path.Combine(ApplicationData.Current.LocalFolder.Path, "Release");
@@ -115,8 +120,9 @@ namespace DynamicCodeCompiler
             {
                 parameters.ReferencedAssemblies.Add(@"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.1\Microsoft.CSharp.dll");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
 
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters, source);
@@ -232,22 +238,28 @@ namespace DynamicCodeCompiler
         {
             List<KeyValuePair<string, string>> parameterList = new List<KeyValuePair<string, string>>();
 
-            if (!method.Contains("(  )"))
+            try
             {
-                Match matches = new Regex(@"\(\s(.+)\s\)", RegexOptions.IgnoreCase).Match(method);
-                if (matches.Groups.Count > 0)
+                if (!method.Contains("(  )"))
                 {
-                    var group = matches.Groups[1];
-                    var parameters = group.ToString().Split(',');
-
-                    foreach (var parameter in parameters)
+                    Match matches = new Regex(@"\(\s(.+)\s\)", RegexOptions.IgnoreCase).Match(method);
+                    if (matches.Groups.Count > 0)
                     {
-                        var items = parameter.Trim().Split(' ');
-                        parameterList.Add(new KeyValuePair<string, string>(items[0], items[1]));
+                        var group = matches.Groups[1];
+                        var parameters = group.ToString().Split(',');
+
+                        foreach (var parameter in parameters)
+                        {
+                            var items = parameter.Trim().Split(' ');
+                            parameterList.Add(new KeyValuePair<string, string>(items[0], items[1]));
+                        }
                     }
                 }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
             return parameterList;
         }
 
@@ -271,7 +283,6 @@ namespace DynamicCodeCompiler
             }
             catch (Exception ex)
             {
-                var x = ex.ToString();
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
@@ -327,8 +338,10 @@ namespace DynamicCodeCompiler
                     var fileName = Path.GetFileName(externalAssembly.Value);
                     File.Copy(externalAssembly.Value, appDirectory + @"\" + fileName, true);
                 }
-                catch (Exception)
-                { }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+                }
             }
         }
 
@@ -336,7 +349,7 @@ namespace DynamicCodeCompiler
 
         private async void CopyReleaseZip()
         {
-            MessageBox.Show("1");
+            //MessageBox.Show("1");
             try
             {
                 StorageFile zipFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Release.zip"));
@@ -352,13 +365,13 @@ namespace DynamicCodeCompiler
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
 
         private void ExtractReleaseZip()
         {
-            MessageBox.Show("2");
+            //MessageBox.Show("2");
             try
             {
                 if (Directory.Exists(extractedFolder))
@@ -367,27 +380,32 @@ namespace DynamicCodeCompiler
                     Directory.CreateDirectory(extractedFolder);
                 }
 
+                MessageBox.Show(zipFile + "XXX" + extractedFolder);
+
                 ZipFile.ExtractToDirectory(zipFile, extractedFolder);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
 
         private void UpdateAppManifest(string assemblyName)
         {
-            MessageBox.Show("3");
             try
             {
+                //AppPackageId = Guid.NewGuid().ToString();
+                //MessageBox.Show(AppPackageId);
+
                 string appxManifestFilePath = Path.Combine(extractedFolder, "AppxManifest.xml");
                 string text = File.ReadAllText(appxManifestFilePath);
                 text = text.Replace("APPNAME", assemblyName);
+                //text = text.Replace("APPPKGID", AppPackageId);
                 File.WriteAllText(appxManifestFilePath, text);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
 
@@ -401,35 +419,61 @@ namespace DynamicCodeCompiler
                 var assemblyName = Path.GetFileName(CompiledDllPath).Replace(".dll", "").Replace(".exe", "");
 
                 File.Copy(CompiledDllPath, Path.Combine(extractedFolder, assemblyName + ".exe"));
-
+                
                 UpdateAppManifest(assemblyName);
 
                 var path = ApplicationData.Current.LocalFolder.Path;
                 var appx = Path.Combine(path, assemblyName + @".appx");
 
-                MessageBox.Show("MakeAppx");
+                //MessageBox.Show("MakeAppx");
 
                 string makeAppxCommand = @"MakeAppx pack /l /d " + Path.Combine(path, "Release") + @" /p " + appx;
 
                 ExecutePowerShell(makeAppxCommand);
 
-                MessageBox.Show("SignTool");
+                //MessageBox.Show("SignTool");
 
                 string signAppx = @"SignTool sign /fd sha256 /a /f D:\UWP\DynamicCompilerTools\iLink-Systems.pfx /p Welcome123 " + appx;
 
-                ExecutePowerShell(signAppx);
-                
-                string deploy = @"Add-AppxPackage -Path " + appx;
+                ExecutePowerShell(signAppx);              
 
-                MessageBox.Show("Deploy : " + deploy);
+                string addpackagesyntax = @"Add-AppxPackage -Path " + appx;
+                string addpackagecmdlet = string.Format("\"{0}\"", addpackagesyntax);
+                //powershell.exe -Command "Add-AppxPackage -Path C:\Users\vignesha\AppData\Local\Packages\48141348-0714-4092-9b64-beaac406807b_y1rwc9yf20874\LocalState\Dynamic.appx"
+                string deploy = "powershell.exe -Command " + addpackagecmdlet;
+
+                //MessageBox.Show("Deploy : " + deploy);
 
                 ExecutePowerShell(deploy);
 
-                MessageBox.Show("Done");
+                string packageFamilyNames = ExecutePowerShell("get-appxpackage | Select PackageFamilyName");
+
+                string packageToInvoke = string.Empty;
+
+                //MessageBox.Show("Count : " + packageFamilyNames.Length);
+
+                foreach (var packageName in packageFamilyNames.Split('@'))
+                {
+                    if (packageName.Contains(AppPackageId))
+                    {
+                        packageToInvoke = packageName.Replace("{PackageFamilyName=", "").Replace("}", "");
+                        //MessageBox.Show(packageToInvoke);
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(packageToInvoke))
+                {
+                    string launch = @"explorer.exe shell:appsFolder\" + packageToInvoke + "!" + "App";
+                   // MessageBox.Show(launch);
+                    ExecutePowerShell(launch);
+                }
+
+
+                //MessageBox.Show("Done");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
         }
 
@@ -457,17 +501,19 @@ namespace DynamicCodeCompiler
                         {
                             //TODO: do something with the output item 
 
-                            if (outputItem.BaseObject.GetType().FullName != "System.ServiceProcess.ServiceController")
-                            {
-                                result += outputItem.BaseObject.ToString() + "\r\n";
-                            }
+                            //if (outputItem.BaseObject.GetType().FullName != "System.ServiceProcess.ServiceController")
+                            //{
+                            //    result += outputItem.BaseObject.ToString() + "\r\n";
+                            //}
+
+                            result += outputItem.ToString();
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
             }
 
             return result;

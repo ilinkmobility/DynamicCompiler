@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DynamicCodeCompiler
 {
@@ -32,8 +33,16 @@ namespace DynamicCodeCompiler
         /// </summary>
         private AzureBlobStroageHelper()
         {
-            cloudBlobClient = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=blobstoragesample111;"
-                 + "AccountKey=").CreateCloudBlobClient();
+            try
+            {
+                cloudBlobClient = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=blobstoragesample111;"
+                + "AccountKey=").CreateCloudBlobClient();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+
+            }
         }
 
         /// <summary>
@@ -43,24 +52,31 @@ namespace DynamicCodeCompiler
         /// <param name="fileContent"></param>
         public void UploadFile(string fileName, string fileContent)
         {
-            // Get Blob Container
-            CloudBlobContainer container = cloudBlobClient.GetContainerReference("documents");
-            container.CreateIfNotExist();
+            try
+            {
+                // Get Blob Container
+                CloudBlobContainer container = cloudBlobClient.GetContainerReference("documents");
+                container.CreateIfNotExist();
 
-            // Get reference to blob (binary content)
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+                // Get reference to blob (binary content)
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
 
-            // set its properties
-            blockBlob.Properties.ContentType = "text/plain";
-            blockBlob.Metadata["filename"] = fileName;
-            blockBlob.Metadata["filemime"] = "text/plain";
+                // set its properties
+                blockBlob.Properties.ContentType = "text/plain";
+                blockBlob.Metadata["filename"] = fileName;
+                blockBlob.Metadata["filemime"] = "text/plain";
 
-            // Get stream from file bytes
-            Stream stream = new MemoryStream(Encoding.ASCII.GetBytes(fileContent));
+                // Get stream from file bytes
+                Stream stream = new MemoryStream(Encoding.ASCII.GetBytes(fileContent));
 
-            // Async upload of stream to Storage
-            AsyncCallback UploadCompleted = new AsyncCallback(OnUploadCompleted);
-            blockBlob.BeginUploadFromStream(stream, UploadCompleted, blockBlob);
+                // Async upload of stream to Storage
+                AsyncCallback UploadCompleted = new AsyncCallback(OnUploadCompleted);
+                blockBlob.BeginUploadFromStream(stream, UploadCompleted, blockBlob);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
         }
 
         /// <summary>
@@ -69,11 +85,18 @@ namespace DynamicCodeCompiler
         /// <param name="result"></param>
         private void OnUploadCompleted(IAsyncResult result)
         {
-            CloudBlockBlob blob = (CloudBlockBlob)result.AsyncState;
-            blob.SetMetadata();
-            blob.EndUploadFromStream(result);
+            try
+            {
+                CloudBlockBlob blob = (CloudBlockBlob)result.AsyncState;
+                blob.SetMetadata();
+                blob.EndUploadFromStream(result);
 
-            System.Windows.Forms.MessageBox.Show("Uploaded");
+                MessageBox.Show("Uploaded");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+            }
         }
 
 
@@ -84,26 +107,26 @@ namespace DynamicCodeCompiler
         /// <returns></returns>
         public string DownloadFile(string fileName)
         {
-            // Get Blob Container
-            CloudBlobContainer container = cloudBlobClient.GetContainerReference("documents");
-            container.CreateIfNotExist();
-
-            // Get reference to blob (binary content)
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
-
-            // Read content
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                try
+                // Get Blob Container
+                CloudBlobContainer container = cloudBlobClient.GetContainerReference("documents");
+                container.CreateIfNotExist();
+
+                // Get reference to blob (binary content)
+                CloudBlockBlob blockBlob = container.GetBlockBlobReference(fileName);
+
+                // Read content
+                using (MemoryStream ms = new MemoryStream())
                 {
                     blockBlob.DownloadToStream(ms);
-
                     return Encoding.UTF8.GetString(ms.ToArray());
                 }
-                catch (Exception)
-                {
-                    return null;
-                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+                return null;
             }
         }
 
@@ -113,21 +136,28 @@ namespace DynamicCodeCompiler
         /// <returns></returns>
         public List<string> GetListOfFiles()
         {
-            // Get Blob Container
-            CloudBlobContainer container = cloudBlobClient.GetContainerReference("documents");
-            container.CreateIfNotExist();
-
-            var blobs = container.ListBlobs();
-            
-            var listOfFileNames = new List<string>();
-
-            foreach (var blob in blobs)
+            try
             {
-                var blobFileName = blob.Uri.Segments.Last();
-                listOfFileNames.Add(blobFileName);
-            }
+                var listOfFileNames = new List<string>();
+                // Get Blob Container
+                CloudBlobContainer container = cloudBlobClient.GetContainerReference("documents");
+                container.CreateIfNotExist();
 
-            return listOfFileNames;
+                var blobs = container.ListBlobs();                
+
+                foreach (var blob in blobs)
+                {
+                    var blobFileName = blob.Uri.Segments.Last();
+                    listOfFileNames.Add(blobFileName);
+                }  
+
+                return listOfFileNames;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK);
+                return null;
+            }
         }
     }
 }
